@@ -205,7 +205,7 @@
                 <span>Nên để text xuống dòng hay là để ..., khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
               </td>
               <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: -1;">                                          
+                <div style="z-index: 31;">                                          
                   <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                       class="" alt="Small Image " width="20" height="20">
               </div>
@@ -232,7 +232,7 @@
                 <span>Để (..) đi, khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
               </td>
               <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: -1;">                                          
+                <div style="z-index: 31;">                                          
                   <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                       class="" alt="Small Image " width="20" height="20">
               </div>
@@ -260,7 +260,7 @@
 
               </td>
               <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: -1;">                                          
+                <div style="z-index: 31;">                                          
                   <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                       class="" alt="Small Image " width="20" height="20">
               </div>
@@ -287,7 +287,7 @@
                   Model Name: Virgin Again Capsule, Pck of 10 x 10 = 100 Capsules </span>
               </td>
               <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: -1;">                                          
+                <div style="z-index: 31;">                                          
                   <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                       class="" alt="Small Image " width="20" height="20">
               </div>
@@ -313,7 +313,7 @@
                 <span>Không được sử dụng thuốc bổ trợ Isulin khi dùng trà sữa </span>
               </td>
               <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: -1;">                                          
+                <div style="z-index: 999;">                                          
                   <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                       class="" alt="Small Image " width="20" height="20">
               </div>
@@ -394,10 +394,17 @@
 
   // Attach a click event to all the rows in the table
   var rows = document.querySelectorAll("#myTable tbody tr");
-  rows.forEach(function (row) {
-    row.addEventListener("click", function () {
+
+rows.forEach(function (row) {
+  row.addEventListener("click", function (event) {
+    // Check if the click occurred on the image inside the row
+    if (event.target.tagName.toLowerCase() !== 'img') {
+      // Redirect to the URL based on row content
       redirectToURL(row);
-    });
+    }
+  });
+});
+);
   });
 </script>
 
