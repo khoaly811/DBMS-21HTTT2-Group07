@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Open Sans Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- FontAweSome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!-- Styles.css -->
+  <!-- <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/> -->
+  <!-- <link rel="stylesheet" href="/css/styleManage.css" type="text/css"/> -->
+  <link rel="stylesheet" href="../public/css/stylesUpload.css" type="text/css" />
+  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css"/>
+  <!-- Tiny ediotr -->
+  <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Health Us</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid" style="background-color: #dcfffd;">
+        <a class="navbar-brand" href="">
+            <img class="rounded-2" src="../public/image/logo.png" alt="Bootstrap" width="60" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+            <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách nhân viên</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách nha sĩ</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">D/s thuốc</a></b>
+                </li>
+                
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách buổi hẹn</a></b>
+                </li>
+                <div style="width: 354px;"></div>
+                <!-- ======================================================================================================== -->
+                <li class="nav-item ml-auto rounded-3">
+                  <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+                    <div class="user-profile">
+                      <p>Le Nhan</p>
+                    </div>
+                    <div class="img-box">
+                      <img src="../public/image/admin_ava.jpeg" alt="some user image" />
+                    </div>
+                  </div>
+                  <div class="menu">
+                    <ul>
+                      <li>
+                        <a href="#"><i class="fa-regular fa-user"></i>Tài khoản</a>
+                      </li>
+                      <li>
+                        <a href=""><i class="far fa-bell"></i>Thông báo</a>
+                      </li>
+                      <li>
+                        <a href=""><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                      </li>
+                      <!-- <li>
+                        <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
+                      </li> -->
+        
+                      <li>
+                        <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+                      </li>
+        
+                      <li>
+                        <a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+                      </li>
+                    </ul>
+                  </div>
+        
+                  <script>
+                    let profile = document.querySelector(".profile");
+                    let menu = document.querySelector(".menu");
+                    let userProfile = document.querySelector(".user-profile");
+        
+                    document.onclick = function (e) {
+                      if (!profile.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.remove("active");
+                      }
+                    };
+        
+                    profile.onclick = function (e) {
+                      menu.classList.toggle("active");
+                    };
+        
+                    function hoverOn(e) {
+                      e.style.color = "#36a189";
+                    }
+                    function hoverOff(e) {
+                      e.style.color = "rgb(72, 72, 72)";
+                    }
+        
+                  </script>
+                </li>
+
+            </ul>
+
+            <!-- <ul class="nav-item ml-auto rounded-3">
+                <%- include("./avtDropDown2") -%>
+            </ul> -->
+        </div>
+    </div>
+    
+</nav>
+<br>
+
+  <div class="container border rounded p-3" style="margin-bottom: 50px;">
+    <!-- Tiêu đề -->
+    <h2><i class="fa-solid fa-users"></i> <strong> Quản lý bệnh nhân</strong></h2>
+    <div class="row">
+      <div class="col-md-4 mt-2  d-flex align-items-center ">
+        <div class="input-group " style="max-width: 266px;">
+          <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
+              class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
+            placeholder="Tên, dị ứng, chống chỉ định">
+        </div>
+      </div>
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+        <span class="me-3">
+          <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
+          <i class="fa-solid fa-filter"></i>
+        </span>
+        <select id="filter-select" class="form-select" style="max-width: 113px;background-color: #D9D9D9;">
+          <option>Giới tính</option>
+          <option>Nam</option>
+          <option>Nữ</option>
+        </select>
+        
+      </div>
+      
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+        <select id="filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
+          <option>Dị ứng</option>
+          <option>Không</option>
+          <option>Có</option>
+        </select>
+        
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center">
+        <button id="button-ban-unban" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 30px;">Thêm bệnh nhân</button>
+      </div>
+
+      <!-- Bảng -->
+
+      <div class="table-responsive mt-2">
+        <table id="myTable" class="table table-hover table-borderless ">
+          <thead>
+            <tr>
+              <th class="border-bottom">STT <i class="fa-solid "></i> </th>
+              <th class="border-bottom">Họ tên <i class="fa-solid "></i></th>
+              <th class="border-bottom">Ngày sinh <i class="fa-solid "></i></th>
+              <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
+              <th class="border-bottom text-center">Chống chỉ định<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+            </tr>
+          </thead>
+          <tbody id="bookTableBody">
+            <!-- Duplicate các dong ở đây -->
+
+
+            <tr>
+              <td> 1 </td>
+              <td>
+                Lý Đăng Khoa
+              </td>
+              <td>
+                05/09/04
+              </td>
+              <td class="">
+                <span class="rounded"
+                  style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
+
+              </td>
+              <!-- D-flex khi không có dị ứng -->
+              <td class="d-flex  ">
+                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+              </td>
+              <td class="text-center chong-chi-dinh-cell">
+                <span>Nên để text xuống dòng hay là để ..., khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
+              </td>
+              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
+                <div style="z-index: -1;">                                          
+                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                      class="" alt="Small Image " width="20" height="20">
+              </div>
+              </td>
+              <!-- Thêm dòng để xóa -->
+            </tr>
+
+            <tr>
+              <td> 2 </td>
+              <td>
+                Lý Đăng Khoa
+              </td>
+              <td>
+                05/09/04
+              </td>
+              <td>
+                <span class="rounded"
+                  style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
+              </td>
+              <td class="text-center di-ung-cell">
+                Dị ứng với thả tim ứng với thả tim ứng với thả tim
+              </td>
+              <td class="text-center chong-chi-dinh-cell">
+                <span>Để (..) đi, khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
+              </td>
+              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
+                <div style="z-index: -1;">                                          
+                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                      class="" alt="Small Image " width="20" height="20">
+              </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td> 3 </td>
+              <td>
+                Lê Nhân
+              </td>
+              <td>
+                14/06/03
+              </td>
+              <td>
+                <span class="rounded"
+                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
+              </td>
+              <td class="d-flex">
+                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+              </td>
+              <td class="text-center chong-chi-dinh-cell">
+                <span class="rounded"
+                  style="background-color: #FF6767; padding-left: 18px; padding-right: 18px; padding-top: 5px; padding-bottom: 5px;">Không</span>
+
+              </td>
+              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
+                <div style="z-index: -1;">                                          
+                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                      class="" alt="Small Image " width="20" height="20">
+              </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td> 4 </td>
+              <td>
+                Tín Trung
+              </td>
+              <td>
+                11/06/03
+              </td>
+              <td>
+                <span class="rounded"
+                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
+              </td>
+              <td class="d-flex">
+                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+              </td>
+              <td class="text-center chong-chi-dinh-cell">
+                <span>Hạn chế xài Virgin Again Pills, bệnh nhân thích xài Cackle's
+                  Model Name: Virgin Again Capsule, Pck of 10 x 10 = 100 Capsules </span>
+              </td>
+              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
+                <div style="z-index: -1;">                                          
+                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                      class="" alt="Small Image " width="20" height="20">
+              </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td> 5 </td>
+              <td>
+                Nguyễn Vũ Tường An
+              </td>
+              <td>
+                07/09/03
+              </td>
+              <td>
+                <span class="rounded"
+                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
+              </td>
+              <td class="d-flex">
+                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+              </td>
+              <td class="text-center chong-chi-dinh-cell">
+                <span>Không được sử dụng thuốc bổ trợ Isulin khi dùng trà sữa </span>
+              </td>
+              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
+                <div style="z-index: -1;">                                          
+                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                      class="" alt="Small Image " width="20" height="20">
+              </div>
+              </td>
+            </tr>
+
+
+
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+
+</body>
+
+<style>
+  .btn-text {
+    cursor: default;
+    /* Không thay đổi con trỏ chuột khi di chuột vào */
+    pointer-events: none;
+    /* Vô hiệu hóa sự kiện chuột cho thẻ */
+    color: #6c757d;
+    /* Màu chữ khi vô hiệu hóa */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+  }
+
+  .chong-chi-dinh-cell {
+    max-width: 200px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .di-ung-cell{
+    max-width: 100px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+<style>
+  .p-1 {
+    width: 90px;
+    /* Đặt chiều rộng cố định cho các khung */
+    text-align: center;
+    /* Căn giữa nội dung trong khung */
+  }
+</style>
+<script>
+  function deleteRowAndImage(element) {
+    var row = element.closest('tr'); // Find the closest <tr> element to the clicked image
+    row.remove(); // Remove the row from the table
+  }
+
+  // Attach the click event to all the images in the table
+  var images = document.querySelectorAll("#myTable img");
+  images.forEach(function (image) {
+    image.addEventListener("click", function () {
+      deleteRowAndImage(image);
+    });
+  });
+</script>
+<script>
+  // Function to redirect based on the STT value
+  function redirectToURL(row) {
+    var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
+    var url = "page_based_on_stt.html?stt=" + stt; // Construct the URL based on STT
+
+    // Redirect to the constructed URL
+    window.location.href = url;
+  }
+
+  // Attach a click event to all the rows in the table
+  var rows = document.querySelectorAll("#myTable tbody tr");
+  rows.forEach(function (row) {
+    row.addEventListener("click", function () {
+      redirectToURL(row);
+    });
+  });
+</script>
+
+</body>
+
+</html>
