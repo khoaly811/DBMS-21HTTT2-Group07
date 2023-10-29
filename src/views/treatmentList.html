@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Open Sans Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- FontAweSome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!-- Styles.css -->
+  <!-- <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/> -->
+  <!-- <link rel="stylesheet" href="/css/styleManage.css" type="text/css"/> -->
+  <link rel="stylesheet" href="../public/css/stylesUpload.css" type="text/css" />
+  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css"/>
+
+  <!-- Tiny editor -->
+  <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Health Us</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-transparent">
+      <div class="container-fluid" style="background-color: #dcfffd;">
+          <a class="navbar-brand" href="">
+              <img class="rounded-2" src="../public/image/logo.png" alt="Bootstrap" width="60" height="40">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+              <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                  <li class="nav-item rounded-3">
+                      <b><a class="nav-link" href="">Danh sách nhân viên</a></b>
+                  </li>
+                  <li class="nav-item rounded-3">
+                      <b><a class="nav-link" href="">Danh sách nha sĩ</a></b>
+                  </li>
+                  
+                  <li class="nav-item rounded-3">
+                      <b><a class="nav-link" href="">D/s thuốc</a></b>
+                  </li>
+                  
+                  <li class="nav-item rounded-3">
+                      <b><a class="nav-link" href="">Danh sách buổi hẹn</a></b>
+                  </li>
+                  <div style="width: 354px;"></div>
+                  <!-- ======================================================================================================== -->
+                  <li class="nav-item ml-auto rounded-3">
+                    <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+                      <div class="user-profile">
+                        <p>Le Nhan</p>
+                      </div>
+                      <div class="img-box">
+                        <img src="../public/image/admin_ava.jpeg" alt="some user image" />
+                      </div>
+                    </div>
+                    <div class="menu">
+                      <ul>
+                        <li>
+                          <a href="#"><i class="fa-regular fa-user"></i>Tài khoản</a>
+                        </li>
+                        <li>
+                          <a href=""><i class="far fa-bell"></i>Thông báo</a>
+                        </li>
+                        <li>
+                          <a href=""><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                        </li>
+                                  
+                        <li>
+                          <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+                        </li>
+          
+                        <li>
+                          <a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+                        </li>
+                      </ul>
+                    </div>
+          
+                    <script>
+                      let profile = document.querySelector(".profile");
+                      let menu = document.querySelector(".menu");
+                      let userProfile = document.querySelector(".user-profile");
+          
+                      document.onclick = function (e) {
+                        if (!profile.contains(e.target) && !menu.contains(e.target)) {
+                          menu.classList.remove("active");
+                        }
+                      };
+          
+                      profile.onclick = function (e) {
+                        menu.classList.toggle("active");
+                      };
+          
+                      function hoverOn(e) {
+                        e.style.color = "#36a189";
+                      }
+                      function hoverOff(e) {
+                        e.style.color = "rgb(72, 72, 72)";
+                      }          
+                    </script>
+                  </li>
+                </ul>
+  
+              <!-- <ul class="nav-item ml-auto rounded-3">
+                  <%- include("./avtDropDown2") -%>
+              </ul> -->
+            </div>
+        </div>    
+    </nav>
+<br>
+  <div class="container border rounded p-3" style="margin-bottom: 50px; height:800px">
+    <h2><i class="fa-solid fa-users" style="margin-left: 20px;"></i> <strong> Hồ sơ bệnh nhân</strong></h2>
+
+    <div class="container-fluid" style="width: auto; height: 500px; margin-left: 10px">
+        <div class="row no-gutters">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                  <div class="mt-3">
+                    <h4 id="fullname" name="fullname">Lý Đăng Khoa</h4>
+                    
+                    <div class="card mb-3" style="width: 350px">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-4" style="text-align:left">
+                            <h6 class="mb-0">Patient ID</h6>
+                          </div>
+                          <div class="col-sm-8 text-secondary" id="patientID" name="patientID">
+                            pat0001
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4" style="text-align:left">
+                            <h6 class="mb-0">Sex</h6>
+                          </div>
+                          <div class="col-sm-8 text-secondary" id="sex" name="sex">
+                            Female
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4" style="text-align:left">
+                            <h6 class="mb-0">Phone</h6>
+                          </div>
+                          <div class="col-sm-8 text-secondary" id="phone" name="phone">
+                            (239) 816-9029
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4" style="text-align:left">
+                            <h6 class="mb-0" >Địa chỉ</h6>
+                          </div>
+                          <div class="col-sm-8 text-secondary" id="address" name="address">
+                            227, Nguyen Van Cu
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4" style="text-align:left"
+                            <h6 class="mb-0">Notes</h6>
+                          </div>
+                          <div class="col-sm-8 text-secondary" id="notes" name="notes">
+                            Không dị ứng
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary">Add Treatment</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-8" style="width: 800px">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="tab-content">
+                <div id="treatment" class="tab-pane fade show active">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="font-size: 21px; font-weight:normal">
+                        Treatment 1
+                      </button>
+                    </h2>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne-1">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-1" aria-expanded="false" aria-controls="flush-collapseOne-1" style="font-size: 21px; font-weight:normal">
+                        Treatment 2
+                      </button>
+                    </h2>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne-2">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-2" aria-expanded="false" aria-controls="flush-collapseOne-2" style="font-size: 21px; font-weight:normal">
+                        Treatment 3
+                      </button>
+                    </h2>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" style="font-size: 21px; font-weight:normal">
+                        Treatment 4
+                      </button>
+                    </h2>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo-1">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo-1" aria-expanded="false" aria-controls="flush-collapseTwo-1" style="font-size: 21px; font-weight:normal">
+                        Treatment 5
+                      </button>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <style>
+      .p-1 {
+        width: 90px;
+        /* Đặt chiều rộng cố định cho các khung */
+        text-align: center;
+        /* Căn giữa nội dung trong khung */
+      }
+    </style>
+<script src="../public/js/treatmentList.js"> </script>
+
+</body>
+
+</html>
