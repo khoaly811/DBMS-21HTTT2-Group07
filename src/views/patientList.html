@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +137,7 @@
           <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
               class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
-            placeholder="Tên, dị ứng, chống chỉ định">
+            placeholder="Tìm kiếm tên bệnh nhân">
         </div>
       </div>
       <div class="col-md-2 mt-2  d-flex align-items-center">
@@ -152,7 +154,7 @@
       </div>
       
       <div class="col-md-2 mt-2  d-flex align-items-center">
-        <select id="filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
+        <select id="allergies-filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
           <option>Dị ứng</option>
           <option>Không</option>
           <option>Có</option>
@@ -171,7 +173,7 @@
             <tr>
               <th class="border-bottom">STT <i class="fa-solid "></i> </th>
               <th class="border-bottom">Họ tên <i class="fa-solid "></i></th>
-              <th class="border-bottom">Ngày sinh <i class="fa-solid "></i></th>
+              <th class="border-bottom">Ngày sinh <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
               <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
               <th class="border-bottom text-center">Chống chỉ định<i class="fa-solid "></i></th>
@@ -327,6 +329,8 @@
 
     </div>
 
+
+
 </body>
 
 <style>
@@ -400,7 +404,166 @@ rows.forEach(function (row) {
     }
   });
 });
+
+
+  // Search===================================================================
 </script>
+<script>
+  // Function to handle search filtering
+  function handleSearch() {
+    var searchInput = document.getElementById("search-input");
+    var filter = searchInput.value.toLowerCase();
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Loop through all table rows and hide those that don't match the search query
+    for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+      var nameCell = rows[i].getElementsByTagName("td")[1]; // 2nd column (Họ tên)
+
+      if (nameCell) {
+        var name = nameCell.innerText.toLowerCase();
+
+        if (name.indexOf(filter) > -1) {
+          rows[i].style.display = ""; // Show the row if it matches the search query
+        } else {
+          rows[i].style.display = "none"; // Hide the row if it doesn't match
+        }
+      }
+    }
+  }
+
+  // Attach the search event listener to the search input
+  var searchInput = document.getElementById("search-input");
+  searchInput.addEventListener("input", handleSearch);
+</script>
+
+<!-- Filter giới tính============================================================================= -->
+<script>
+  // Function to handle gender filtering
+  function handleGenderFilter() {
+    var filterSelect = document.getElementById("filter-select");
+    var selectedGender = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected gender is not "Giới tính," apply the filter
+    if (selectedGender !== "Giới tính") {
+      // Loop through all table rows and hide those that don't match the selected gender
+      for (var i = 1; i < rows.length; i++) {
+        var genderCell = rows[i].getElementsByTagName("td")[3]; // 4th column (Giới tính)
+
+        if (genderCell) {
+          var gender = genderCell.innerText;
+
+          if (gender !== selectedGender) {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the gender filter event listener to the filter select element
+  var filterSelect = document.getElementById("filter-select");
+  filterSelect.addEventListener("change", handleGenderFilter);
+</script>
+
+<!-- Filter dị ứng===================================================================================== -->
+
+<script>
+  // Function to handle allergies filter based on "Tình trạng dị ứng" column
+  function handleAllergiesFilter() {
+    var filterSelect = document.getElementById("allergies-filter-select");
+    var selectedAllergy = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected allergy is not "Dị ứng," apply the filter
+    if (selectedAllergy !== "Dị ứng") {
+      // Loop through all table rows and hide those that don't match the selected allergy
+      for (var i = 1; i < rows.length; i++) {
+        var allergyStatusCell = rows[i].getElementsByTagName("td")[4]; // 5th column (Tình trạng dị ứng)
+
+        if (allergyStatusCell) {
+          var allergyStatus = allergyStatusCell.innerText;
+
+          if (
+            (selectedAllergy === "Không" && allergyStatus !== "Không") ||
+            (selectedAllergy === "Có" && allergyStatus === "Không")
+          ) {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match the selected allergy
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the allergies filter event listener to the allergies filter select element
+  var allergiesFilterSelect = document.getElementById("allergies-filter-select");
+  allergiesFilterSelect.addEventListener("change", handleAllergiesFilter);
+</script>
+
+<!-- Sort DOB================================================================================================= -->
+
+<script>
+  // Function to parse date strings and return a date object
+  function parseDate(dateString) {
+    const dateParts = dateString.split("/");
+    return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+  }
+
+  // Function to handle sorting for Ngày Sinh column
+  function handleSortNgaySinh(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[2]; // 3rd column (Ngày Sinh)
+      var date = parseDate(cell.innerText);
+      data.push({ date, row: rows[i] });
+    }
+
+    data.sort(function (a, b) {
+      if (order === "asc") {
+        return a.date - b.date;
+      } else {
+        return b.date - a.date;
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+
+  // Attach the sorting event listeners to the column header
+  var ngaySinhHeader = document.querySelector("#myTable thead th:nth-child(3)");
+  ngaySinhHeader.addEventListener("click", function () {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortNgaySinh("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortNgaySinh("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+
+
 
 </body>
 
