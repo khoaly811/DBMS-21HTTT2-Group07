@@ -1,0 +1,6 @@
+{
+    "scripts": {
+      "devStart": "node app.js"
+    }
+  }
+  
