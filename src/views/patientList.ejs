@@ -119,9 +119,7 @@
 
             </ul>
 
-            <!-- <ul class="nav-item ml-auto rounded-3">
-                <%- include("./avtDropDown2") -%>
-            </ul> -->
+       
         </div>
     </div>
     
@@ -171,8 +169,8 @@
         <table id="myTable" class="table table-hover table-borderless ">
           <thead>
             <tr>
-              <th class="border-bottom">STT <i class="fa-solid "></i> </th>
-              <th class="border-bottom">Họ tên <i class="fa-solid "></i></th>
+              <th class="border-bottom">STT <i class="fa-solid fa-sort"></i> </th>
+              <th class="border-bottom">Họ tên <i class="fa-solid fa-sort "></i></th>
               <th class="border-bottom">Ngày sinh <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
               <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
@@ -562,6 +560,88 @@ rows.forEach(function (row) {
     }
   });
 </script>
+
+<script>
+  function handleSortHoTen(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[1]; // 2nd column (Họ tên)
+      var name = cell.innerText;
+      data.push({ name, row: rows[i] });
+    }
+
+    data.sort(function (a, b) {
+      if (order === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+</script>
+<script>
+  // Attach the sorting event listeners to the column header
+  var hoTenHeader = document.querySelector("#myTable thead th:nth-child(2)"); // 2nd column (Họ tên)
+  hoTenHeader.addEventListener("click", function () {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortHoTen("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortHoTen("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+<script>// Function to handle sorting for STT column
+  function handleSortSTT() {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+  
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[0]; // 1st column (STT)
+      var stt = parseInt(cell.innerText);
+      data.push({ stt, row: rows[i] });
+    }
+  
+    // Check the current sorting order based on the icon's class
+    var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+    var isAscending = sttHeader.classList.contains("sorted-asc");
+  
+    if (isAscending) {
+      data.sort(function (a, b) {
+        return b.stt - a.stt; // Sort in descending order
+      });
+      sttHeader.classList.remove("sorted-asc");
+      sttHeader.classList.add("sorted-desc");
+    } else {
+      data.sort(function (a, b) {
+        return a.stt - b.stt; // Sort in ascending order
+      });
+      sttHeader.classList.remove("sorted-desc");
+      sttHeader.classList.add("sorted-asc");
+    }
+  
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+  
+  // Attach the sorting event listener to the STT column header
+  var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+  sttHeader.addEventListener("click", handleSortSTT);
+  </script>
 
 
 
