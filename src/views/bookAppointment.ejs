@@ -1,0 +1,24 @@
+<%- include("partials/header"); %>
+
+<div class="container col-8">
+    <table class="table table-bordered">
+        <tr>
+            <th>appid</th>
+            <th>treatid</th>
+            <th>date</th>
+            <th>shift</th>
+            <th>status</th>
+            <th>notes</th>
+        </tr>
+        <% appointment.forEach((app)=>{%>
+            <tr>
+              <td><%= app.appointment_id%></td>
+              <td><%= app.treatment_id%></td>
+              <td><%= app.appointment_date%></td>
+              <td><%= app.appointment_shift%></td>
+              <td><%= app.appointment_status%></td>
+              <td><%= app.notes%></td>
+            </tr>
+          <% }) %>
+      </table>
+    </div>

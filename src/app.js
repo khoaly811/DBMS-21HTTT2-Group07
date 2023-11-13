@@ -21,11 +21,9 @@ if (fs.existsSync('server.pid')) {
 fs.writeFileSync('server.pid', process.pid.toString(), 'utf8');
 
 // Continue with your server setup
-const staffRoute = require("./routes/staffRoute");
-const dentistRoute = require("./routes/dentistRoute");
-const patientRoute = require("./routes/patientRoute");
 const patientListRoute = require("./routes/patientListRoute");
 const patientProfileRoute = require("./routes/patientProfileRoutes");
+const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 
 const bodyParser = require("body-parser");
 const mysql = require('mysql2');
@@ -61,7 +59,4 @@ app.get('/', (req, res) => {
 });
 app.use("/", patientListRoute);
 app.use("/", patientProfileRoute);
-// app.use("/", adminRoute);
-// app.use("/", staffRoute);
-// app.use("/", dentistRoute);
-// app.use("/", patientRoute); 
+app.use("/", bookingAppointmentRoute);
