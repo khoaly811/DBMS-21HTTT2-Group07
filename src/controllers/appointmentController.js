@@ -1,10 +1,12 @@
-const Appointment = require('../models/appointments');
+const appointmentModel = require('../models/appointments');
 
-exports.listAppointment = function(req, res) {
-  Appointment.listAppointment(function(err, appointment) {
-    if (err)
-    res.send(err);
-    console.log('res', appointment);
-    res.render('bookAppointment', {appointment: appointment})
-  });
+exports.listAppointment = function(req, res, next) {
+    let sql = `SELECT * FROM appointment LIMIT 10`;
+    appointmentModel.query(sql, function(err, data) {
+        if (err) {
+            return next(err);
+        }
+        console.log(data);
+        res.render('bookAppointment', { appointmentData: data });
+    });
 };

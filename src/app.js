@@ -59,4 +59,4 @@ app.get('/', (req, res) => {
 });
 app.use("/", patientListRoute);
 app.use("/", patientProfileRoute);
-app.use("/", bookingAppointmentRoute);
+app.use("/appointment", bookingAppointmentRoute);

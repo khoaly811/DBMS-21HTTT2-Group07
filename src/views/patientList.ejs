@@ -137,158 +137,38 @@
         <table id="myTable" class="table table-hover table-borderless ">
           <thead>
             <tr>
-              <th class="border-bottom">STT <i class="fa-solid fa-sort"></i> </th>
+              <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
               <th class="border-bottom">Họ tên <i class="fa-solid fa-sort "></i></th>
               <th class="border-bottom">Ngày sinh <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
               <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
-              <th class="border-bottom text-center">Chống chỉ định<i class="fa-solid "></i></th>
               <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
             </tr>
           </thead>
           <tbody id="bookTableBody">
             <!-- Duplicate các dong ở đây -->
-
-
-            <tr>
-              <td> 1 </td>
-              <td>
-                Lý Đăng Khoa
-              </td>
-              <td>
-                05/09/04
-              </td>
-              <td class="">
-                <span class="rounded"
-                  style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
-
-              </td>
+            <% patientData.forEach((pat)=>{%>
+              <tr>
+                <td><%= pat.PATIENT_ID%></td>
+                <td><%= pat.FULL_NAME%></td>
+                <td><%= pat.DOB.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
+                <td>
+                  <span class="rounded"
+                    style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"> 
+                    <% if (pat.GENDER == 'M') {%> Nam
+                    <%} else { %> Nữ <%}%></span>
+                </td>
               <!-- D-flex khi không có dị ứng -->
               <td class="d-flex  ">
-                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+                <span class="p-1 rounded" style="background-color: #FF6767;"><%= pat.ALLERGIES%></span>
               </td>
-              <td class="text-center chong-chi-dinh-cell">
-                <span>Nên để text xuống dòng hay là để ..., khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
-              </td>
-              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: 31;">                                          
-                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                      class="" alt="Small Image " width="20" height="20">
-              </div>
-              </td>
+              <td><div style="z-index: 31;">                                          
+                <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                    class="" alt="Small Image " width="20" height="20">
+              </div></td>
               <!-- Thêm dòng để xóa -->
-            </tr>
-
-            <tr>
-              <td> 2 </td>
-              <td>
-                Lý Đăng Khoa
-              </td>
-              <td>
-                05/09/04
-              </td>
-              <td>
-                <span class="rounded"
-                  style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
-              </td>
-              <td class="text-center di-ung-cell">
-                Dị ứng với thả tim ứng với thả tim ứng với thả tim
-              </td>
-              <td class="text-center chong-chi-dinh-cell">
-                <span>Để (..) đi, khi bấm vào chi tiết mới thể hiện hết (recommended) </span>
-              </td>
-              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: 31;">                                          
-                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                      class="" alt="Small Image " width="20" height="20">
-              </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td> 3 </td>
-              <td>
-                Lê Nhân
-              </td>
-              <td>
-                14/06/03
-              </td>
-              <td>
-                <span class="rounded"
-                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
-              </td>
-              <td class="d-flex">
-                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
-              </td>
-              <td class="text-center chong-chi-dinh-cell">
-                <span class="rounded"
-                  style="background-color: #FF6767; padding-left: 18px; padding-right: 18px; padding-top: 5px; padding-bottom: 5px;">Không</span>
-
-              </td>
-              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: 31;">                                          
-                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                      class="" alt="Small Image " width="20" height="20">
-              </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td> 4 </td>
-              <td>
-                Tín Trung
-              </td>
-              <td>
-                11/06/03
-              </td>
-              <td>
-                <span class="rounded"
-                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
-              </td>
-              <td class="d-flex">
-                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
-              </td>
-              <td class="text-center chong-chi-dinh-cell">
-                <span>Hạn chế xài Virgin Again Pills, bệnh nhân thích xài Cackle's
-                  Model Name: Virgin Again Capsule, Pck of 10 x 10 = 100 Capsules </span>
-              </td>
-              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: 31;">                                          
-                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                      class="" alt="Small Image " width="20" height="20">
-              </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td> 5 </td>
-              <td>
-                Nguyễn Vũ Tường An
-              </td>
-              <td>
-                07/09/03
-              </td>
-              <td>
-                <span class="rounded"
-                  style="background-color: #67fff7; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
-              </td>
-              <td class="d-flex">
-                <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
-              </td>
-              <td class="text-center chong-chi-dinh-cell">
-                <span>Không được sử dụng thuốc bổ trợ Isulin khi dùng trà sữa </span>
-              </td>
-              <td class=" chong-chi-dinh-cell" style="font-size: large; cursor: pointer;">
-                <div style="z-index: 999;">                                          
-                  <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                      class="" alt="Small Image " width="20" height="20">
-              </div>
-              </td>
-            </tr>
-
-
-
-
+              </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
