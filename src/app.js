@@ -58,5 +58,4 @@ app.get('/', (req, res) => {
   res.render('login');
 });
 app.use("/", patientListRoute);
-app.use("/", patientProfileRoute);
 app.use("/appointment", bookingAppointmentRoute);

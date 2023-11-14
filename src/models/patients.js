@@ -1,12 +1,19 @@
-const mysql = require('mysql2')
-const dotenv = require('dotenv')
-dotenv.config()
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+const db = require("./db.js");
 
-db.connect(() => console.log('Sucessfully connected to database'));
-module.exports=db;
+const Patient = function(patient){
+    this.patient_id = patient.patient_id;
+    this.full_name = patient.full_name;
+    this.dob = patient.dob;
+    this.gender = patient.gender;
+    this.allergies = patient.allergies;
+};
+Patient.getall = function(req,res,next){
+    db.query("Select * from patient limit 5", function(err,data){
+        if (err){
+            return next(err);
+        }
+        // console.log(data);
+        res.render('patientList', {patientData: data});
+    });
+};
+module.exports = Patient;
