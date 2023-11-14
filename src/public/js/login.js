@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         const username = $('#username').val();
-        const password = $('#password').val();
+        const password = 12345678;
 
         if (!username || !password) {
             alert('Please fill in all fields');
