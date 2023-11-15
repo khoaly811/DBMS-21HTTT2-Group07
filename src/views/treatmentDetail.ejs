@@ -1,0 +1,216 @@
+<%- include("partials/header"); %>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid" style="background-color: #dcfffd;">
+        <a class="navbar-brand" href="">
+            <img class="rounded-2" src="../public/image/logo.png" alt="Bootstrap" width="60" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+            <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách nhân viên</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách nha sĩ</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">D/s thuốc</a></b>
+                </li>
+                
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="">Danh sách buổi hẹn</a></b>
+                </li>
+                <div style="width: 354px;"></div>
+                <!-- ======================================================================================================== -->
+                <li class="nav-item ml-auto rounded-3">
+                  <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+                    <div class="user-profile">
+                      <p>Le Nhan</p>
+                    </div>
+                    <div class="img-box">
+                      <img src="../public/image/admin_ava.jpeg" alt="some user image" />
+                    </div>
+                  </div>
+                  <div class="menu">
+                    <ul>
+                      <li>
+                        <a href="#"><i class="fa-regular fa-user"></i>Tài khoản</a>
+                      </li>
+                      <li>
+                        <a href=""><i class="far fa-bell"></i>Thông báo</a>
+                      </li>
+                      <li>
+                        <a href=""><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                      </li>
+                      <!-- <li>
+                        <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
+                      </li> -->
+        
+                      <li>
+                        <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+                      </li>
+        
+                      <li>
+                        <a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+                      </li>
+                    </ul>
+                  </div>
+        
+                  <script>
+                    let profile = document.querySelector(".profile");
+                    let menu = document.querySelector(".menu");
+                    let userProfile = document.querySelector(".user-profile");
+        
+                    document.onclick = function (e) {
+                      if (!profile.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.remove("active");
+                      }
+                    };
+        
+                    profile.onclick = function (e) {
+                      menu.classList.toggle("active");
+                    };
+        
+                    function hoverOn(e) {
+                      e.style.color = "#36a189";
+                    }
+                    function hoverOff(e) {
+                      e.style.color = "rgb(72, 72, 72)";
+                    }
+        
+                  </script>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+    
+</nav>
+
+<div class="row">
+  <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+    <!-- Sidebar -->
+    <h3>Xem thêm:</h3>
+    <a href="">
+      <button class="btn btn-secondary">Danh sách điều trị</button>
+  </a>  
+  <h5>ㅤ</h5> 
+  <a href="/patientList">
+    <button class="btn btn-secondary">Danh sách bệnh nhân</button>
+</a>    
+  <h5>ㅤ</h5>
+    <button class="btn btn-secondary">Chi tiết thanh toán</button>
+  </div>
+
+  <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+    <div class="container-xl px-4 mt-4">
+      <div class="row">
+        
+        <div class="col-xl-8"style="right:100px;position: absolute;">
+          <!-- Account details card-->
+          <div class="card mb-4 w-100">
+            <div class="card-header">Chi tiết bệnh nhân</div>
+            <div class="card-body">
+              <form action="" method="post">               
+                 <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="patientID">ID</label> 
+                    
+
+                    <input type="text" id="patientID" class="form-control form-control-lg" value="gg" disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="patientName">Tên bẹnh nhân</label>
+                    <input type="text" id="patientName"class="form-control form-control-lg" value="gg" disabled>
+                    <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                  </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Ngày Sinh</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="hh" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Giới tính</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="gg" disabled>
+                  </div>
+                  
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="allegies">Tình trạng dị ứng</label>
+                    <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled>gg</textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="contraindication">Chống chỉ định</label>
+                    <textarea id="contraindication" name="contraindication" class="form-control form-control-lg" rows="1" disabled>Không</textarea>
+                  </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="TreatmentFee">Tổng tiền điều trị</label>
+                   
+                    <input type="text" id="TreatmentFee"class="form-control form-control-lg" value="gg" disabled>
+              
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Treatmentpaid">Số lượng điều trị</label>
+                   
+                    <input type="text" id="Treatmentpaid"class="form-control form-control-lg" value="gg" disabled>
+                   
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Thông tin tổng quan về sức khỏe</label>
+                  <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2">Không có</textarea>
+                </div>
+                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+
+                
+              </form>
+              <br><br>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("updateButton").addEventListener("click", function () {
+  var formElements = document.querySelectorAll("form input, form textarea");
+  var updateButton = document.getElementById("updateButton");
+
+  if (updateButton.textContent === "Update") {
+    formElements.forEach(function (element) {
+      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "DOB"&& element.id !== "patientName"&& element.id !== "description") {
+        element.removeAttribute("disabled");
+      }
+    });
+
+    updateButton.textContent = "Done";
+  } else if (updateButton.textContent === "Done") {
+    formElements.forEach(function (element) {
+      element.setAttribute("disabled", true);
+    });
+
+    updateButton.textContent = "Update";
+  }
+});
+
+
+</script>
+</body>
