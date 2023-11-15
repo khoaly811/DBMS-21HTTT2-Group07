@@ -153,15 +153,23 @@
                 <td><%= pat.FULL_NAME%></td>
                 <td><%= pat.DOB.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
                 <td>
-                  <span class="rounded"
-                    style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"> 
-                    <% if (pat.GENDER == 'M') {%> Nam
-                    <%} else { %> Nữ <%}%></span>
+                  <% if (pat.GENDER == 'M') { %>
+                    <span class="rounded" style="background-color: #67ffeb; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
+                  <% } else { %>
+                    <span class="rounded" style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
+                  <% } %>
                 </td>
+
+                <td class="d-flex  ">
+                  <% if (pat.GENDER != null) { %>
+                    <%= pat.ALLERGIES%>
+                    <% } else { %>
+                      <span class="p-1 rounded" style="background-color: #FF6767;">Không</span>
+                      <% } %>
+                </td>
+                
               <!-- D-flex khi không có dị ứng -->
-              <td class="d-flex  ">
-                <span class="p-1 rounded" style="background-color: #FF6767;"><%= pat.ALLERGIES%></span>
-              </td>
+             
               <td><div style="z-index: 31;">                                          
                 <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                     class="" alt="Small Image " width="20" height="20">
@@ -232,7 +240,7 @@
   // Function to redirect based on the STT value
   function redirectToURL(row) {
     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
-    var url = "page_based_on_stt.html?stt=" + stt; // Construct the URL based on STT
+    var url = "/patientProfile/" + stt; // Construct the URL based on STT
 
     // Redirect to the constructed URL
     window.location.href = url;

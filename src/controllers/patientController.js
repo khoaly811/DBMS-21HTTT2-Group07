@@ -11,9 +11,15 @@ const patientModel = require('../models/patients');
 //     });
 // };
 exports.listPatient = function(req,res,next){
-    patientModel.getall(req,res,next);
+    patientModel.listPatient(req,res,next);
 }
 
 exports.listPatientPro = function(req,res,next){
     patientModel.listPatientPro(req,res,next);
+}
+exports.treatListperPatient = function(req,res,next){
+    patientModel.treatListperPatient(req,res,next);
+}
+exports.treatmentDetail = function(req,res,next){
+    patientModel.treatmentDetail(req,res,next);
 }
