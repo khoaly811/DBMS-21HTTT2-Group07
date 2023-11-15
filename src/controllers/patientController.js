@@ -13,3 +13,7 @@ const patientModel = require('../models/patients');
 exports.listPatient = function(req,res,next){
     patientModel.getall(req,res,next);
 }
+
+exports.listPatientPro = function(req,res,next){
+    patientModel.listPatientPro(req,res,next);
+}
