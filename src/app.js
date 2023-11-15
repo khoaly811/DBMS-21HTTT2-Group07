@@ -21,7 +21,7 @@ if (fs.existsSync('server.pid')) {
 fs.writeFileSync('server.pid', process.pid.toString(), 'utf8');
 
 // Continue with your server setup
-const patientListRoute = require("./routes/patientListRoute");
+const patientRoute = require("./routes/patientRoute");
 const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 
 const bodyParser = require("body-parser");
@@ -56,6 +56,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.render('login');
 });
-app.use("/", patientListRoute);
-
+app.use("/", patientRoute);
 app.use("/appointment", bookingAppointmentRoute);

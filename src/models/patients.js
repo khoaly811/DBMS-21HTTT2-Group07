@@ -1,12 +1,101 @@
-const mysql = require('mysql2')
-const dotenv = require('dotenv')
-dotenv.config()
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+const db = require("./db.js");
 
-db.connect(() => console.log('Sucessfully connected to database'));
-module.exports=db;
+const Patient = function(patient){
+    this.patient_id = patient.patient_id;
+    this.full_name = patient.full_name;
+    this.dob = patient.dob;
+    this.gender = patient.gender;
+    this.allergies = patient.allergies;
+};
+
+Patient.listPatient = function(req, res, next) {
+    db.query("SELECT * FROM patient LIMIT 15", function(err, data) {
+        if (err) {
+            return next(err);
+        }
+        // console.log(data);
+        res.render('patientList', { patientData: data });
+    });
+};
+Patient.listPatientPro = function(req, res, next) {
+    const IDuser = req.params.id;
+    console.log(IDuser);
+    let sql = `SELECT * FROM patient WHERE PATIENT_ID = ${IDuser}`;
+    let sql2 = `SELECT SUM(INVOICE.PAID_FEE) AS totalPaidFee
+    FROM TREATMENT
+    JOIN INVOICE ON TREATMENT.TREATMENT_ID = INVOICE.TREATMENT_ID
+    WHERE TREATMENT.PATIENT_ID = ${IDuser}`;
+    let sql3 = `SELECT COUNT(DISTINCT TREATMENT_ID) AS treatmentCount
+                FROM TREATMENT
+                WHERE PATIENT_ID = ${IDuser}`;
+
+    
+                db.query(sql, function(err, data) {
+                    if (err) {
+                        return next(err);
+                    }
+                    console.log(data);
+            
+                    db.query(sql2, function(err2, data2) {
+                        if (err2) {
+                            return next(err2);
+                        }
+            
+                        console.log(data2);
+            
+                        db.query(sql3, function(err3, data3) {
+                            if (err3) {
+                                return next(err3);
+                            }
+            
+                            console.log(data3);
+            
+                            // Render with patient data, treatment data, and treatment count
+                            res.render('patientProfile', { patientData: data, treatmentData: data2, treatmentCount:data3 });
+                        });
+                    });
+                });
+};
+
+// Patient.treatListperPatient = function(req, res, next) {
+//     const patientID = req.params.id;
+  
+//     let sql = `
+//         SELECT 
+//             TREATMENT.*, 
+//             D1.FULL_NAME AS DentistName, 
+//             D2.FULL_NAME AS AssistantName
+//         FROM 
+//             TREATMENT
+//         LEFT JOIN 
+//             DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
+//         LEFT JOIN 
+//             DENTIST D2 ON TREATMENT.DENTIST_ID = D2.DENTIST_ID
+//         WHERE 
+//             TREATMENT.PATIENT_ID = ${patientID}`;
+    
+//     db.query(sql, function(err, treatmentData) {
+//         if (err) {
+//             return next(err);
+//         }
+//         console.log(treatmentData);
+//         res.render('treatmentListperPatient', { treatmentData: treatmentData });
+//     });
+// };
+
+// Patient.treatmentDetail = function(req, res, next) {
+//     const patientID = req.params.id;//treatmentID
+//     console.log(patientID);
+  
+//     let sql = `SELECT * FROM TREATMENT WHERE TREATMENT_ID = '${patien0tID}'`;
+    
+//     db.query(sql, function(err, treatmentData) {
+//         if (err) {
+//             return next(err);
+//         }
+//         console.log(treatmentData);
+//         res.render('treatmentDetail', );
+//     });
+// };
+
+module.exports = Patient;
