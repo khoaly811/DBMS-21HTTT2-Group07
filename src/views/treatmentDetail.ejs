@@ -15,14 +15,14 @@
                     <b><a class="nav-link" href="">Danh sách nhân viên</a></b>
                 </li>
                 <li class="nav-item rounded-3">
-                    <b><a class="nav-link" href="">Danh sách nha sĩ</a></b>
+                    <b><a class="nav-link" href="">D/s nha sĩ</a></b>
                 </li>
                 <li class="nav-item rounded-3">
                     <b><a class="nav-link" href="">D/s thuốc</a></b>
                 </li>
                 
                 <li class="nav-item rounded-3">
-                    <b><a class="nav-link" href="">Danh sách buổi hẹn</a></b>
+                    <b><a class="nav-link" href="/patientList">Danh sách bệnh nhân</a></b>
                 </li>
                 <div style="width: 354px;"></div>
                 <!-- ======================================================================================================== -->
@@ -96,13 +96,12 @@
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
     <!-- Sidebar -->
     <h3>Xem thêm:</h3>
+    <% treatmentDetail.forEach((pat)=>{%>
+
     <a href="">
       <button class="btn btn-secondary">Danh sách điều trị</button>
   </a>  
-  <h5>ㅤ</h5> 
-  <a href="/patientList">
-    <button class="btn btn-secondary">Danh sách bệnh nhân</button>
-</a>    
+   
   <h5>ㅤ</h5>
     <button class="btn btn-secondary">Chi tiết thanh toán</button>
   </div>
@@ -114,7 +113,7 @@
         <div class="col-xl-8"style="right:100px;position: absolute;">
           <!-- Account details card-->
           <div class="card mb-4 w-100">
-            <div class="card-header">Chi tiết bệnh nhân</div>
+            <div class="card-header">Chi tiết điều trị</div>
             <div class="card-body">
               <form action="" method="post">               
                  <div class="row gx-3 mb-3">
@@ -123,14 +122,14 @@
                     <label class="small mb-1" for="patientID">ID</label> 
                     
 
-                    <input type="text" id="patientID" class="form-control form-control-lg" value="gg" disabled>
+                    <input type="text" id="patientID" class="form-control form-control-lg" value="<%= pat.TREATMENT_ID %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>
                       <div class="small text-danger"><%= errorMessage1%></div>
                     <% } %> -->
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="patientName">Tên bẹnh nhân</label>
-                    <input type="text" id="patientName"class="form-control form-control-lg" value="gg" disabled>
+                    <label class="small mb-1" for="patientName">Nha sĩ chính</label>
+                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.DENTIST_ID %>" disabled>
                     <!-- <% if (locals.errorMessage2) { %>
                       <div class="small text-danger"><%= errorMessage2 %></div>
                     <% } %> -->
@@ -138,43 +137,34 @@
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="DOB">Ngày Sinh</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="hh" disabled>
+                    <label class="small mb-1" for="DOB">Nha sĩ phụ</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.ASSISTANT_ID %>" disabled>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Giới tính</label>
-                    <input type="text" id="Gender"class="form-control form-control-lg" value="gg" disabled>
+                    <label class="small mb-1" for="Gender">Bệnh nhân được điều trị</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.PATIENT_ID %>" disabled>
                   </div>
                   
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="allegies">Tình trạng dị ứng</label>
-                    <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled>gg</textarea>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="contraindication">Chống chỉ định</label>
-                    <textarea id="contraindication" name="contraindication" class="form-control form-control-lg" rows="1" disabled>Không</textarea>
-                  </div>
+                    <label class="small mb-1" for="allegies">Tình trạng điều trị</label>
+                    <% if(pat.TREATMENT_STATUS == "Completed"){%>
+                    <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled style="background-color: rgb(154, 255, 159);">Đã xong</textarea>
+                    <% } %>
+                    <% if(pat.TREATMENT_STATUS == "In progress"){%>
+                        <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled style="background-color: rgb(154, 226, 255);">Đang trong quá trình thực hiện</textarea>
+                        <% } %>
                 </div>
-                <div class="row gx-3 mb-3">
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="TreatmentFee">Tổng tiền điều trị</label>
-                   
-                    <input type="text" id="TreatmentFee"class="form-control form-control-lg" value="gg" disabled>
-              
-                  </div>
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="Treatmentpaid">Số lượng điều trị</label>
-                   
-                    <input type="text" id="Treatmentpaid"class="form-control form-control-lg" value="gg" disabled>
-                   
-                  </div>
+                 
                 </div>
+               
+               
                 <div class="mb-3">
-                  <label class="small mb-1" for="description">Thông tin tổng quan về sức khỏe</label>
-                  <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2">Không có</textarea>
+                  <label class="small mb-1" for="description">Mô tả điều trị</label>
+                  <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2"><%= pat.DESCRIPTION %></textarea>
                 </div>
+                <% }) %>
                 <button id="updateButton" class="btn btn-primary" type="button">Update</button>
 
                 

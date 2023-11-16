@@ -87,14 +87,14 @@ Patient.treatmentDetail = function(req, res, next) {
     const patientID = req.params.id;//treatmentID
     console.log(patientID);
   
-    let sql = `SELECT * FROM TREATMENT WHERE TREATMENT_ID = '${patien0tID}'`;
+    let sql = `SELECT * FROM TREATMENT WHERE TREATMENT_ID = '${patientID}'`;
     
     db.query(sql, function(err, treatmentData) {
         if (err) {
             return next(err);
         }
         console.log(treatmentData);
-        res.render('treatmentDetail', );
+        res.render('treatmentDetail',{ treatmentDetail: treatmentData } );
     });
 };
 
