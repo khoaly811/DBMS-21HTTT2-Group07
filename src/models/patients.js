@@ -9,12 +9,12 @@ const Patient = function(patient){
 };
 
 Patient.listPatient = function(req, res, next) {
-    db.query("SELECT * FROM patient LIMIT 15", function(err, data) {
+    db.query('CALL sp_patient()', function(err, data) {
         if (err) {
             return next(err);
         }
-        // console.log(data);
-        res.render('patientList', { patientData: data });
+        console.log(data);
+        res.render('patientList', { patientData: data[0] });
     });
 };
 Patient.listPatientPro = function(req, res, next) {
@@ -60,26 +60,27 @@ Patient.listPatientPro = function(req, res, next) {
 Patient.treatListperPatient = function(req, res, next) {
     const patientID = req.params.id;
   
-    let sql = `
-        SELECT 
-            TREATMENT.*, 
-            D1.FULL_NAME AS DentistName, 
-            D2.FULL_NAME AS AssistantName
-        FROM 
-            TREATMENT
-        LEFT JOIN 
-            DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
-        LEFT JOIN 
-            DENTIST D2 ON TREATMENT.DENTIST_ID = D2.DENTIST_ID
-        WHERE 
-            TREATMENT.PATIENT_ID = ${patientID}`;
+    // let sql = `
+    //     SELECT 
+    //         TREATMENT.*, 
+    //         D1.FULL_NAME AS DentistName, 
+    //         D2.FULL_NAME AS AssistantName
+    //     FROM 
+    //         TREATMENT
+    //     LEFT JOIN 
+    //         DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
+    //     LEFT JOIN 
+    //         DENTIST D2 ON TREATMENT.DENTIST_ID = D2.DENTIST_ID
+    //     WHERE 
+    //         TREATMENT.PATIENT_ID = ${patientID}`;
+    let sql= `call sp_treatment('${patientID}')`;
     
     db.query(sql, function(err, treatmentData) {
         if (err) {
             return next(err);
         }
         console.log(treatmentData);
-        res.render('treatmentListperPatient', { treatmentData: treatmentData });
+        res.render('treatmentListperPatient', { treatmentData: treatmentData[0] });
     });
 };
 
