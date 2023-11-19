@@ -13,13 +13,11 @@ Patient.listPatient = function(req, res, next) {
         if (err) {
             return next(err);
         }
-        console.log(data);
         res.render('patientList', { patientData: data[0] });
     });
 };
 Patient.listPatientPro = function(req, res, next) {
     const IDuser = req.params.id;
-    console.log(IDuser);
     let sql = `SELECT * FROM patient WHERE PATIENT_ID = ${IDuser}`;
     let sql2 = `SELECT SUM(INVOICE.PAID_FEE) AS totalPaidFee
     FROM TREATMENT
@@ -34,21 +32,18 @@ Patient.listPatientPro = function(req, res, next) {
                     if (err) {
                         return next(err);
                     }
-                    console.log(data);
             
                     db.query(sql2, function(err2, data2) {
                         if (err2) {
                             return next(err2);
                         }
             
-                        console.log(data2);
             
                         db.query(sql3, function(err3, data3) {
                             if (err3) {
                                 return next(err3);
                             }
             
-                            console.log(data3);
             
                             // Render with patient data, treatment data, and treatment count
                             res.render('patientProfile', { patientData: data, treatmentData: data2, treatmentCount:data3 });
@@ -57,46 +52,6 @@ Patient.listPatientPro = function(req, res, next) {
                 });
 };
 
-Patient.treatListperPatient = function(req, res, next) {
-    const patientID = req.params.id;
-  
-    // let sql = `
-    //     SELECT 
-    //         TREATMENT.*, 
-    //         D1.FULL_NAME AS DentistName, 
-    //         D2.FULL_NAME AS AssistantName
-    //     FROM 
-    //         TREATMENT
-    //     LEFT JOIN 
-    //         DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
-    //     LEFT JOIN 
-    //         DENTIST D2 ON TREATMENT.DENTIST_ID = D2.DENTIST_ID
-    //     WHERE 
-    //         TREATMENT.PATIENT_ID = ${patientID}`;
-    let sql= `call sp_treatment('${patientID}')`;
-    
-    db.query(sql, function(err, treatmentData) {
-        if (err) {
-            return next(err);
-        }
-        console.log(treatmentData);
-        res.render('treatmentListperPatient', { treatmentData: treatmentData[0] });
-    });
-};
 
-Patient.treatmentDetail = function(req, res, next) {
-    const patientID = req.params.id;//treatmentID
-    console.log(patientID);
-  
-    let sql = `SELECT * FROM TREATMENT WHERE TREATMENT_ID = '${patientID}'`;
-    
-    db.query(sql, function(err, treatmentData) {
-        if (err) {
-            return next(err);
-        }
-        console.log(treatmentData);
-        res.render('treatmentDetail',{ treatmentDetail: treatmentData } );
-    });
-};
 
 module.exports = Patient;

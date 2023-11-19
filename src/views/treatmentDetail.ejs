@@ -11,7 +11,10 @@
         </button>
         <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
             <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
-                <li class="nav-item rounded-3">
+              <li class="nav-item rounded-3">
+                <b><a class="nav-link" href="/patientList">Danh sách bệnh nhân</a></b>
+              </li>  
+              <li class="nav-item rounded-3">
                     <b><a class="nav-link" href="">Danh sách nhân viên</a></b>
                 </li>
                 <li class="nav-item rounded-3">
@@ -19,10 +22,6 @@
                 </li>
                 <li class="nav-item rounded-3">
                     <b><a class="nav-link" href="">D/s thuốc</a></b>
-                </li>
-                
-                <li class="nav-item rounded-3">
-                    <b><a class="nav-link" href="/patientList">Danh sách bệnh nhân</a></b>
                 </li>
                 <div style="width: 354px;"></div>
                 <!-- ======================================================================================================== -->
@@ -98,12 +97,12 @@
     <h3>Xem thêm:</h3>
     <% treatmentDetail.forEach((pat)=>{%>
 
-    <a href="">
-      <button class="btn btn-secondary">Danh sách điều trị</button>
+    <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
+      <button class="btn btn-secondary">Về lại d/s điều trị</button>
   </a>  
    
-  <h5>ㅤ</h5>
-    <button class="btn btn-secondary">Chi tiết thanh toán</button>
+  <h5>ㅤ</h5><a href="/precriptionList/<%= pat.TREATMENT_ID %>">
+    <button class="btn btn-secondary">Danh sách đơn thuốc</button></a>
   </div>
 
   <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
@@ -148,14 +147,21 @@
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="allegies">Tình trạng điều trị</label>
-                    <% if(pat.TREATMENT_STATUS == "Completed"){%>
-                    <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled style="background-color: rgb(154, 255, 159);">Đã xong</textarea>
-                    <% } %>
-                    <% if(pat.TREATMENT_STATUS == "In progress"){%>
-                        <textarea id="allegies" name="allegies" class="form-control form-control-lg" rows="1" disabled style="background-color: rgb(154, 226, 255);">Đang trong quá trình thực hiện</textarea>
-                        <% } %>
-                </div>
+                      <label class="small mb-1" for="treatmentStatus">Tình trạng điều trị</label>
+                      <select id="treatmentStatus" name="treatmentStatus" class="form-control form-control-lg" disabled>
+                        <option value="GG" selected><%=pat.TREATMENT_STATUS%></option>  
+                        <option value="completed">Completed</option>
+                          <option value="inProgress">In progress</option>
+                          <option value="canceled">Canceled</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Ngày điều trị đầu tiên</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>" disabled>
+                  </div>
+                </div>      
+              
+               
                  
                 </div>
                
@@ -163,6 +169,10 @@
                 <div class="mb-3">
                   <label class="small mb-1" for="description">Mô tả điều trị</label>
                   <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2"><%= pat.DESCRIPTION %></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Nơi khám</label>
+                  <textarea disabled id="Gender" name="description" class="form-control form-control-lg" rows="2"><%= pat.ClinicAddress %></textarea>
                 </div>
                 <% }) %>
                 <button id="updateButton" class="btn btn-primary" type="button">Update</button>
@@ -181,12 +191,12 @@
 
 <script>
 document.getElementById("updateButton").addEventListener("click", function () {
-  var formElements = document.querySelectorAll("form input, form textarea");
+  var formElements = document.querySelectorAll("form input, form textarea, form select");
   var updateButton = document.getElementById("updateButton");
 
   if (updateButton.textContent === "Update") {
     formElements.forEach(function (element) {
-      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "DOB"&& element.id !== "patientName"&& element.id !== "description") {
+      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "DOB" && element.id !== "patientName" && element.id !== "Gender") {
         element.removeAttribute("disabled");
       }
     });
@@ -200,6 +210,7 @@ document.getElementById("updateButton").addEventListener("click", function () {
     updateButton.textContent = "Update";
   }
 });
+
 
 
 </script>

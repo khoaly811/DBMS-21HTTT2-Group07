@@ -179,6 +179,14 @@
             <% }) %>
           </tbody>
         </table>
+        <!-- Add this section at the bottom of your HTML file, below the table -->
+        <div class="pagination">
+          <button id="firstPage">First</button>
+          <button id="prevPage">Previous</button>
+          <span id="currentPage">Page 1</span>
+          <button id="nextPage">Next</button>
+          <button id="lastPage">Last</button>
+        </div>
       </div>
 
     </div>
@@ -222,6 +230,20 @@
     /* Căn giữa nội dung trong khung */
   }
 </style>
+<style>
+  /* Add this CSS for pagination styling */
+  .pagination {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+</style>
+
 <script>
   function deleteRowAndImage(element) {
     var row = element.closest('tr'); // Find the closest <tr> element to the clicked image
@@ -263,8 +285,9 @@ rows.forEach(function (row) {
   // Search===================================================================
 </script>
 <script>
-  // Function to handle search filtering
-  function handleSearch() {
+  function handleSearch(event) {
+  // Check if the Enter key was pressed (key code 13)
+  if (event.keyCode === 13) {
     var searchInput = document.getElementById("search-input");
     var filter = searchInput.value.toLowerCase();
     var table = document.getElementById("myTable");
@@ -273,11 +296,14 @@ rows.forEach(function (row) {
     // Loop through all table rows and hide those that don't match the search query
     for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
       var nameCell = rows[i].getElementsByTagName("td")[1]; // 2nd column (Họ tên)
+      var idCell = rows[i].getElementsByTagName("td")[0]; // 1st column (ID)
 
-      if (nameCell) {
+      if (nameCell && idCell) {
         var name = nameCell.innerText.toLowerCase();
+        var id = idCell.innerText.toLowerCase();
 
-        if (name.indexOf(filter) > -1) {
+        // Check if the filter matches either name or id
+        if (name.indexOf(filter) > -1 || id.indexOf(filter) > -1) {
           rows[i].style.display = ""; // Show the row if it matches the search query
         } else {
           rows[i].style.display = "none"; // Hide the row if it doesn't match
@@ -285,10 +311,15 @@ rows.forEach(function (row) {
       }
     }
   }
+}
 
-  // Attach the search event listener to the search input
-  var searchInput = document.getElementById("search-input");
-  searchInput.addEventListener("input", handleSearch);
+// Attach the search event listener to the search input for the "input" event
+var searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", handleSearch);
+
+// Attach a keydown event listener to the search input for the "keydown" event
+searchInput.addEventListener("keydown", handleSearch);
+
 </script>
 
 <!-- Filter giới tính============================================================================= -->
@@ -498,6 +529,68 @@ rows.forEach(function (row) {
   var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
   sttHeader.addEventListener("click", handleSortSTT);
   </script>
+  <script>
+    // ... (existing code)
+  
+    // Add this code to handle pagination
+    var totalRows = document.getElementById("bookTableBody").getElementsByTagName("tr").length - 1;
+    var currentPage = 1;
+    var rowsPerPage = 20;
+  
+    function updateTable() {
+      var table = document.getElementById("myTable");
+      var rows = table.getElementsByTagName("tr");
+  
+      var startIndex = (currentPage - 1) * rowsPerPage + 1;
+      var endIndex = currentPage * rowsPerPage + 1;
+  
+      for (var i = 1; i < rows.length; i++) {
+        if (i >= startIndex && i < endIndex) {
+          rows[i].style.display = ""; // Show the rows for the current page
+        } else {
+          rows[i].style.display = "none"; // Hide rows not on the current page
+        }
+      }
+  
+      // Update the current page display
+      document.getElementById("currentPage").innerText = "Page " + currentPage;
+    }
+  
+    function goToFirstPage() {
+      currentPage = 1;
+      updateTable();
+    }
+  
+    function goToPrevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        updateTable();
+      }
+    }
+  
+    function goToNextPage() {
+      var totalPage = Math.ceil(totalRows / rowsPerPage);
+      if (currentPage < totalPage) {
+        currentPage++;
+        updateTable();
+      }
+    }
+  
+    function goToLastPage() {
+      currentPage = Math.ceil(totalRows / rowsPerPage);
+      updateTable();
+    }
+  
+    // Attach event listeners to pagination buttons
+    document.getElementById("firstPage").addEventListener("click", goToFirstPage);
+    document.getElementById("prevPage").addEventListener("click", goToPrevPage);
+    document.getElementById("nextPage").addEventListener("click", goToNextPage);
+    document.getElementById("lastPage").addEventListener("click", goToLastPage);
+  
+    // Initialize the table with the first page
+    updateTable();
+  </script>
+  
 
 
 

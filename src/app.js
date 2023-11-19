@@ -22,6 +22,7 @@ fs.writeFileSync('server.pid', process.pid.toString(), 'utf8');
 
 // Continue with your server setup
 const patientRoute = require("./routes/patientRoute");
+const treatmentRoutes = require("./routes/treatmentRoute");
 const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 
 const bodyParser = require("body-parser");
@@ -57,4 +58,5 @@ app.get('/', (req, res) => {
   res.render('login');
 });
 app.use("/", patientRoute);
+app.use("/", treatmentRoutes);
 app.use("/appointment", bookingAppointmentRoute);
