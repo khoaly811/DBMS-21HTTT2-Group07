@@ -49,4 +49,19 @@ Prescription.prescriptionList = function(req, res, next) {
     });
 };
 
+Prescription.prescriptionDetail = function(req, res, next) {
+    const prescription_id = req.params.id;
+
+    
+    let sql = 'CALL sp_getMedicineInPrescription(?)';
+
+    db.query(sql, [prescription_id], function(err, prescriptionData) {
+        if (err) {
+            return next(err);
+        }
+        console.log(prescriptionData);
+        res.render('prescriptionDetail', { prescriptionDetail: prescriptionData[0] });
+    });
+};
+
 module.exports = Prescription;

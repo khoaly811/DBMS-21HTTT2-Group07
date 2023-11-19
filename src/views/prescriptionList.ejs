@@ -92,12 +92,12 @@
     
 </nav>
 <br>
-<a href="/treatment/">
+<a href="/treatment/<%=prescriptionList[0].TREATMENT_ID%>">
     <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
 </a> 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
     <!-- Tiêu đề -->
-    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách điều trị</strong></h2>
+    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách đơn thuốc</strong></h2>
     <div class="row">
       <div class="col-md-4 mt-2  d-flex align-items-center ">
         <div class="input-group " style="max-width: 266px;">
@@ -145,7 +145,8 @@
             <% prescriptionList.forEach((pat)=>{%>
               <tr>
                 <td><%=pat.PRESCRIPTION_ID%></td>
-                <td>Lần<%=pat.APPOINTMENT_ID%></td>
+                <td>Lần <%=pat.APPOINTMENT_ID.slice(-2)%></td>
+
                 <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
                 <td>
                   <%=pat.Number_of_distinct_medicine%>
@@ -229,7 +230,7 @@
   // Function to redirect based on the STT value
   function redirectToURL(row) {
     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
-    var url = "/treatment/" + stt; // Construct the URL based on STT
+    var url = "/prescription/" + stt; // Construct the URL based on STT
 
     // Redirect to the constructed URL
     window.location.href = url;
