@@ -128,7 +128,7 @@
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="patientName">Nha sĩ chính</label>
-                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.DENTIST_ID %>" disabled>
+                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.DentistName %>" disabled>
                     <!-- <% if (locals.errorMessage2) { %>
                       <div class="small text-danger"><%= errorMessage2 %></div>
                     <% } %> -->
@@ -137,11 +137,11 @@
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
                     <label class="small mb-1" for="DOB">Nha sĩ phụ</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.ASSISTANT_ID %>" disabled>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.AssistantName %>" disabled>
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="Gender">Bệnh nhân được điều trị</label>
-                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.PATIENT_ID %>" disabled>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.PatientName %>" disabled>
                   </div>
                   
                 </div>
@@ -190,28 +190,33 @@
 </div>
 
 <script>
-document.getElementById("updateButton").addEventListener("click", function () {
-  var formElements = document.querySelectorAll("form input, form textarea, form select");
-  var updateButton = document.getElementById("updateButton");
-
-  if (updateButton.textContent === "Update") {
-    formElements.forEach(function (element) {
-      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "DOB" && element.id !== "patientName" && element.id !== "Gender") {
-        element.removeAttribute("disabled");
-      }
-    });
-
-    updateButton.textContent = "Done";
-  } else if (updateButton.textContent === "Done") {
-    formElements.forEach(function (element) {
-      element.setAttribute("disabled", true);
-    });
-
-    updateButton.textContent = "Update";
-  }
-});
-
-
-
-</script>
+  document.getElementById("updateButton").addEventListener("click", function () {
+    var formElements = document.querySelectorAll("form input, form textarea, form select");
+    var updateButton = document.getElementById("updateButton");
+    var descriptionTextarea = document.getElementById("description");
+  
+    if (updateButton.textContent === "Update") {
+      formElements.forEach(function (element) {
+        if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "DOB" && element.id !== "patientName" && element.id !== "Gender") {
+          element.removeAttribute("disabled");
+        }
+      });
+  
+      // Enable the description textarea
+      descriptionTextarea.removeAttribute("disabled");
+  
+      updateButton.textContent = "Done";
+    } else if (updateButton.textContent === "Done") {
+      formElements.forEach(function (element) {
+        element.setAttribute("disabled", true);
+      });
+  
+      // Disable the description textarea
+      descriptionTextarea.setAttribute("disabled", true);
+  
+      updateButton.textContent = "Update";
+    }
+  });
+  </script>
+  
 </body>

@@ -22,6 +22,7 @@ fs.writeFileSync('server.pid', process.pid.toString(), 'utf8');
 
 // Continue with your server setup
 const patientRoute = require("./routes/patientRoute");
+const precriptionRoute = require("./routes/precriptionRoutes");
 const treatmentRoutes = require("./routes/treatmentRoute");
 const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 
@@ -59,4 +60,5 @@ app.get('/', (req, res) => {
 });
 app.use("/", patientRoute);
 app.use("/", treatmentRoutes);
+app.use("/", precriptionRoute);
 app.use("/appointment", bookingAppointmentRoute);
