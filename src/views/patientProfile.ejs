@@ -1,6 +1,7 @@
 <%- include("partials/header"); %>
 
 <body>
+
 <% patientData.forEach((pat)=>{%>
 <div class="row">
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
@@ -13,7 +14,10 @@
  
    
   <h5>ㅤ</h5>
-    <button class="btn btn-secondary">Chi tiết thanh toán</button>
+  <a href="/invoiceList/<%= pat.PATIENT_ID %>">
+    <button class="btn btn-secondary">Danh sách thanh toán</button></a>
+    <h5>ㅤ</h5>
+    <button class="btn btn-secondary">Danh sách chưa trả</button>
   </div>
 
   <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
@@ -30,7 +34,6 @@
                   <div class="col-md-6">
 
                     <label class="small mb-1" for="patientID">ID</label> 
-                    <%=console.log("Patient ID:",pat.PATIENT_ID )%>
 
                     <input type="text" id="patientID" class="form-control form-control-lg" value="<%= pat.PATIENT_ID %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>
@@ -66,20 +69,18 @@
                     <textarea id="contraindication" name="contraindication" class="form-control form-control-lg" rows="1" disabled>Không</textarea>
                   </div>
                 </div>
+                <% patie.forEach((pat2)=>{%>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
                     <label class="small mb-1" for="TreatmentFee">Tổng tiền điều trị</label>
-                    <% treatmentData.forEach((pat2)=>{%>
-                    <input type="text" id="TreatmentFee"class="form-control form-control-lg" value="<%= pat2.totalPaidFee %>$" disabled>
-                    <% }) %>
+                    <input type="text" id="TreatmentFee"class="form-control form-control-lg" value="<%= pat2.TotalPaidFee %>$" disabled>
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="Treatmentpaid">Số lượng điều trị</label>
-                    <% treatmentCount.forEach((pat3)=>{%>
-                    <input type="text" id="Treatmentpaid"class="form-control form-control-lg" value="<%= pat3.treatmentCount %>" disabled>
-                    <% }) %>
+                    <input type="text" id="Treatmentpaid"class="form-control form-control-lg" value="<%= pat2.TreatmentCount %>" disabled>
                   </div>
                 </div>
+                <% }) %>
                 <div class="mb-3">
                   <label class="small mb-1" for="description">Thông tin tổng quan về sức khỏe</label>
                   <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2">Không có</textarea>

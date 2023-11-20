@@ -17,6 +17,37 @@ Patient.listPatient = function(req, res, next) {
     });
 };
 Patient.listPatientPro = function(req, res, next) {
+
+//     USE `adb_nhakhoa`;
+// DELIMITER //
+
+// CREATE PROCEDURE GetPatientInfo(IN p_IDuser INT)
+// BEGIN
+//     DECLARE totalPaidFee DECIMAL(10, 2);
+//     DECLARE treatmentCount INT;
+
+//     -- Get patient information
+//     SELECT * FROM patient WHERE PATIENT_ID = p_IDuser;
+
+//     -- Get total paid fee
+//     SELECT SUM(INVOICE.PAID_FEE) INTO totalPaidFee
+//     FROM TREATMENT
+//     JOIN INVOICE ON TREATMENT.TREATMENT_ID = INVOICE.TREATMENT_ID
+//     WHERE TREATMENT.PATIENT_ID = p_IDuser;
+
+//     -- Get treatment count
+//     SELECT COUNT(DISTINCT TREATMENT_ID) INTO treatmentCount
+//     FROM TREATMENT
+//     WHERE PATIENT_ID = p_IDuser;
+
+//     -- Return results
+//     SELECT totalPaidFee AS TotalPaidFee, treatmentCount AS TreatmentCount;
+    
+// END //
+
+// DELIMITER ;
+
+
     const IDuser = req.params.id;
     let sql = 'CALL GetPatientInfo(?)';
 
@@ -24,7 +55,6 @@ Patient.listPatientPro = function(req, res, next) {
         if (err) {
             return next(err);
         }
-        console.log(patientData);
         res.render('patientProfile', { patientData: patientData[0] , patie:patientData[1]});
     });
 };
