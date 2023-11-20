@@ -3,3 +3,4 @@ src/node_modules
 .vscode/launch.json
 .vscode/settings.json
 src/server.pid
+*.pid

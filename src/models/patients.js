@@ -18,38 +18,15 @@ Patient.listPatient = function(req, res, next) {
 };
 Patient.listPatientPro = function(req, res, next) {
     const IDuser = req.params.id;
-    let sql = `SELECT * FROM patient WHERE PATIENT_ID = ${IDuser}`;
-    let sql2 = `SELECT SUM(INVOICE.PAID_FEE) AS totalPaidFee
-    FROM TREATMENT
-    JOIN INVOICE ON TREATMENT.TREATMENT_ID = INVOICE.TREATMENT_ID
-    WHERE TREATMENT.PATIENT_ID = ${IDuser}`;
-    let sql3 = `SELECT COUNT(DISTINCT TREATMENT_ID) AS treatmentCount
-                FROM TREATMENT
-                WHERE PATIENT_ID = ${IDuser}`;
+    let sql = 'CALL GetPatientInfo(?)';
 
-    
-                db.query(sql, function(err, data) {
-                    if (err) {
-                        return next(err);
-                    }
-            
-                    db.query(sql2, function(err2, data2) {
-                        if (err2) {
-                            return next(err2);
-                        }
-            
-            
-                        db.query(sql3, function(err3, data3) {
-                            if (err3) {
-                                return next(err3);
-                            }
-            
-            
-                            // Render with patient data, treatment data, and treatment count
-                            res.render('patientProfile', { patientData: data, treatmentData: data2, treatmentCount:data3 });
-                        });
-                    });
-                });
+    db.query(sql, [IDuser], function(err, patientData) {
+        if (err) {
+            return next(err);
+        }
+        console.log(patientData);
+        res.render('patientProfile', { patientData: patientData[0] , patie:patientData[1]});
+    });
 };
 
 
