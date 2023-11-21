@@ -1,4 +1,4 @@
-const invoicesModel = require('../models/invoices');
+const invoicesModel = require('../models//invoices');
 
 // exports.prescriptionList = function(req, res, next) {
 //     res.render('prescriptionList');

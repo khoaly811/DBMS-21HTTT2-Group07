@@ -15,7 +15,7 @@
           <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
               class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
-            placeholder="Tìm kiếm mô tả điều trị">
+            placeholder="Tìm kiếm đơn thuốc">
         </div>
       </div>
       <div class="col-md-2 mt-2  d-flex align-items-center">
@@ -24,10 +24,12 @@
           <i class="fa-solid fa-filter"></i>
         </span>
         <select id="filter-select" class="form-select" style="max-width: 127px;background-color: #D9D9D9;">
-          <option>Tình trạng</option>
-          <option>Completed</option>
-          <option>In Progress</option>
-          <option>Canceled</option>
+          <option>Lần điều trị</option>
+          <option>Lần 01</option>
+          <option>Lần 02</option>
+          <option>Lần 03</option>
+          <option>Lần 04</option>
+          <option>Lần 05</option>
         </select>
         
       </div>
@@ -207,10 +209,10 @@ rows.forEach(function (row) {
     }
 
     // If the selected gender is not "Giới tính," apply the filter
-    if (selectedGender !== "Tình trạng") {
+    if (selectedGender !== "Lần điều trị") {
       // Loop through all table rows and hide those that don't match the selected gender
       for (var i = 1; i < rows.length; i++) {
-        var genderCell = rows[i].getElementsByTagName("td")[3]; // 4th column (Giới tính)
+        var genderCell = rows[i].getElementsByTagName("td")[1]; // 4th column (Giới tính)
 
         if (genderCell) {
           var gender = genderCell.innerText;

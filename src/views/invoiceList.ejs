@@ -3,19 +3,19 @@
 <body>
 
 <br>
-<a href="/patientProfile/<%= treatmentData[0].PATIENT_ID %>">
+<a href="/patientList">
     <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
 </a> 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
     <!-- Tiêu đề -->
-    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách điều trị</strong></h2>
+    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách thanh toán</strong></h2>
     <div class="row">
       <div class="col-md-4 mt-2  d-flex align-items-center ">
         <div class="input-group " style="max-width: 266px;">
           <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
               class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
-            placeholder="Tìm kiếm mô tả điều trị">
+            placeholder="Tìm kiếm thanh toán">
         </div>
       </div>
       <div class="col-md-2 mt-2  d-flex align-items-center">
@@ -24,10 +24,9 @@
           <i class="fa-solid fa-filter"></i>
         </span>
         <select id="filter-select" class="form-select" style="max-width: 127px;background-color: #D9D9D9;">
-          <option>Tình trạng</option>
-          <option>Completed</option>
-          <option>In Progress</option>
-          <option>Canceled</option>
+          <option>Thanh toán</option>
+          <option>Tiền mặt</option>
+          <option>Chuyển khoản</option>
         </select>
         
       </div>
@@ -44,29 +43,32 @@
           <thead>
             <tr>
               <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
-              <th class="border-bottom">Nha sĩ chính<i class="fa-solid fa-sort "></i></th>
-              <th class="border-bottom">Nha sĩ phụ <i class="fa-solid fa-sort"></i></th>
-              <th class="border-bottom"> Tình trạng <i class="fa-solid "></i></th>
-              <th class="border-bottom ">Mô tả điều trị<i class="fa-solid "></i></th>
+              <th class="border-bottom">Mã điều trị<i class="fa-solid fa-sort "></i></th>
+              <th class="border-bottom">Lần hẹn<i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Hình thức thanh toán<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Giá<i class="fa-solid "></i></th>
               <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
             </tr>
           </thead>
           <tbody id="bookTableBody">
             <!-- Duplicate các dong ở đây -->
-            <% treatmentData.forEach((pat)=>{%>
+            <% invoiceList.forEach((pat)=>{%>
               <tr>
+                <td><%=pat.INVOICE_ID%></td>
                 <td><%=pat.TREATMENT_ID%></td>
-                <td><%=pat.DentistName%></td>
-                <td><%=pat.AssistantName%></td> 
+                <td><%=pat.APPOINTMENT_ID.slice(-2)%></td> 
                 <td>
-  
-                    <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"><%=pat.TREATMENT_STATUS%></span>
-             
+                    <% if (pat.PAYMENT_METHOD == 'Cash') { %>
+                    <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Tiền mặt</span>
+                    <% } %>
+                    <% if (pat.PAYMENT_METHOD == 'Online') { %>
+                        <span class="rounded" style="background-color: #67dcff; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Chuyển khoản</span>
+                        <% } %>
                 </td>
 
-                <td class="d-flex  ">
+                <td >
      
-                    <%=pat.DESCRIPTION%>
+                    <%=pat.FEE%>
           
                 </td>
                 
@@ -174,7 +176,7 @@ rows.forEach(function (row) {
 
     // Loop through all table rows and hide those that don't match the search query
     for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
-      var nameCell = rows[i].getElementsByTagName("td")[4]; // 2nd column (Họ tên)
+      var nameCell = rows[i].getElementsByTagName("td")[0]; // 2nd column (Họ tên)
 
       if (nameCell) {
         var name = nameCell.innerText.toLowerCase();
@@ -208,7 +210,7 @@ rows.forEach(function (row) {
     }
 
     // If the selected gender is not "Giới tính," apply the filter
-    if (selectedGender !== "Tình trạng") {
+    if (selectedGender !== "Thanh toán") {
       // Loop through all table rows and hide those that don't match the selected gender
       for (var i = 1; i < rows.length; i++) {
         var genderCell = rows[i].getElementsByTagName("td")[3]; // 4th column (Giới tính)
