@@ -46,8 +46,6 @@ Patient.listPatientPro = function(req, res, next) {
 // END //
 
 // DELIMITER ;
-
-
     const IDuser = req.params.id;
     let sql = 'CALL GetPatientInfo(?)';
 
@@ -58,7 +56,20 @@ Patient.listPatientPro = function(req, res, next) {
         res.render('patientProfile', { patientData: patientData[0] , patie:patientData[1]});
     });
 };
-
+Patient.updatePatient=function(req,res,next){
+    const name = req.body.name;
+    const dob = req.body.dob;
+    const gender = req.body.gender;
+    const allergies = req.body.allergies;
+    const IDuser=req.body.id;
+    let sql='CALL updatePatient(?,?,?,?,?)';
+    db.query(sql, [name, dob, gender, allergies,IDuser], function(err, patientData) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/patientList');
+    });
+};
 
 
 module.exports = Patient;

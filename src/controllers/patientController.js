@@ -17,4 +17,6 @@ exports.listPatient = function(req,res,next){
 exports.listPatientPro = function(req,res,next){
     patientModel.listPatientPro(req,res,next);
 }
-
+exports.updatePatient = function(req,res,next){
+    patientModel.updatePatient(req,res,next);
+}
