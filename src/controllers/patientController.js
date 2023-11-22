@@ -20,3 +20,6 @@ exports.listPatientPro = function(req,res,next){
 exports.updatePatient = function(req,res,next){
     patientModel.updatePatient(req,res,next);
 }
+exports.addPatient = function(req,res,next){
+    patientModel.addPatient(req,res,next);
+}

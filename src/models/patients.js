@@ -18,34 +18,7 @@ Patient.listPatient = function(req, res, next) {
 };
 Patient.listPatientPro = function(req, res, next) {
 
-//     USE `adb_nhakhoa`;
-// DELIMITER //
 
-// CREATE PROCEDURE GetPatientInfo(IN p_IDuser INT)
-// BEGIN
-//     DECLARE totalPaidFee DECIMAL(10, 2);
-//     DECLARE treatmentCount INT;
-
-//     -- Get patient information
-//     SELECT * FROM patient WHERE PATIENT_ID = p_IDuser;
-
-//     -- Get total paid fee
-//     SELECT SUM(INVOICE.PAID_FEE) INTO totalPaidFee
-//     FROM TREATMENT
-//     JOIN INVOICE ON TREATMENT.TREATMENT_ID = INVOICE.TREATMENT_ID
-//     WHERE TREATMENT.PATIENT_ID = p_IDuser;
-
-//     -- Get treatment count
-//     SELECT COUNT(DISTINCT TREATMENT_ID) INTO treatmentCount
-//     FROM TREATMENT
-//     WHERE PATIENT_ID = p_IDuser;
-
-//     -- Return results
-//     SELECT totalPaidFee AS TotalPaidFee, treatmentCount AS TreatmentCount;
-    
-// END //
-
-// DELIMITER ;
     const IDuser = req.params.id;
     let sql = 'CALL GetPatientInfo(?)';
 
@@ -56,15 +29,26 @@ Patient.listPatientPro = function(req, res, next) {
         res.render('patientProfile', { patientData: patientData[0] , patie:patientData[1]});
     });
 };
+function mapGender(input) {
+    const lowerCaseInput = input.toLowerCase();
+    if (lowerCaseInput === 'nam') {
+        return 'M';
+    } else if (lowerCaseInput === 'nữ') {
+        return 'F';
+    }
+    // If input is not 'Nam' or 'Nữ', return the input value
+    return input;
+}
 Patient.updatePatient=function(req,res,next){
     console.log(req.body);
     const full_name = req.body.full_name;
     if (!full_name) {
         return res.status(400).send('Full name cannot be null.');
     }
-    const gender = req.body.gender;
+    let gender = req.body.gender;
     const allergies = req.body.allergies;
     const patient_id =req.params.id;
+    gender=mapGender(gender);
     var sql = 'call updatePatient(?,?,?,?)';
     db.query(sql, [full_name,gender,allergies,patient_id], function(err, patientData) {
         if (err) {
@@ -73,8 +57,26 @@ Patient.updatePatient=function(req,res,next){
         res.redirect('/patientList');
     });
 };
+
+Patient.addPatient=function(req,res,next){
+    console.log(req.body);
+    const patient_id =req.body.patient_id;
+    const full_name = req.body.full_name; 
+    let dob =req.body.dob;
+    let gender = req.body.gender;
+    const allergies = req.body.allergies;
+    dob = (typeof dob === 'string') ? dob.split('/').reverse().join('-') : null;
+    gender=mapGender(gender);
+    var sql='call addPatient(?,?,?,?,?)';
+    db.query(sql, [patient_id,full_name,dob,gender,allergies], function(err, patientData) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/patientList');
+    });
+}
 Patient.deletePatient=function(req,res,next){
-    
+
 }
 
 
