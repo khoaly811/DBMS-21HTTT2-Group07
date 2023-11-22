@@ -144,7 +144,7 @@
   // Function to redirect based on the STT value
   function redirectToURL(row) {
     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
-    var url = "/treatment/" + stt; // Construct the URL based on STT
+    var url = "/invoiceDetail/" + stt; // Construct the URL based on STT
 
     // Redirect to the constructed URL
     window.location.href = url;
