@@ -73,6 +73,9 @@ Patient.updatePatient=function(req,res,next){
         res.redirect('/patientList');
     });
 };
+Patient.deletePatient=function(req,res,next){
+    
+}
 
 
 module.exports = Patient;

@@ -42,7 +42,7 @@
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="full_name">Họ và tên</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control form-control-lg" value="<%= pat.FULL_NAME %>" required>
+                    <input type="text" id="full_name" name="full_name" class="form-control form-control-lg" value="<%= pat.FULL_NAME %>" required disabled>
                   </div>
                 </div>
                 <div class="row gx-3 mb-3">
@@ -52,14 +52,14 @@
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="gender">Giới tính</label>
-                    <input type="text" id="gender" name="gender" class="form-control form-control-lg" value="<%= pat.GENDER%>" required>
+                    <input type="text" id="gender" name="gender" class="form-control form-control-lg" value="<%= pat.GENDER%>" required disabled>
                   </div>
                   
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
                     <label class="small mb-1" for="allegies">Tình trạng dị ứng</label>
-                    <input type="text" id="allergies" name="allergies" class="form-control form-control-lg" rows="1" value="<%= pat.ALLERGIES%>" required>
+                    <input type="text" id="allergies" name="allergies" class="form-control form-control-lg" rows="1" value="<%= pat.ALLERGIES%>" required disabled>
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="contraindication">Chống chỉ định</label>
@@ -79,7 +79,7 @@
                 </div>
                 <% }) %>
                
-                <button id="updateButton" class="btn btn-primary" type="submit">Update</button>
+                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
 
                 
               </form>
@@ -93,7 +93,7 @@
   </div>
 </div>
 <% }) %>
-<!-- <script>
+<script>
 document.getElementById("updateButton").addEventListener("click", function () {
   var formElements = document.querySelectorAll("form input, form textarea");
   var updateButton = document.getElementById("updateButton");
@@ -114,21 +114,7 @@ document.getElementById("updateButton").addEventListener("click", function () {
 
     updateButton.textContent = "Update";
   }
-}); -->
-<script>
-  function formatDOB(dateString) {
-    // Parse the original date string in the format "DD/MM/YYYY"
-    var parts = dateString.split('/');
-    var formattedDate = new Date(parts[2], parts[1] - 1, parts[0]); // Month is 0-based
-  
-    // Format the date in the desired format "YYYY-MM-DD"
-    var year = formattedDate.getFullYear();
-    var month = ('0' + (formattedDate.getMonth() + 1)).slice(-2); // Adding 1 because months are 0-based
-    var day = ('0' + formattedDate.getDate()).slice(-2);
-  
-    return year + '-' + month + '-' + day;
-  }
-  </script>
+});
 
 </script>
 </body>
