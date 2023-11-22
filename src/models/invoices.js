@@ -57,4 +57,18 @@ Invoice.invoiceList = function(req, res, next) {
     });
 };
 
+Invoice.invoiceDetail = function(req, res, next) {
+    const invoice_id = req.params.id;
+  
+    let sql= `call sp_getInvoiceByID('${invoice_id}')`;
+    
+    db.query(sql, function(err, invoiceDetail) {
+        if (err) {
+            return next(err);
+        }
+        console.log(invoiceDetail);
+        res.render('invoiceDetail', { invoiceDetail: invoiceDetail[0] });
+    });
+};
+
 module.exports = Invoice;
