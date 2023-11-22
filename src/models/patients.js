@@ -57,13 +57,16 @@ Patient.listPatientPro = function(req, res, next) {
     });
 };
 Patient.updatePatient=function(req,res,next){
-    const name = req.body.name;
-    const dob = req.body.dob;
+    console.log(req.body);
+    const full_name = req.body.full_name;
+    if (!full_name) {
+        return res.status(400).send('Full name cannot be null.');
+    }
     const gender = req.body.gender;
     const allergies = req.body.allergies;
-    const IDuser=req.body.id;
-    let sql='CALL updatePatient(?,?,?,?,?)';
-    db.query(sql, [name, dob, gender, allergies,IDuser], function(err, patientData) {
+    const patient_id =req.params.id;
+    var sql = 'call updatePatient(?,?,?,?)';
+    db.query(sql, [full_name,gender,allergies,patient_id], function(err, patientData) {
         if (err) {
             return next(err);
         }
