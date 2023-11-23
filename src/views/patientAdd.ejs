@@ -24,9 +24,9 @@
                       <label class="small mb-1" for="patient_id">Số điện thoại</label>
 
                       <input type="text" id="patient_id" name="patient_id" class="form-control form-control-lg" required>
-                      <!-- <% if (locals.errorMessage1) { %>
-                      <div class="small text-danger"><%= errorMessage1%></div>
-                    <% } %> -->
+                      <% if (locals.message) { %>
+                      <div class="small text-danger"><%= message%></div>
+                    <% } %>
                     </div>
                     <div class="col-md-6">
                       <label class="small mb-1" for="full_name">Họ và tên</label>

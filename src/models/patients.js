@@ -68,11 +68,15 @@ Patient.addPatient=function(req,res,next){
     dob = (typeof dob === 'string') ? dob.split('/').reverse().join('-') : null;
     gender=mapGender(gender);
     var sql='call addPatient(?,?,?,?,?)';
-    db.query(sql, [patient_id,full_name,dob,gender,allergies], function(err, patientData) {
+    db.query(sql, [patient_id,full_name,dob,gender,allergies], function(err, result) {
         if (err) {
-            return next(err);
+            const errorMessage = err.message || 'An error occurred while adding the patient.';
+            return res.render('patientAdd', { message: errorMessage, errorField: 'patient_id' });
+           
         }
-        res.redirect('/patientList');
+        if (result.affectedRows > 0) {
+            res.redirect('/patientList');
+        } 
     });
 }
 Patient.deletePatient=function(req,res,next){
