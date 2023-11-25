@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         const username = $('#username').val();
-        const password = 12345678;
+        const password = "12345678";
 
         if (!username || !password) {
             alert('Please fill in all fields');
@@ -18,16 +18,19 @@ $(document).ready(function () {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({username})
         })
         .then(res => {
             if (res.redirected && res.status === 200) {
                 window.location.href = res.url;
             }
             else {
-                alert('Username or password is incorrect');
-                throw new Error('Username or password is incorrect');
+                alert('Username or password is incorrect !');
+                throw new Error('Username or password is incorrect !!');
             }
         })
+        .catch(error => {
+            console.error(error);
+        });
     });
 });
