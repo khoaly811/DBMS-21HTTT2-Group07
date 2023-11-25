@@ -1,5 +1,5 @@
 exports.adminAuth = (req, res, next) => {
-    if (req.session.user === 'ADM') {
+    if (req.session.user === 'AD') {
         console.log('Admin authentication passed');
         next();
     }
@@ -10,7 +10,7 @@ exports.adminAuth = (req, res, next) => {
 }
 
 exports.dentistAuth = (req, res, next) => {
-    if (req.session.user === 'DEN') {
+    if (req.session.user === 'DE') {
         console.log('Dentist authentication passed');
         next();
     }
@@ -21,7 +21,7 @@ exports.dentistAuth = (req, res, next) => {
 }
 
 exports.staffAuth = (req, res, next) => {
-    if (req.session.user === 'STA') {
+    if (req.session.user === 'ST') {
         console.log('Staff authentication passed');
         next();
     }
