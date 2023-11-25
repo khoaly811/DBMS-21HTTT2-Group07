@@ -89,6 +89,8 @@ Treatment.treatmentDetail = function(req, res, next) {
 };
 
 
-
+Treatment.newTreatment = function (result) {
+    // db.query('GOI FUNCTION)'
+}
 
 module.exports = Treatment;

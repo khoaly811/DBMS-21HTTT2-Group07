@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const appointmentController = require('../controllers/appointmentController');
+const requestController = require('../controllers/requestController');
 
-router.get("/", appointmentController.listAppointment);
-module.exports=router;
+router.get("/", requestController.getAllDate);
+router.get("/dentists", requestController.getAllDentist);
+router.post("/finish", requestController.writeDownTreatment);
+
+module.exports = router;
