@@ -38,3 +38,28 @@
 // 		patient_id=p_IDuser;
 // end
 // DELIMITER ;
+// DELIMITER $$
+// create procedure `sp_patient`()
+// begin
+// 	select * from patient limit 30;
+// end
+
+// DELIMITER $$
+
+// DELIMITER //
+
+// CREATE PROCEDURE addPatient(IN patid char(9), patname varchar(50), patdob date, patgender char(1), patallergies varchar(30))
+// BEGIN
+// 	DECLARE existing_count INT;
+
+//     -- Check if the patient ID already exists
+//     SELECT COUNT(*) INTO existing_count FROM patient WHERE PATIENT_ID = patid;
+//     IF existing_count = 0 THEN
+// 		INSERT INTO patient VALUES (patid, patname, patdob, patgender, patallergies);
+// 	else
+// 		SIGNAL SQLSTATE '45000'
+//         SET MESSAGE_TEXT = N'Số điện thoại đã tồn tại. Vui lòng chọn số khác!';
+//     END IF;
+// END//
+
+// DELIMITER ;
