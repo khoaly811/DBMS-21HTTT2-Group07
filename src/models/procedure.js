@@ -26,7 +26,7 @@
 // END //
 
 // DELIMITER ;
-// DELIMITER 
+// DELIMITER  //
 // create procedure updatePatient(in patname varchar(50),patgender char(1), patallergies varchar(30),IN p_IDuser char(9))
 // begin
 // 	update patient

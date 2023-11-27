@@ -48,7 +48,7 @@
             <tr>
               <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
               <th class="border-bottom">Họ tên <i class="fa-solid fa-sort "></i></th>
-              <th class="border-bottom">Ngày sinh <i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom">Tuổi <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
               <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
               <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
@@ -61,7 +61,20 @@
             <tr>
               <td><%= pat.PATIENT_ID%></td>
               <td><%= pat.FULL_NAME%></td>
-              <td><%= pat.DOB.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td>
+              <%function calculateAge(dateOfBirth) {
+                const dob = new Date(dateOfBirth);
+                const today = new Date();
+            
+                let age = today.getFullYear() - dob.getFullYear();
+                const monthDiff = today.getMonth() - dob.getMonth();
+            
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                  age--;
+                }
+            
+                return age;
+              }%>
+              <td><%= calculateAge(pat.DOB) %></td>
               <td>
                 <% if (pat.GENDER == 'M') { %>
                 <span class="rounded" style="background-color: #67ffeb; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
@@ -534,6 +547,21 @@
 
   // Initialize the table with the first page
   updateTable();
+</script>
+<script>
+  function calculateAge(dateOfBirth) {
+    const dob = new Date(dateOfBirth);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
 </script>
 
 

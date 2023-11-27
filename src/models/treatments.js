@@ -22,7 +22,8 @@ Treatment.treatListperPatient = function(req, res, next) {
     //     SELECT 
     //         TREATMENT.*, 
     //         D1.FULL_NAME AS DentistName, 
-    //         D2.FULL_NAME AS AssistantName
+    //         D2.FULL_NAME AS AssistantName,
+    //         D1.CLINIC as place
     //     FROM 
     //         TREATMENT
     //     LEFT JOIN 
