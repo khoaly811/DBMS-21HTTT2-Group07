@@ -82,6 +82,22 @@ Patient.addPatient=function(req,res,next){
 Patient.deletePatient=function(req,res,next){
 
 }
+Patient.searchPatient = function(req, res, next) {
+    console.log(req.query);
+    var full_name = req.query.full_name;
+    var patient_id = req.query.patient_id;
+
+    // var sql = 'SELECT DISTINCT * FROM patient WHERE full_name LIKE ? AND patient_id LIKE ? LIMIT 30';
+    var sql = 'CALL searchPatient(?, ?)';
+    db.query(sql, ['%' + full_name + '%', '%' + patient_id + '%'], function(err, patientData) {
+        if (err) {
+            return next(err);
+        }
+
+        console.log(patientData);
+        res.render('patientSearch', { patientData2: patientData[0] });
+    });
+};
 
 
 module.exports = Patient;

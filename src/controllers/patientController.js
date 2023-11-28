@@ -23,3 +23,6 @@ exports.updatePatient = function(req,res,next){
 exports.addPatient = function(req,res,next){
     patientModel.addPatient(req,res,next);
 }
+exports.searchPatient = function(req,res,next){
+    patientModel.searchPatient(req,res,next);
+}

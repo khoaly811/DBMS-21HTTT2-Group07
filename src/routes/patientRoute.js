@@ -9,6 +9,6 @@ router.post('/patientAdd',patientController.addPatient);
 router.get('/patientProfile/:id', patientController.listPatientPro);
 router.post('/patientProfile/:id', patientController.updatePatient);
 router.get('/patientList', patientController.listPatient);
-
+router.get('/patientSearch', patientController.searchPatient);
 
 module.exports = router; 
