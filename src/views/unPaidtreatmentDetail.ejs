@@ -8,14 +8,10 @@
     <h3>Xem thêm:</h3>
     <% treatmentDetail.forEach((pat)=>{%>
 
-    <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
-      <button class="btn btn-secondary">Back</button>
+    <a href="/unPaidTreatment/<%= pat.PATIENT_ID %>">
+      <button class="btn btn-secondary">Về lại d/s điều trị</button>
   </a>  
-   
-  <h5>ㅤ</h5><a href="/precriptionList/<%= pat.TREATMENT_ID %>">
-    <button class="btn btn-secondary">Danh sách đơn thuốc</button></a>
-    <h5>ㅤ</h5><a href="/appointmentList/<%= pat.TREATMENT_ID %>">
-      <button class="btn btn-secondary">Danh sách cuộc hẹn</button></a>
+
   </div>
 
 
@@ -42,8 +38,8 @@
                     <% } %> -->
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="patientName">Nha sĩ chính</label>
-                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.DentistName %>" disabled>
+                    <label class="small mb-1" for="DentistName">Nha sĩ chính</label>
+                    <input type="text" id="DentistName"class="form-control form-control-lg" value="<%= pat.DentistName %>" disabled>
                     <!-- <% if (locals.errorMessage2) { %>
                       <div class="small text-danger"><%= errorMessage2 %></div>
                     <% } %> -->
@@ -51,12 +47,12 @@
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="DOB">Nha sĩ phụ</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.AssistantName %>" disabled>
+                    <label class="small mb-1" for="AssistantName">Nha sĩ phụ</label>
+                    <input type="text" id="AssistantName"class="form-control form-control-lg" value="<%= pat.AssistantName %>" disabled>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Bệnh nhân được điều trị</label>
-                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.PatientName %>" disabled>
+                    <label class="small mb-1" for="unPaidMoney">Tổng số tiền còn thiếu cho điều trị</label>
+                    <input type="text" id="unPaidMoney"class="form-control form-control-lg" value="<%= pat.unPaidMoney %>" disabled>
                   </div>
                   
                 </div>
@@ -71,8 +67,8 @@
                       </select>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Ngày điều trị đầu tiên</label>
-                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>" disabled>
+                    <label class="small mb-1" for="unPaidAppoint">Những buổi hẹn chưa trả</label>
+                    <input type="text" id="unPaidAppoint"class="form-control form-control-lg" value="<%= pat. %>" disabled>
                   </div>
                 </div>      
               
@@ -86,8 +82,8 @@
                   <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2"><%= pat.DESCRIPTION %></textarea>
                 </div>
                 <div class="mb-3">
-                  <label class="small mb-1" for="description">Nơi khám</label>
-                  <textarea disabled id="Gender" name="description" class="form-control form-control-lg" rows="2"><%= pat.ClinicAddress %></textarea>
+                  <label class="small mb-1" for="clinic">Nơi khám</label>
+                  <textarea disabled id="clinic" name="clinic" class="form-control form-control-lg" rows="2"><%= pat.ClinicAddress %></textarea>
                 </div>
                 <% }) %>
                 <button id="updateButton" class="btn btn-primary" type="button">Update</button>
