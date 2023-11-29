@@ -3,8 +3,9 @@ const router = express.Router();
 
 const requestController = require('../controllers/requestController');
 
-router.get("/", requestController.getAllDateAppointment);
+router.get("/", requestController.getAllClinic);
+router.get("/treatments", requestController.getALlTreatment);
 router.get("/dentists", requestController.getAllDentist);
-router.post("/finish", requestController.writeDownTreatment);
+router.get("/finish", requestController.writeDownTreatment);
 
 module.exports = router;
