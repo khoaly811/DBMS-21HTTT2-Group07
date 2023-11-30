@@ -3,7 +3,7 @@
 <body>
 
 <br>
-<a href="/patientProfile/<%= treatmentData[0].PATIENT_ID %>">
+<a href="/patientProfile/<%= unPaidTreatment[0].PATIENT_ID %>">
     <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
 </a> 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
@@ -56,14 +56,14 @@
           </thead>
           <tbody id="bookTableBody">
             <!-- Duplicate các dong ở đây -->
-            <% treatmentData.forEach((pat)=>{%>
+            <% unPaidTreatment.forEach((pat)=>{%>
               <tr>
                 <td><%=pat.TREATMENT_ID%></td>
-                <td><%=pat.DentistName%></td>
-                <td><%= pat. %></td> 
+                <td><%=pat.DENTIST_NAME%></td>
+                <td><%= pat.APPOINTMENT_ID_LIST %></td> 
                 <td>
   
-                  <%=pat.place%>             
+                  <%=pat.DENTIST_CLINIC%>             
                 </td>
                 
                 <td>

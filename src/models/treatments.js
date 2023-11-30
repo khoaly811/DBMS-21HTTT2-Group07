@@ -94,4 +94,20 @@ Treatment.newTreatment = function (result) {
     // db.query('GOI FUNCTION)'
 }
 
+Treatment.unPaidTreatment = function(req, res, next) {
+    const patientID = req.params.id;
+
+
+    let sql = `CALL sp_findUnpaidInvoicesWithDetails('${patientID}')`;
+    
+    
+    db.query(sql, function(err, unPaidTreatment) {
+        if (err) {
+            return next(err);
+        }
+        console.log(unPaidTreatment);
+        res.render('unPaidTreatment', { unPaidTreatment: unPaidTreatment[0] });
+    });
+};
+
 module.exports = Treatment;

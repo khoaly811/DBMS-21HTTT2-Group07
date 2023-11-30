@@ -17,3 +17,6 @@ exports.treatListperPatient = function(req,res,next){
 exports.treatmentDetail = function(req,res,next){
     treatmentModel.treatmentDetail(req,res,next);
 }
+exports.unPaidTreatment = function(req,res,next){
+    treatmentModel.unPaidTreatment(req,res,next);
+}
