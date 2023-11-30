@@ -65,4 +65,4 @@ app.use("/", treatmentRoutes);
 app.use("/", precriptionRoute);
 app.use("/", invoiceRoutes);
 app.use("/", appointmentRoutes);
-app.use("/appointment", bookingAppointmentRoute);
+app.use("/bookingAppointment", bookingAppointmentRoute);

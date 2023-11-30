@@ -15,7 +15,7 @@ Dentist.getAll = function (result) {
           result(null, err);
         }
         else{
-          console.log('Dentist : ', res);
+          //console.log('Dentist : ', res);
           result(null, res);
         }
     });
