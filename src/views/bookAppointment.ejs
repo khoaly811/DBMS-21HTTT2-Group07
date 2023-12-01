@@ -1,83 +1,89 @@
 <%- include("partials/header"); %>
-    <style>
-        .card {
-            display: none;
-        }
+<style>
+    .card {
+        display: none;
+    }
 
-        .card.active {
-            display: block;
-        }
-    </style>
+    .card.active {
+        display: block;
+    }
+</style>
 
-    <div class="container-making-form align-items-center min-vh-100">
-        <div class="row g-0 justify-content-center">
-            <div class="col-lg-4 offset-lg-1 mx-0 px-0">
-                <div id="title-container">
-                    <img class="logo-image" src="">
-                    <h2>MAKING APPOINTMENT</h2>
-                    <form data-multi-step>
-                        <div class="card" data-step>
-                            <label for="Clinic">Clinic</label><br>
-                            <% clinics.forEach((clinic) => { %>
-                                <input type="radio" name="clinic" id="clinic-branch">
-                                <label for="clinic-branch"><%= clinic %></label><br>
-                            <% }) %>
-                            <button type="button" data-next>Next</button>
-                        </div>
-                        <div class="card" data-step>
-                            <label for="Schedule">Schedule</label><br>
-                            <input type="date" name="appointment-date" id="appointment-date"><br>
-                            <button type="button" data-previous>Previous</button>
-                            <button type="button" data-next>Next</button>
-                        </div>
-                        <div class="card" data-step>
-                            <label for="Dentist">Dentist</label><br>
-                            <% dentists.forEach((dentist) => { %>
-                                <input type="radio" name="dentist" id="dentist">
-                                <label for="dentist"><%= dentist.FULL_NAME %></label><br>
-                            <% }) %>
-                            <button type="button" data-previous>Previous</button>
-                            <button type="button" data-next>Next</button>
-                        </div>
-                        <div class="card" data-step>
-                            <label for="Treatment">Treatment</label><br>
-                            <% treatments.forEach((treatment) => { %>
-                                <input type="radio" name="treatment" id="treatment">
-                                <label for="treatment"><%= treatment %></label><br>
-                            <% }) %>
-                            <button type="button" data-previous>Previous</button>
-                            <input type="submit" value="Submit">
-                        </div>
-                    </form>
-                </div>
+<div class="container-making-form align-items-center min-vh-100">
+    <div class="row g-0 justify-content-center">
+        <div class="col-lg-4 offset-lg-1 mx-0 px-0">
+            <div id="title-container">
+                <img class="logo-image" src="">
+                <h2>MAKING APPOINTMENT</h2>
+                <form data-multi-step action="bookingAppointment/bookDentist" method="GET">
+                    <div class="card" data-step>
+                        <label for="Clinic">Clinic</label><br>
+                        <% clinics.forEach((clinic) => { %>
+                            <input type="radio" name="clinic" id="clinic-branch" value=<%= clinic.clinic_id %>>
+                            <label for="clinic-branch"><%= clinic.clinic_address %></label><br>
+                        <% }) %>
+                        <button type="button" data-next>Next</button>
+                    </div>
+                    <div class="card" data-step>
+                        <label for="Schedule">Schedule</label><br>
+                        <input type="date" name="appointment-date" id="appointment-date"><br>
+                        <input type="radio" name="shift" id="shift-1" value="1">
+                        <label for="shift-1">Ca 1: 7h - 8h</label><br>
+                        <input type="radio" name="shift" id="shift-2" value="2">
+                        <label for="shift-2">Ca 2: 8h - 9h</label><br>
+                        <input type="radio" name="shift" id="shift-3" value="3">
+                        <label for="shift-3">Ca 3: 9h - 10h</label><br>
+                        <input type="radio" name="shift" id="shift-4" value="4">
+                        <label for="shift-4">Ca 4: 10h - 11h</label><br>
+                        <input type="radio" name="shift" id="shift-5" value="5">
+                        <label for="shift-5">Ca 5: 11h - 12h</label><br>
+                        <input type="radio" name="shift" id="shift-6" value="6">
+                        <label for="shift-6">Ca 6: 13h - 14h</label><br>
+                        <input type="radio" name="shift" id="shift-7" value="7">
+                        <label for="shift-7">Ca 7: 14h - 15h</label><br>
+                        <input type="radio" name="shift" id="shift-1" value="8">
+                        <label for="shift-8">Ca 8: 15h - 16h</label><br>
+                        <input type="radio" name="shift" id="shift-9" value="9">
+                        <label for="shift-9">Ca 9: 16h - 17h</label><br>
+                        <button type="button" data-previous>Previous</button>
+                        <button type="button" data-next>Next</button>
+                    </div>
+                    <div class="card" data-step>
+                        <label for="Treatment">Treatment</label><br>
+                        <input type="text" name="treatment" id="treatment" placeholder="Nhập loại điều trị bạn cần"><br>
+                        <button type="button" data-previous>Previous</button>
+                        <input type="submit" value="Chọn nha sĩ">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <script>
-        const multiStepForm = document.querySelector("[data-multi-step]")
-        const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
-        let currentStep = formSteps.findIndex(step => {
-            return step.classList.contains("active")
-        })
+</div>
+<script>
+    const multiStepForm = document.querySelector("[data-multi-step]")
+    const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
+    let currentStep = formSteps.findIndex(step => {
+        return step.classList.contains("active")
+    })
 
-        if (currentStep < 0) {
-            currentStep = 0
-            showCurrentStep()
+    if (currentStep < 0) {
+        currentStep = 0
+        showCurrentStep()
+    }
+
+    multiStepForm.addEventListener("click", e => {
+        if (e.target.matches("[data-next]")) {
+            currentStep += 1
+        } else if (e.target.matches("[data-previous]")) {
+            currentStep -= 1
         }
 
-        multiStepForm.addEventListener("click", e => {
-            if (e.target.matches("[data-next]")) {
-                currentStep += 1
-            } else if (e.target.matches("[data-previous]")) {
-                currentStep -= 1
-            }
+        showCurrentStep()
+    })
 
-            showCurrentStep()
+    function showCurrentStep() {
+        formSteps.forEach((step, index) => {
+            step.classList.toggle("active", index === currentStep)
         })
-
-        function showCurrentStep() {
-            formSteps.forEach((step, index) => {
-                step.classList.toggle("active", index === currentStep)
-            })
-        }
-    </script>
+    }
+</script>
