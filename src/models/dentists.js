@@ -9,7 +9,7 @@ const Dentist = function(patient){
 };
 
 Dentist.getAll = function (result) {
-    db.query("Select * from DENTIST limit 20", function (err, res) {
+    db.query("call sp_get_dentist(?,?,?)", function (err, res) {
         if(err) {
           console.log("error: ", err);
           result(null, err);
