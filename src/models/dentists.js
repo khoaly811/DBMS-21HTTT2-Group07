@@ -15,9 +15,7 @@ Dentist.getAll = function (req, res, next) {
         if(err) {
           next(err)
         }
-        console.log(req.body)
         res.render('bookDentist', { dentists: data[0]})
-        console.log(data[0])
     });
 };
 
