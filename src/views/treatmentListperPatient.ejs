@@ -45,9 +45,10 @@
             <tr>
               <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
               <th class="border-bottom">Nha sĩ chính<i class="fa-solid fa-sort "></i></th>
-              <th class="border-bottom">Nha sĩ phụ <i class="fa-solid fa-sort"></i></th>
-              <th class="border-bottom"> Tình trạng <i class="fa-solid "></i></th>
-              <th class="border-bottom ">Mô tả điều trị<i class="fa-solid "></i></th>
+              <th class="border-bottom">Lần hẹn đầu <i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Noi khám <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Tình trạng<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
        
             </tr>
           </thead>
@@ -57,17 +58,23 @@
               <tr>
                 <td><%=pat.TREATMENT_ID%></td>
                 <td><%=pat.DentistName%></td>
-                <td><%=pat.AssistantName%></td> 
+                <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %></td> 
                 <td>
   
-                    <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"><%=pat.TREATMENT_STATUS%></span>
-             
+                  <%=pat.place%>             
                 </td>
-
-                <td class="d-flex  ">
-     
-                    <%=pat.DESCRIPTION%>
-          
+                
+                <td>
+  
+                  <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"><%=pat.TREATMENT_STATUS%></span>
+           
+              </td>
+                <td>
+                  <div style="z-index: 31;">
+                    <a href="/treatment/<%= pat.TREATMENT_ID%>" class="text-success">
+                      <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
+                    </a>
+                  </div>
                 </td>
                 
               <!-- D-flex khi không có dị ứng -->
@@ -137,26 +144,26 @@
 </script>
 <script>
   // Function to redirect based on the STT value
-  function redirectToURL(row) {
-    var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
-    var url = "/treatment/" + stt; // Construct the URL based on STT
+//   function redirectToURL(row) {
+//     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
+//     var url = "/treatment/" + stt; // Construct the URL based on STT
 
-    // Redirect to the constructed URL
-    window.location.href = url;
-  }
+//     // Redirect to the constructed URL
+//     window.location.href = url;
+//   }
 
-  // Attach a click event to all the rows in the table
-  var rows = document.querySelectorAll("#myTable tbody tr");
+//   // Attach a click event to all the rows in the table
+//   var rows = document.querySelectorAll("#myTable tbody tr");
 
-rows.forEach(function (row) {
-  row.addEventListener("click", function (event) {
-    // Check if the click occurred on the image inside the row
-    if (event.target.tagName.toLowerCase() !== 'img') {
-      // Redirect to the URL based on row content
-      redirectToURL(row);
-    }
-  });
-});
+// rows.forEach(function (row) {
+//   row.addEventListener("click", function (event) {
+//     // Check if the click occurred on the image inside the row
+//     if (event.target.tagName.toLowerCase() !== 'img') {
+//       // Redirect to the URL based on row content
+//       redirectToURL(row);
+//     }
+//   });
+// });
 
 
   // Search===================================================================

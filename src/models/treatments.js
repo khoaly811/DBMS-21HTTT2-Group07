@@ -22,7 +22,8 @@ Treatment.treatListperPatient = function(req, res, next) {
     //     SELECT 
     //         TREATMENT.*, 
     //         D1.FULL_NAME AS DentistName, 
-    //         D2.FULL_NAME AS AssistantName
+    //         D2.FULL_NAME AS AssistantName,
+    //         D1.CLINIC as place
     //     FROM 
     //         TREATMENT
     //     LEFT JOIN 
@@ -92,5 +93,21 @@ Treatment.treatmentDetail = function(req, res, next) {
 Treatment.newTreatment = function (result) {
     // db.query('GOI FUNCTION)'
 }
+
+Treatment.unPaidTreatment = function(req, res, next) {
+    const patientID = req.params.id;
+
+
+    let sql = `CALL sp_findUnpaidInvoicesWithDetails('${patientID}')`;
+    
+    
+    db.query(sql, function(err, unPaidTreatment) {
+        if (err) {
+            return next(err);
+        }
+        console.log(unPaidTreatment);
+        res.render('unPaidTreatment', { unPaidTreatment: unPaidTreatment[0] });
+    });
+};
 
 module.exports = Treatment;

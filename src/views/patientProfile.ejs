@@ -17,7 +17,7 @@
   <a href="/invoiceList/<%= pat.PATIENT_ID %>">
     <button class="btn btn-secondary">Danh sách thanh toán</button></a>
     <h5>ㅤ</h5>
-    <button class="btn btn-secondary">Danh sách chưa trả</button>
+    <a href="/unPaidTreatment/<%= pat.PATIENT_ID %>"><button class="btn btn-secondary">Danh sách chưa trả</button></a>
   </div>
 
   <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
@@ -33,7 +33,7 @@
                  <div class="row gx-3 mb-3">
                   <div class="col-md-6">
 
-                    <label class="small mb-1" for="patient_id">ID</label> 
+                    <label class="small mb-1" for="patient_id">Số điện thoại</label> 
 
                     <input type="text" id="patient_id" class="form-control form-control-lg" value="<%= pat.PATIENT_ID %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>

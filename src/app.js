@@ -27,6 +27,7 @@ const precriptionRoute = require("./routes/precriptionRoutes");
 const treatmentRoutes = require("./routes/treatmentRoute");
 const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 const bodyParser = require("body-parser");
 const mysql = require('mysql2');
@@ -64,4 +65,5 @@ app.use("/", patientRoute);
 app.use("/", treatmentRoutes);
 app.use("/", precriptionRoute);
 app.use("/", invoiceRoutes);
-app.use("/appointment", bookingAppointmentRoute);
+app.use("/", appointmentRoutes);
+app.use("/bookingAppointment", bookingAppointmentRoute);

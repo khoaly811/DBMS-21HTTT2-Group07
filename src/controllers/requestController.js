@@ -1,27 +1,34 @@
 const Dentist = require('../models/dentists');
-const DateAppointment = require('../models/dates');
-const Treatment = require('../models/treatments')
+const Clinic = require('../models/clinics')
 
-exports.getAllDentist = function(req, res) {
-    Dentist.getAll(function(err, dentists) {
-      if (err)
-        res.send(err);
-      res.send(dentists);
-    });
-};
+const dentistList = []
 
-exports.getAllDateAppointment = function(req, res) {
-    DateAppointment.getAll(function(err, dates) {
-      if (err)
-        res.send(err);
-      res.send(dates);
-    });
-};
+Dentist.getAll(function (err, dentists) {
+  if (err)
+    res.send(err);
 
-exports.writeDownTreatment = function(req, res) {
-    Treatment.getAll(function(err, treatments) {
-      if (err)
-        res.send(err);
-      res.send(treatments);
-    });
-};
+  dentists.forEach(dentist => {
+    dentistList.push(dentist)
+  });
+});
+
+const clinicList = []
+
+Clinic.getAll(function (err, clinics) {
+  if (err)
+    res.send(err);
+
+  clinics.forEach(clinic => {
+    clinicList.push(clinic)
+  })
+});
+
+exports.showDentist = function (req, res) {
+  const dentists = [].concat(dentistList);
+  res.render('bookDentist', { dentists: dentists })
+}
+
+exports.processBooking = function (req, res) {
+  const clinics = [].concat(clinicList)
+  res.render('bookAppointment', { clinics: clinics });
+}

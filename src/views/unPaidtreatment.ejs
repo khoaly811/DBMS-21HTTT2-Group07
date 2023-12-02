@@ -3,19 +3,19 @@
 <body>
 
 <br>
-<a href="/treatment/<%=prescriptionList[0].TREATMENT_ID%>">
+<a href="/patientProfile/<%= unPaidTreatment[0].PATIENT_ID %>">
     <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
 </a> 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
     <!-- Tiêu đề -->
-    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách đơn thuốc</strong></h2>
+    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách điều trị còn thiếu </strong></h2>
     <div class="row">
       <div class="col-md-4 mt-2  d-flex align-items-center ">
         <div class="input-group " style="max-width: 266px;">
           <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
               class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
-            placeholder="Tìm kiếm đơn thuốc">
+            placeholder="Tìm kiếm mô tả điều trị">
         </div>
       </div>
       <div class="col-md-2 mt-2  d-flex align-items-center">
@@ -24,12 +24,10 @@
           <i class="fa-solid fa-filter"></i>
         </span>
         <select id="filter-select" class="form-select" style="max-width: 127px;background-color: #D9D9D9;">
-          <option>Lần điều trị</option>
-          <option>Lần 01</option>
-          <option>Lần 02</option>
-          <option>Lần 03</option>
-          <option>Lần 04</option>
-          <option>Lần 05</option>
+          <option>Tình trạng</option>
+          <option>Completed</option>
+          <option>In Progress</option>
+          <option>Canceled</option>
         </select>
         
       </div>
@@ -45,46 +43,45 @@
         <table id="myTable" class="table table-hover table-borderless ">
           <thead>
             <tr>
+                <!-- ID của treatment -->
               <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
-              <th class="border-bottom">Lần điều trị<i class="fa-solid fa-sort "></i></th>
-              <th class="border-bottom">Ngày viết hóa đơn<i class="fa-solid fa-sort"></i></th>
-              <th class="border-bottom"> Số loại thuốc <i class="fa-solid "></i></th>
-              <th class="border-bottom ">Nha sĩ<i class="fa-solid "></i></th>
+              <th class="border-bottom">Nha sĩ chính<i class="fa-solid fa-sort "></i></th>
+              <!-- Nhiều cái hẹn trên INVOICE tavble group by TREATMENT_ID mà có số tiền chưa trả -->
+              <th class="border-bottom">Thuộc về lần hẹn <i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Noi khám <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Tình trạng<i class="fa-solid "></i></th>
               <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
-              <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+       
             </tr>
           </thead>
           <tbody id="bookTableBody">
             <!-- Duplicate các dong ở đây -->
-            <% prescriptionList.forEach((pat)=>{%>
+            <% unPaidTreatment.forEach((pat)=>{%>
               <tr>
-                <td><%=pat.PRESCRIPTION_ID%></td>
-                <td>Lần <%=pat.APPOINTMENT_ID.slice(-2)%></td>
-
-                <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
+                <td><%=pat.TREATMENT_ID%></td>
+                <td><%=pat.DENTIST_NAME%></td>
+                <td><%= pat.APPOINTMENT_ID_LIST %></td> 
                 <td>
-                  <%=pat.Number_of_distinct_medicine%>
+  
+                  <%=pat.DENTIST_CLINIC%>             
                 </td>
-
+                
                 <td>
-     
-                    <%=pat.FULL_NAME%>
-          
+  
+                  <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;"><%=pat.TREATMENT_STATUS%></span>
+           
+              </td>
+                <td>
+                  <div style="z-index: 31;">
+                    <a href="/unPaidtreatment/<%= pat.TREATMENT_ID%>" class="text-success">
+                      <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
+                    </a>
+                  </div>
                 </td>
                 
               <!-- D-flex khi không có dị ứng -->
-              <td>
-                <div style="z-index: 31;">
-                  <a href="/prescription/<%= pat.PRESCRIPTION_ID%>" class="text-success">
-                    <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
-                  </a>
-                </div>
-              </td>
              
-              <td><div style="z-index: 31;">                                          
-                <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
-                    class="" alt="Small Image " width="20" height="20">
-              </div></td>
+              
               <!-- Thêm dòng để xóa -->
               </tr>
               <% }) %>
@@ -151,7 +148,7 @@
   // Function to redirect based on the STT value
 //   function redirectToURL(row) {
 //     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
-//     var url = "/prescription/" + stt; // Construct the URL based on STT
+//     var url = "/treatment/" + stt; // Construct the URL based on STT
 
 //     // Redirect to the constructed URL
 //     window.location.href = url;
@@ -217,10 +214,10 @@
     }
 
     // If the selected gender is not "Giới tính," apply the filter
-    if (selectedGender !== "Lần điều trị") {
+    if (selectedGender !== "Tình trạng") {
       // Loop through all table rows and hide those that don't match the selected gender
       for (var i = 1; i < rows.length; i++) {
-        var genderCell = rows[i].getElementsByTagName("td")[1]; // 4th column (Giới tính)
+        var genderCell = rows[i].getElementsByTagName("td")[3]; // 4th column (Giới tính)
 
         if (genderCell) {
           var gender = genderCell.innerText;

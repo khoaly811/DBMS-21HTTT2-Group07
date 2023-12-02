@@ -128,4 +128,36 @@
 
 -- --===================================================================================================================================================
 
+-- USE `adb_nhakhoa`;
+-- DELIMITER $$
 
+-- CREATE PROCEDURE sp_findAppointmentsByTreatmentID(
+--     IN treatment_id_param VARCHAR(9)
+-- )
+-- BEGIN
+--     -- Select appointments from APPOINTMENT table based on given TREATMENT_ID
+--     SELECT *
+--     FROM APPOINTMENT
+--     WHERE TREATMENT_ID = treatment_id_param;
+-- END $$
+
+-- DELIMITER ;
+
+-- ========================================================================================================
+
+--     USE `adb_nhakhoa`;
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_findAppointmentsByTreatmentID(
+--     IN treatment_id_param VARCHAR(9)
+-- )
+-- BEGIN
+--     -- Select appointments from APPOINTMENT table based on given TREATMENT_ID
+--     SELECT *
+--     FROM APPOINTMENT
+--     WHERE TREATMENT_ID = treatment_id_param;
+-- END $$
+
+-- DELIMITER ;
+
+-- ================================================================================================================
