@@ -15,7 +15,7 @@
             <div id="title-container">
                 <img class="logo-image" src="">
                 <h2>MAKING APPOINTMENT</h2>
-                <form data-multi-step action="bookingAppointment/bookDentist" method="GET">
+                <form data-multi-step action="/bookingAppointment/bookDentist" method="POST">
                     <div class="card" data-step>
                         <label for="Clinic">Clinic</label><br>
                         <% clinics.forEach((clinic) => { %>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="card" data-step>
                         <label for="Schedule">Schedule</label><br>
-                        <input type="date" name="appointment-date" id="appointment-date"><br>
+                        <input type="date" name="appointment_date" id="appointment_date"><br>
                         <input type="radio" name="shift" id="shift-1" value="1">
                         <label for="shift-1">Ca 1: 7h - 8h</label><br>
                         <input type="radio" name="shift" id="shift-2" value="2">

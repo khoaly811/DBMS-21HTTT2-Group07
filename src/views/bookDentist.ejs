@@ -1,13 +1,4 @@
 <%- include("partials/header"); %>
-<style>
-    .card {
-        display: none;
-    }
-
-    .card.active {
-        display: block;
-    }
-</style>
 
 <div class="container-making-form align-items-center min-vh-100">
     <div class="row g-0 justify-content-center">
@@ -15,15 +6,15 @@
             <div id="title-container">
                 <img class="logo-image" src="">
                 <h2>MAKING APPOINTMENT</h2>
-                <form data-multi-step>
-                    <div class="card" data-step>
+                <form action="/bookingAppointment/bookOK" method="POST">
+                    <div class="card">
                         <label for="Dentist">Dentist</label><br>
                         <% dentists.forEach((dentist) => { %>
                             <input type="radio" name="dentist" id="dentist" value="<%= dentist.DENTIST_ID %>">
                             <label for="dentist"><%= dentist.FULL_NAME %></label><br>
                         <% }) %>
-                        <input type="submit" value="Submit">
                     </div>
+                    <input type="submit" value="Submit">
                 </form>
             </div>
         </div>

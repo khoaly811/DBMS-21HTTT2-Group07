@@ -68,7 +68,7 @@
 
 // create procedure sp_get_dentist(in clinicID int, in wishDate date, in shift int)
 // begin
-// 	select distinct D.full_name
+// 	select distinct D.dentist_id, D.full_name
 // 	from (select * from dentist where clinic_id = clinicID) as D
 // 	inner join
 // 	(select * from schedule where schedule_date = wishDate and schedule_shift = shift) as S 

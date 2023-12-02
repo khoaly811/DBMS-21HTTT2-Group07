@@ -8,15 +8,16 @@ const Dentist = function(patient){
     this.allergies = patient.allergies;
 };
 
-Dentist.getAll = function (result) {
-    db.query("call sp_get_dentist(?,?,?)", function (err, res) {
+Dentist.getAll = function (req, res, next) {
+
+    db.query("call sp_get_dentist(?,?,?)", [req.body.clinic, req.body.appointment_date, req.body.shift],
+     function (err, data) {
         if(err) {
-          console.log("error: ", err);
-          result(null, err);
+          next(err)
         }
-        else{
-          result(null, res);
-        }
+        console.log(req.body)
+        res.render('bookDentist', { dentists: data[0]})
+        console.log(data[0])
     });
 };
 
