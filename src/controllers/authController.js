@@ -1,48 +1,46 @@
-const Account = require("../models/accounts");
-const { extractUsernameAndRole } = require('../models/accounts');
-const { getAllUsernames } = require('../models/accounts');
+const Accounts = require("../models/accounts");
+const argon2 = require('argon2');
 
-exports.roleAuth = async (req, res) => {
-  const username = req.body.username;
-
-  const password = "12345678";
-  const usernames = await Account.getAllUsernames();
-
-  console.log(username);
-
-  try {
-    const account = await Account.findOneByUsernameFromArray(usernames, username);
-
-    if (account) {
-      // Check the password here (use a proper authentication mechanism)
-      if (password) {
-        req.session.user = extractUsernameAndRole(account);
-
-        switch (req.session.user.role) {
-          case 'admin':
-            res.redirect('/admin');
-            break;
-          case 'dentist':
-            res.redirect('/patientList');
-            break;
-          case 'staff':
-            res.redirect('/patientList');
-            break;
-          case 'patient':
-            res.redirect('/patientList');
-            break;
-          default:
-            res.status(401).send('Invalid role');
+const Login = async (req, res) => {
+    const account = await Accounts.findOne({
+        attributes: ['username', 'password'],
+        where: {
+            username: req.body.username,
+            password: req.body.password // sẽ sửa lại do thời gian compile lâu quá
         }
-      } else {
-        res.status(401).send('Password is incorrect');
-      }
-    } else {
-      res.status(401).send('Username is undefined');
-    }
-  } catch (err) {
-    console.error('From auth', err);
-    res.status(400).send(err.message);
-  }
-};
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    console.log(res.status);
+    console.log(account.password);
+    console.log(req.body.password);
+    const match = await argon2.verify(account.password, req.body.password);
+    if (!match) return res.status(400).json({msg: "Password is incorrect"});
+    req.session.username = account.username;
+    const username = account.username;
+    const email = account.email;
+    const role = account.role;
+    res.status(200).json({username, email, role});
+}
 
+const Me = async(req, res) => {
+    if (!req.session.username){
+        return res.status(401).json({msg: "Please log in to your account!"});
+    }
+    const account = await Accounts.findOne({
+        attribute: ['username', 'email', 'role'],
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    res.status(200).json(account);
+}
+
+const Logout = (req, res) => {
+    req.session.destroy((err) => {
+        if(err) return res.status(400).json({msg: "Logout failed!"});
+        res.status(200).json({msg: "Logout success!"})
+    });
+}
+
+module.exports = { Login, Me, Logout}
