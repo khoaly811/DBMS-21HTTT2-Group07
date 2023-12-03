@@ -23,6 +23,8 @@ if (fs.existsSync('server.pid')) {
 fs.writeFileSync('server.pid', process.pid.toString(), 'utf8');
 
 // Continue with your server setup
+const notFoundMiddleware = require('./middleware/notFoundMiddleware');
+
 const patientRoute = require("./routes/patientRoute");
 const precriptionRoute = require("./routes/precriptionRoutes");
 const treatmentRoutes = require("./routes/treatmentRoute");
@@ -31,6 +33,8 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const accountRoute = require("./routes/accountRoute");
 const authRoute = require("./routes/authRoute");
+
+const internalServerErrorMiddleware = require('./middleware/internalServerError');
 
 const bodyParser = require("body-parser");
 const mysql = require('mysql2');
@@ -75,3 +79,6 @@ app.use("/", precriptionRoute);
 app.use("/", invoiceRoutes);
 app.use("/", appointmentRoutes);
 app.use("/bookingAppointment", bookingAppointmentRoute);
+// Comment them here if you wanna fix bugs
+app.use(notFoundMiddleware);
+app.use(internalServerErrorMiddleware);

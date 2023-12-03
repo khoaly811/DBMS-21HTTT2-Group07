@@ -100,7 +100,7 @@ document.getElementById("updateButton").addEventListener("click", function () {
 
   if (updateButton.textContent === "Update") {
     formElements.forEach(function (element) {
-      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "contraindication"&& element.id !== ""&& element.id !== "description") {
+      if (element.id !== "patient_id" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "contraindication"&& element.id !== ""&& element.id !== "description") {
         element.removeAttribute("disabled");
       }
     });

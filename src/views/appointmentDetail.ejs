@@ -40,7 +40,7 @@
                 <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
               </li>
               <li class="nav-item rounded-3">
-                <b><a class="nav-link" href="">Quản lý cuộc hẹn</a></b>
+                <b><a class="nav-link" href="/navAppointmentMag">Quản lý cuộc hẹn</a></b>
               </li>
               <li class="nav-item rounded-3">
                 <b><a class="nav-link" href="">Quản lý nhân viên</a></b>
@@ -112,37 +112,37 @@
           <div class="card mb-4 w-100">
             <div class="card-header">Chi tiết cuộc hẹn</div>
             <div class="card-body">
-              <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="POST" id="myForm">               
+              <form action="/appointmentDetail/<%= pat.TREATMENT_ID%>/<%=pat.APPOINTMENT_ID%>" method="POST" id="myForm">               
                  <div class="row gx-3 mb-3">
                   <div class="col-md-6">
 
-                    <label class="small mb-1" for="patient_id">Cuộc điều trị</label> 
+                    <label class="small mb-1" for="TREATMENT_ID">Cuộc điều trị</label> 
 
-                    <input type="text" id="patient_id" class="form-control form-control-lg" value="<%= pat.TREATMENT_ID %>" disabled>
+                    <input type="text" id="TREATMENT_ID" class="form-control form-control-lg" value="<%= pat.TREATMENT_ID %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>
                       <div class="small text-danger"><%= errorMessage1%></div>
                     <% } %> -->
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="full_name">Lần hẹn</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control form-control-lg" value="<%=pat.APPOINTMENT_ID.slice(-2)%>" required disabled>
+                    <label class="small mb-1" for="APPOINTMENT_ID">Lần hẹn</label>
+                    <input type="text" id="APPOINTMENT_ID" name="APPOINTMENT_ID" class="form-control form-control-lg" value="<%=pat.APPOINTMENT_ID.slice(-2)%>" required disabled>
                   </div>
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="DOB">Ngày hẹn</label>
-                    <input type="date" id="DOB"class="form-control form-control-lg" value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' })%>" disabled>
+                    <label class="small mb-1" for="APPOINTMENT_DATE">Ngày hẹn</label>
+                    <input type="date" id="APPOINTMENT_DATE"class="form-control form-control-lg" value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' })%>" disabled>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="gender">Thuộc ca</label>
-                    <input type="text" id="gender" name="gender" class="form-control form-control-lg" value="<%= pat.APPOINTMENT_SHIFT%>" required disabled>
+                    <label class="small mb-1" for="APPOINTMENT_SHIFT">Thuộc ca</label>
+                    <input type="text" id="APPOINTMENT_SHIFT" name="APPOINTMENT_SHIFT" class="form-control form-control-lg" value="<%= pat.APPOINTMENT_SHIFT%>" required disabled>
                   </div>
                   
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="allergies">Loại cuộc hẹn</label>
-                    <input type="text" id="allergies" name="allergies" class="form-control form-control-lg" rows="1" value="<%= pat.APPOINTMENT_STATUS%>" required disabled>
+                    <label class="small mb-1" for="APPOINTMENT_STATUS">Loại cuộc hẹn</label>
+                    <input type="text" id="APPOINTMENT_STATUS" name="APPOINTMENT_STATUS" class="form-control form-control-lg" rows="1" value="<%= pat.APPOINTMENT_STATUS%>" required disabled>
                   </div>
                  
                 </div>
@@ -169,7 +169,7 @@ document.getElementById("updateButton").addEventListener("click", function () {
 
   if (updateButton.textContent === "Update") {
     formElements.forEach(function (element) {
-      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "contraindication"&& element.id !== ""&& element.id !== "description") {
+      if (element.id !== "TREATMENT_ID" && element.id !== "APPOINTMENT_STATUS" && element.id !== "APPOINTMENT_ID"&& element.id !== "contraindication"&& element.id !== ""&& element.id !== "description") {
         element.removeAttribute("disabled");
       }
     });
