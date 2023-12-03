@@ -1,44 +1,62 @@
-exports.adminAuth = (req, res, next) => {
-    if (req.session.user === 'AD') {
-        console.log('Admin authentication passed');
-        next();
+const Accounts = require("../models/accounts");
+
+const verifyAccount = async(req, res, next) => {
+    if (!req.session.username){
+        return res.status(401).json({msg: "Please log in to your account!"});
     }
-    else {
-        console.log('Admin authentication failed');
-        res.redirect('/login');
-    }
+    const account = await Accounts.findOne({
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    req.username = account.username;
+    req.role = account.role;
+    next();
 }
 
-exports.dentistAuth = (req, res, next) => {
-    if (req.session.user === 'DE') {
-        console.log('Dentist authentication passed');
-        next();
-    }
-    else {
-        console.log('Dentist authentication failed');
-        res.redirect('/login');
-    }
+const adminOnly = async(req, res, next) => {
+    const account = await Accounts.findOne({
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    if (account.role !== "admin") return res.status(403).json({msg: "Admin authentication failed"});
+    next();
 }
 
-exports.staffAuth = (req, res, next) => {
-    if (req.session.user === 'ST') {
-        console.log('Staff authentication passed');
-        next();
-    }
-    else {
-        console.log('Staff authentication failed');
-        res.redirect('/login');
-    }
+const dentistOnly = async(req, res, next) => {
+    const account = await Accounts.findOne({
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    if (account.role !== "dentist") return res.status(403).json({msg: "Dentist authentication failed"});
+    next();
 }
 
-exports.isLogged = (req, res, next) => {
-    if (req.session.user) {
-        console.log('Logged in');
-        next();
-    }
-    else {
-        console.log('Not logged in');
-        // res.redirect('/login');
-        res.render('Login');
-    }
+const staffOnly = async(req, res, next) => {
+    const account = await Accounts.findOne({
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    if (account.role !== "staff") return res.status(403).json({msg: "Staff authentication failed"});
+    next();
 }
+
+const patientOnly = async(req, res, next) => {
+    const account = await Accounts.findOne({
+        where: {
+            username: req.session.username
+        }
+    });
+    if (!account) return res.status(404).json({msg: "Account don't exist!"});
+    if (account.role !== "patient") return res.status(403).json({msg: "Patient authentication failed"});
+    next();
+}
+
+module.exports = { verifyAccount, adminOnly, dentistOnly, staffOnly, patientOnly }
