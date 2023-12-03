@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const csv = require('csv-parser');
+const session = require('express-session');
 const app = express();
 const MAIN_PORT = 9696; // Change to a number, not a string
 
@@ -28,6 +29,8 @@ const treatmentRoutes = require("./routes/treatmentRoute");
 const bookingAppointmentRoute = require("./routes/bookingAppointmentRoute");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const accountRoute = require("./routes/accountRoute");
+const authRoute = require("./routes/authRoute");
 
 const bodyParser = require("body-parser");
 const mysql = require('mysql2');
@@ -61,6 +64,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.render('login');
 });
+app.get('/signup', (req, res) => {
+  res.render('signup');
+});
+app.use("/", accountRoute);
+app.use("/", authRoute);
 app.use("/", patientRoute);
 app.use("/", treatmentRoutes);
 app.use("/", precriptionRoute);
