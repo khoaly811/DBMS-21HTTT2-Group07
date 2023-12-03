@@ -1,88 +1,101 @@
-// Function to find an account by username
-async function findOneByUsernameFromArray(usernamesArray, username) {
-  try {
-    const sqlDentist = 'SELECT * FROM DENTIST WHERE Dentist_ID = ?';
-    const sqlPatient = 'SELECT * FROM PATIENT WHERE PATIENT_ID = ?';
-    const sqlStaff = 'SELECT * FROM STAFF WHERE Staff_ID = ?';
+const { Sequelize, DataTypes } = require('sequelize');
 
-    if (usernamesArray.includes(username)) {
-      const [dentist] = await query(sqlDentist, [username]);
-      const [patient] = await query(sqlPatient, [username]);
-      const [staff] = await query(sqlStaff, [username]);
+const sequelize = new Sequelize('adb_nhakhoa', 'root', '12345678', {
+  host: 'localhost',
+  dialect: 'mysql',
+});
 
-      return dentist || patient || staff || null;
-    } else {
-      return null; // Username not found in the array
-    }
-  } catch (error) {
-    throw error;
-  }
-}
+const Accounts = sequelize.define('accounts', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    primaryKey: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  passconfirm: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  timestamps: false
+});
 
+// const Dentist = sequelize.define('dentist', {
+//   dentist_id: {
+//     type: DataTypes.STRING,
+//     primaryKey: true,
+//     unique: true,
+//     allowNull: false,
+//     autoIncrement: true,
+//   },
+//   full_name: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+//   dob: {
+//     type: DataTypes.DATE,
+//   },
+//   gender: {
+//     type: DataTypes.CHAR,
+//   },
+//   clinic: {
+//     type: DataTypes.STRING,
+//   },
+//   email: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//     validate: {
+//       isEmail: true,
+//     },
+//   },
+// }, {
+//   timestamps: false,
+//   freezeTableName: true
+// });
 
-// Function to get 5 usernames from each CSV file
-async function getAllUsernames() {
-  try {
-    const usernames = [];
+// Accounts.hasOne(Dentist, { as: '$Dentist', foreignKey: 'username' });
+// Dentist.hasOne(Accounts, { as: '$Account', foreignKey: 'dentist_id' });
 
-    // Helper function to read CSV file and extract usernames
-    async function extractUsernamesFromCSV(filePath, columnName) {
-      return new Promise((resolve, reject) => {
-        const data = [];
-        fs.createReadStream(filePath)
-          .pipe(csv())
-          .on('data', (row) => {
-            data.push(row[columnName]);
-          })
-          .on('end', () => {
-            resolve(data.slice(0, 5)); // Retrieve the first 5 rows
-          })
-          .on('error', (error) => {
-            reject(error);
-          });
-      });
-    }
+// // const Patient = sequelize.define('patient', {
+// //   patient_id: {
+// //     type: DataTypes.STRING,
+// //     primaryKey: true,
+// //     unique: true,
+// //     autoIncrement: true,
+// //   },
+// //   full_name: {
+// //     type: DataTypes.STRING,
+// //     allowNull: false,
+// //   },
+// //   dob: {
+// //     type: DataTypes.DATE,
+// //   },
+// //   gender: {
+// //     type: DataTypes.CHAR,
+// //   },
+// //   allergies: {
+// //     type: DataTypes.STRING,
+// //   },
+// // }, {
+// //   timestamps: false,
+// //   freezeTableName: true
+// // });
 
-    // Extract usernames from each CSV file and gather them into the 'usernames' array
-    const usernamesFromDentist = await extractUsernamesFromCSV('csv/DENTIST.csv', 'Dentist_ID');
-    usernames.push(...usernamesFromDentist);
+// // Accounts.hasOne(Patient, { as: '$Patient', foreignKey: 'username' });
+// // Patient.hasOne(Accounts, { as: '$Account', foreignKey: 'patient_id' });
 
-    const usernamesFromPatient = await extractUsernamesFromCSV('csv/PATIENT.csv', 'PATIENT_ID');
-    usernames.push(...usernamesFromPatient);
-
-    const usernamesFromStaff = await extractUsernamesFromCSV('csv/STAFF.csv', 'Staff_ID');
-    usernames.push(...usernamesFromStaff);
-
-    return usernames;
-  } catch (error) {
-    throw error;
-  }
-}
-
-const extractUsernameAndRole = (account) => {
-  const result = { username: '', role: '' };
-
-  if (account) {
-    result.username = account.username;
-
-    const firstTwoWords = account.username.split(' ').slice(0, 2);
-
-    if (firstTwoWords === 'AD') {
-      result.role = 'admin';
-    } else if (firstTwoWords === 'DE') {
-      result.role = 'dentist';
-    } else if (firstTwoWords === 'ST') {
-      result.role = 'staff';
-    } else {
-      result.role = 'patient';
-    }
-  }
-
-  return result;
-};
-
-module.exports = {
-  findOneByUsernameFromArray,
-  getAllUsernames,
-  extractUsernameAndRole,
-};
+module.exports = Accounts;
+// module.exports = Dentist;
+// module.exports = Patient;
