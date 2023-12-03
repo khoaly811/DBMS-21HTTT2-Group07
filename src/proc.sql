@@ -161,3 +161,111 @@
 -- DELIMITER ;
 
 -- ================================================================================================================
+
+-- USE `adb_nhakhoa`;
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getInvoiceDetailsByID(
+--     IN invoice_id_param VARCHAR(9)
+-- )
+-- BEGIN
+--     DECLARE treatment_id_var VARCHAR(9);
+--     DECLARE appointment_date_var DATE;
+--     DECLARE dentist_name_var VARCHAR(255);
+
+--     -- Get TREATMENT_ID based on the provided INVOICE_ID
+--     SELECT TREATMENT_ID INTO treatment_id_var
+--     FROM INVOICE
+--     WHERE INVOICE_ID = invoice_id_param
+--     LIMIT 1;
+
+--     -- Check if TREATMENT_ID is not null
+--     IF treatment_id_var IS NOT NULL THEN
+--         -- Get APPOINTMENT_DATE based on TREATMENT_ID and APPOINTMENT_ID
+--         SELECT A.APPOINTMENT_DATE INTO appointment_date_var
+--         FROM APPOINTMENT A
+--         WHERE A.TREATMENT_ID = treatment_id_var
+--               AND A.APPOINTMENT_ID = 'APP01';
+
+--         -- Get DENTIST_NAME based on DENTIST_ID in TREATMENT table
+--         SELECT D.FULL_NAME INTO dentist_name_var
+--         FROM DENTIST D
+--         JOIN TREATMENT T ON D.DENTIST_ID = T.DENTIST_ID
+--         WHERE T.TREATMENT_ID = treatment_id_var;
+
+--         -- Select data from INVOICE table and include PATIENT_ID, APPOINTMENT_DATE, DENTIST_NAME
+--         SELECT I.*, T.PATIENT_ID, appointment_date_var AS APPOINTMENT_DATE, dentist_name_var AS DENTIST_NAME
+--         FROM INVOICE I
+--         LEFT JOIN TREATMENT T ON I.TREATMENT_ID = T.TREATMENT_ID
+--         WHERE I.INVOICE_ID = invoice_id_param;
+--     ELSE
+--         -- If TREATMENT_ID is null, return a message or handle as needed
+--         SELECT 'No invoice found for the given ID.' AS Message;
+--     END IF;
+-- END $$
+
+-- DELIMITER ;
+
+-- ================================================================================================================
+
+-- use `adb_nhakhoa`;
+
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getInvoiceByPatientID(IN patient_id_param VARCHAR(9))
+-- BEGIN
+--     DECLARE treatment_id_var VARCHAR(9);
+
+--     -- Get Treatment_ID based on Patient_ID
+--     SELECT TREATMENT_ID INTO treatment_id_var
+--     FROM TREATMENT
+--     WHERE PATIENT_ID = patient_id_param
+--     LIMIT 1;
+
+--     -- Check if Treatment_ID is not null
+--     IF treatment_id_var IS NOT NULL THEN
+--         -- Select invoice based on Treatment_ID
+--         SELECT *
+--         FROM INVOICE
+--         WHERE TREATMENT_ID = treatment_id_var;
+--     ELSE
+--         -- If Treatment_ID is null, return a message or handle as needed
+--         SELECT 'No treatment found for the given patient.' AS Message;
+--     END IF;
+-- END $$
+
+-- DELIMITER ;
+
+-- ================================================================================================================
+
+
+-- USE `adb_nhakhoa`; -- Replace with your actual database name
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getAllAppointments()
+-- BEGIN
+--     -- Select all appointments from APPOINTMENT table
+--     SELECT *
+--     FROM APPOINTMENT;
+-- END $$
+
+-- DELIMITER ;
+-- ================================================================================================================
+
+
+-- USE `adb_nhakhoa`; -- Replace with your actual database name
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getAllAppointments()
+-- BEGIN
+--     -- Select all appointments from APPOINTMENT table
+--     SELECT *
+     
+--     FROM APPOINTMENT
+--     LIMIT 2000;
+   
+-- END $$
+
+-- DELIMITER ;
+
+

@@ -36,6 +36,15 @@ Appointment.appointList = function(req, res, next) {
     });
 };
 
+Appointment.appointListAll = function(req, res, next) {
+    db.query('CALL sp_getAllAppointments()', function(err, data) {
+        if (err) {
+            return next(err);
+        }
+        res.render('appointListAll', { appointListAll: data[0] });
+    });
+};
+
     Appointment.appointmentDetail = function(req, res, next) {
         const treatment_id = req.params.treatment_id;
         const appointment_id = req.params.appointment_id;
@@ -68,5 +77,20 @@ Appointment.appointList = function(req, res, next) {
             res.render('appointmentDetail', { appointmentDetail: appointmentDetail[0] });
         });
     };
+
+    Appointment.navAppointmentMag = function(req, res, next) {
+        // No need for a database query in this case
+        res.render('navAppointmentMag');
+    };
+
+    Appointment.requestList = function(req, res, next) {
+        db.query('CALL sp_getRequest()', function(err, data) {
+            if (err) {
+                return next(err);
+            }
+            res.render('tableRequest', { requestList: data[0] });
+        });
+    };
+    
 
     module.exports = Appointment;

@@ -6,7 +6,7 @@
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
     <!-- Sidebar -->
     <h3>Xem thêm:</h3>
-    <a href="/invoice/<%= pat.TREATMENT_ID %>">
+    <a href="/invoiceList/<%= pat.PATIENT_ID %>">
       <button class="btn btn-secondary">Danh sách thanh toán</button>
   </a>  
   </div>
@@ -24,16 +24,16 @@
                  <div class="row gx-3 mb-3">
                   <div class="col-md-6">
 
-                    <label class="small mb-1" for="patientID">ID</label> 
+                    <label class="small mb-1" for="FEE">Số tiền cần trả</label> 
 
-                    <input type="text" id="patientID" class="form-control form-control-lg" value="<%= pat.PRESCRIPTION_ID %>" disabled>
+                    <input type="text" id="FEE" class="form-control form-control-lg" value="<%= pat.FEE %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>
                       <div class="small text-danger"><%= errorMessage1%></div>
                     <% } %> -->
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="patientName">Số loại thuốc </label>
-                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.Number_of_distinct_medicine %>" disabled>
+                    <label class="small mb-1" for="PAID_FEE">Số tiền bệnh nhân đưa</label>
+                    <input type="text" id="PAID_FEE"class="form-control form-control-lg" value="<%= pat.PAID_FEE %>" disabled>
                     <!-- <% if (locals.errorMessage2) { %>
                       <div class="small text-danger"><%= errorMessage2 %></div>
                     <% } %> -->
@@ -43,19 +43,26 @@
           
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="DOB">Tên thuốc</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat2.NAME%>" disabled>
+                    <label class="small mb-1" for="CHANGES">Tiền thối</label>
+                    <input type="text" id="CHANGES"class="form-control form-control-lg" value="<%= pat.CHANGES%>" disabled>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Số lượng</label>
-                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat2.QUANTITY%>" disabled>
+                    <label class="small mb-1" for="APPOINTMENT_DATE">Ngày thanh toán</label>
+                    <input type="text" id="APPOINTMENT_DATE"class="form-control form-control-lg" value="<%=pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%>" disabled>
+                  </div>
+                  
+                </div>
+                <div class="row gx-3 mb-3">                
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="PAYMENT_METHOD">Phương thức thanh toán</label>
+                    <input type="text" id="PAYMENT_METHOD"class="form-control form-control-lg" value="<%= pat.PAYMENT_METHOD%>" disabled>
                   </div>
                   
                 </div>
                 
                 <div class="mb-3">
-                  <label class="small mb-1" for="description">Mô tả về thuốc</label>
-                  <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2"><%= pat2.DESCRIPTION %></textarea>
+                  <label class="small mb-1" for="DENTIST_NAME">Tên nha sĩ phụ trách</label>
+                  <textarea disabled id="DENTIST_NAME" name="DENTIST_NAME" class="form-control form-control-lg" rows="2"><%= pat.DENTIST_NAME %></textarea>
                 </div>
 
                 <button id="updateButton" class="btn btn-primary" type="button">Update</button>
