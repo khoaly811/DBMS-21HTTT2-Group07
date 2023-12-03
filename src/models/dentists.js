@@ -9,8 +9,9 @@ const Dentist = function(patient){
 };
 
 Dentist.getAll = function (req, res, next) {
+    
 
-    db.query("call sp_get_dentist(?,?,?)", [req.body.clinic, req.body.appointment_date, req.body.shift],
+    db.query("call sp_get_dentist(?,?,?)", [req.body.clinic, 5, req.body.shift],
      function (err, data) {
         if(err) {
           next(err)
