@@ -71,6 +71,11 @@ app.get('/', (req, res) => {
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
+app.use(session({
+  secret: 'healthUs',
+  resave: false,
+  saveUninitialized: false,
+}));
 app.use("/", accountRoute);
 app.use("/", authRoute);
 app.use("/", patientRoute);
