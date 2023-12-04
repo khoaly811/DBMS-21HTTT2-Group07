@@ -67,10 +67,10 @@
                         </thead>
                         <tbody id="bookTableBody">
                             <!-- Duplicate các dong ở đây -->
-                            <% patientData.forEach((pat)=>{%>
+                            <% staffList.forEach((pat)=>{%>
                                 <tr>
                                     <td>
-                                        <%= pat.Staff_ID%>
+                                        <%= pat.STAFF_ID%>
                                     </td>
                                     <td>
                                         <%= pat.FULL_NAME%>
@@ -97,12 +97,12 @@
                                                 <%= pat.NOTES%>
                                                     <% } else { %>
                                                         <span class="p-1 rounded"
-                                                            style="background-color: #FF6767;">Không</span>
+                                                            style="background-color: #67ff7b;">Không</span>
                                                         <% } %>
                                         </td>
                                         <td>
                                             <div style="z-index: 31;">
-                                                <a href="/dentistDetail/<%= pat.Dentist_ID%>" class="text-success">
+                                                <a href="/staffDetail/<%= pat.STAFF_ID%>" class="text-success">
                                                     <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
                                                 </a>
                                             </div>
