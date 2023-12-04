@@ -1,101 +1,90 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const db = require("./db.js");
 
-const sequelize = new Sequelize('adb_nhakhoa', 'root', '12345678', {
-  host: 'localhost',
-  dialect: 'mysql',
-});
+const Accounts = function(accounts) {
+  this.username = accounts.username;
+  this.password = accounts.treatmentid;
+  this.email = accounts.email;
+  this.passconfirm = accounts.passconfirm;
+  this.role = accounts.role;
+};
 
-const Accounts = sequelize.define('accounts', {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    primaryKey: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  passconfirm: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: false
-});
+Accounts.findAll = function(req, res, next) {
+    db.query ('SELECT username, email, role FROM accounts;', function(err, accountList){
+      if(err) {
+        return next(err);
+      } else {
+        res.render('accountList',{accountList: accountList })
+        return res.status(400).json(res);
+      }
 
-// const Dentist = sequelize.define('dentist', {
-//   dentist_id: {
-//     type: DataTypes.STRING,
-//     primaryKey: true,
-//     unique: true,
-//     allowNull: false,
-//     autoIncrement: true,
-//   },
-//   full_name: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   dob: {
-//     type: DataTypes.DATE,
-//   },
-//   gender: {
-//     type: DataTypes.CHAR,
-//   },
-//   clinic: {
-//     type: DataTypes.STRING,
-//   },
-//   email: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//     validate: {
-//       isEmail: true,
-//     },
-//   },
-// }, {
-//   timestamps: false,
-//   freezeTableName: true
-// });
+    })
 
-// Accounts.hasOne(Dentist, { as: '$Dentist', foreignKey: 'username' });
-// Dentist.hasOne(Accounts, { as: '$Account', foreignKey: 'dentist_id' });
+}
 
-// // const Patient = sequelize.define('patient', {
-// //   patient_id: {
-// //     type: DataTypes.STRING,
-// //     primaryKey: true,
-// //     unique: true,
-// //     autoIncrement: true,
-// //   },
-// //   full_name: {
-// //     type: DataTypes.STRING,
-// //     allowNull: false,
-// //   },
-// //   dob: {
-// //     type: DataTypes.DATE,
-// //   },
-// //   gender: {
-// //     type: DataTypes.CHAR,
-// //   },
-// //   allergies: {
-// //     type: DataTypes.STRING,
-// //   },
-// // }, {
-// //   timestamps: false,
-// //   freezeTableName: true
-// // });
+Accounts.findOne = function(req, res, next) {
+  const username = req.params.username;
+  db.query('SELECT username, email, role FROM accounts where username = ?;',[username], function (err, account){
+    if(err) {
+      return next(err);
+    } else {
+      res.render('account',{account: account })
+      res.status(400).json(res);
+    }
+  })
+}
 
-// // Accounts.hasOne(Patient, { as: '$Patient', foreignKey: 'username' });
-// // Patient.hasOne(Accounts, { as: '$Account', foreignKey: 'patient_id' });
+Accounts.create = function(req, res, next) {
+  const {username, password, email, passconfirm } = req.body;
+  const role = 'patient';
+  // use adb_nhakhoa;
+  // DELIMITER //
+  // CREATE PROCEDURE CreateAccount(IN p_username CHAR(9), p_password CHAR(45), p_email CHAR(45), p_passconfirm CHAR(45), p_role CHAR(45))
+  // BEGIN
+  // DECLARE existing_cnt INT;
+  // 	-- Check if username has been exist
+  // 	SELECT COUNT(*) INTO existing_cnt FROM accounts where username = p_username;
+  //     IF existing_cnt = 0 THEN
+  // 		INSERT INTO accounts VALUES (p_username, p_password, p_email, p_passconfirm, p_role);
+  //     ELSE 
+  // 		SIGNAL SQLSTATE '45000'	
+  // 			SET MESSAGE_TEXT = N'Tên đăng nhập đã tồn tại, vui lòng chọn tên đăng nhập khác';
+  // 	END IF;
+  // END //
+  // DELIMITER ;
+  let sql = 'CALL CreateAccount(?,?,?,?,?)'; 
+  db.query(sql, [username, password, email, passconfirm, role], function(err, data) {
+    if (err) {
+      return res.status(201).json({msg: err.message});
+    } else {
+      res.render('login');
+      console.log({msg: 'Create Success'});
+    }
+  })
+}
+
+Accounts.update = function(req, res, next) {
+
+}
+
+Accounts.delete = function(req, res, next) {
+  const username = req.body.username;
+  // use 'adb.nha_khoa'
+  // DELIMITER //
+
+  // CREATE PROCEDURE DeleteAccountByUsername(IN p_username CHAR(9))
+  // BEGIN
+  //     DELETE FROM accounts
+  //     WHERE username = p_username;
+  // END //
+  let sql = 'CALL DeleteAccountByUsername';
+  db.query(sql, [username], function(err, account){
+    if (err) {
+      return res.status(201).json({msg: err.message});
+    } else {
+      res.render('account', {account: account[0]});
+      res.status(201).json({msg: 'Delete success!'});
+    }
+  })
+}
 
 module.exports = Accounts;
-// module.exports = Dentist;
-// module.exports = Patient;
