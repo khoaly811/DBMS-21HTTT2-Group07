@@ -6,7 +6,7 @@
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
     <!-- Sidebar -->
     <h3>Xem thêm:</h3>
-    <% treatmentDetail.forEach((pat)=>{%>
+    <% staffDetail.forEach((pat)=>{%>
 
     <a href="/staffList/">
       <button class="btn btn-secondary">Back</button>
@@ -33,7 +33,7 @@
                     <label class="small mb-1" for="Staff_ID">ID</label> 
                     
 
-                    <input type="text" id="Staff_ID" class="form-control form-control-lg" value="<%= pat.Staff_ID %>" disabled>
+                    <input type="text" id="Staff_ID" class="form-control form-control-lg" value="<%= pat.STAFF_ID %>" disabled>
                     <!-- <% if (locals.errorMessage1) { %>
                       <div class="small text-danger"><%= errorMessage1%></div>
                     <% } %> -->
@@ -49,7 +49,7 @@
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
                     <label class="small mb-1" for="DOB">Ngày sinh</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.DOB %>" disabled>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.DOB.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' })%>" disabled>
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="Gender">Giới tính</label>

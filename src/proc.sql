@@ -268,4 +268,33 @@
 
 -- DELIMITER ;
 
+-- ================================================================================================================
 
+
+-- USE `adb_nhakhoa`; -- Replace with your actual database name
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getStaff()
+-- BEGIN
+--     -- Select all records from the STAFF table
+--     SELECT *
+--     FROM STAFF;
+-- END $$
+
+-- DELIMITER ;
+
+
+-- ================================================================================================================
+
+-- USE `adb_nhakhoa`; -- Replace with your actual database name
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_getStaffById(IN staff_id_param VARCHAR(9))
+-- BEGIN
+--     -- Select staff information from the STAFF table based on the provided STAFF_ID
+--     SELECT *
+--     FROM STAFF
+--     WHERE STAFF_ID = staff_id_param;
+-- END $$
+
+-- DELIMITER ;

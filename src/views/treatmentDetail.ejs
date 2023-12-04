@@ -42,7 +42,7 @@
                     <% } %> -->
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="patientName">Nha sĩ chính</label>
+                    <label class="small mb-1" for="patientName"><a href="/dentistDetail/<%= pat.DENTIST_ID %>" style="text-decoration: none;color: black;">Nha sĩ chính</a></label>
                     <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.DentistName %>" disabled>
                     <!-- <% if (locals.errorMessage2) { %>
                       <div class="small text-danger"><%= errorMessage2 %></div>
@@ -51,11 +51,11 @@
                 </div>
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
-                    <label class="small mb-1" for="DOB">Nha sĩ phụ</label>
+                    <label class="small mb-1" for="DOB"><a href="/dentistDetail/<%= pat.ASSISTANT_ID %>" style="text-decoration: none;color: black;">Nha sĩ phụ</a></label>
                     <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.AssistantName %>" disabled>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Bệnh nhân được điều trị</label>
+                    <label class="small mb-1" for="Gender"><a href="/patientProfile/<%= pat.PATIENT_ID %>" style="text-decoration: none;color: black;">Bệnh nhân được điều trị</a></label>
                     <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.PatientName %>" disabled>
                   </div>
                   
@@ -71,7 +71,7 @@
                       </select>
                   </div>
                   <div class="col-md-6">
-                    <label class="small mb-1" for="Gender">Ngày điều trị đầu tiên</label>
+                    <label class="small mb-1" for="Gender"><a href="/appointmentDetail/<%= pat.TREATMENT_ID %>/APP01" style="text-decoration: none;color: black;">Ngày điều trị đầu tiên</a> </label>
                     <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>" disabled>
                   </div>
                 </div>      

@@ -20,4 +20,58 @@ Dentist.getAll = function (req, res, next) {
     });
 };
 
+Dentist.navSystemMag = function(req, res, next) {
+    // No need for a database query in this case
+    res.render('navSystemMag');
+};
+
+Dentist.staffList = function(req, res, next) {
+    // USE `adb_nhakhoa`; -- Replace with your actual database name
+    // DELIMITER $$
+    
+    // CREATE PROCEDURE sp_getStaff()
+    // BEGIN
+    //     -- Select all records from the STAFF table
+    //     SELECT *
+    //     FROM STAFF;
+    // END $$
+    
+    // DELIMITER ;
+    
+    let sql= `call sp_getStaff()`;
+    
+    db.query(sql, function(err, staffList) {
+        if (err) {
+            return next(err);
+        }
+        res.render('staffList', { staffList: staffList[0] });
+    });
+};
+
+
+Dentist.staffDetail = function(req, res, next) {
+    const staffID = req.params.id;
+    // USE `adb_nhakhoa`; -- Replace with your actual database name
+    // DELIMITER $$
+    
+    // CREATE PROCEDURE sp_getStaffById(IN staff_id_param VARCHAR(9))
+    // BEGIN
+    //     -- Select staff information from the STAFF table based on the provided STAFF_ID
+    //     SELECT *
+    //     FROM STAFF
+    //     WHERE STAFF_ID = staff_id_param;
+    // END $$
+    
+    // DELIMITER ;
+    let sql = `CALL sp_getStaffById('${staffID}')`;
+    
+    
+    db.query(sql, function(err, staffDetail) {
+        if (err) {
+            return next(err);
+        }
+        res.render('staffDetail', { staffDetail: staffDetail[0] });
+    });
+};
+
 module.exports = Dentist;
