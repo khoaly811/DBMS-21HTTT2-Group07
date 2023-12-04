@@ -1,4 +1,4 @@
-const db = require("./db.js");
+const db = require('../models/db.js');
 
 const Appointment = function(appointment) {
     this.appointment_id = appointment.APPOINTMENT_ID;
