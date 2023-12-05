@@ -1,29 +1,40 @@
 const db = require('../models/db');
 
 const login = function(req, res, next){
+    console.log(req.body);
     const username = req.body.username;
     const password = req.body.password;
     db.query('SELECT username, password, role FROM accounts where username = ? AND password = ?;', [username, password], function(err, account){
         if(err){
             next(err);
         } else {
-            console.log(account);
-            if (account.role === 'admin'){
-                res.render('admin');
+            console.log(account[0]);
+            if (account[0].role === 'admin'){
+                // req.session.account.username = account.username;
+                // res.session.account.role = 'admin';
+                res.status(200).json(account[0]);
+                res.redirect('/bookingAppointment');
             }
-            else if(account.role === 'dentist'){
-                res.render('dentistDetail');
+            else if(account[0].role === 'dentist'){
+                // req.session.account.username = account.username;
+                // res.session.account.role = 'dentist';
+                res.status(200).json(account[0]);
+                res.redirect('/bookingAppointment');
             }
-            else if(account.role === 'staff') {
-                res.render('staffDetail');
+            else if(account[0].role === 'staff') {
+                // req.session.account.username = account.username;
+                // res.session.account.role = 'staff';
+                res.status(200).json(account[0]);
+                res.redirect('/bookingAppointment');
             }
             else {
-                res.render('bookAppointment');
+                // req.session.account.username = account.username;
+                // res.session.account.role = 'patient';
+                res.status(200).json(account[0]);
+                res.redirect('/bookingAppointment');
             }
-            req.session.username = account.username;
-            res.status(200).json([account.username, account.email, account.role]);
-        } 
-    })
+        }
+    });
 }
 
 const verify = function(req, res){
