@@ -298,3 +298,61 @@
 -- END $$
 
 -- DELIMITER ;
+
+
+-- ================================================================================================================
+
+
+-- USE `adb_nhakhoa`;
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_updateAppointmentAndTreatmentDetails(
+--     IN appointment_id_param VARCHAR(9),
+--     IN treatment_id_param VARCHAR(9),
+--     IN new_appointment_date_param DATE,
+--     IN new_appointment_shift_param VARCHAR(255),
+--     IN new_description_param VARCHAR(255)
+-- )
+-- BEGIN
+--     -- Update APPOINTMENT table
+--     UPDATE APPOINTMENT
+--     SET
+--         APPOINTMENT_DATE = new_appointment_date_param,
+--         APPOINTMENT_SHIFT = new_appointment_shift_param
+--     WHERE
+--         APPOINTMENT_ID = appointment_id_param
+--         AND TREATMENT_ID = treatment_id_param;
+
+--     -- Update TREATMENT table
+--     UPDATE TREATMENT
+--     SET
+--         DESCRIPTION = new_description_param
+--     WHERE
+--         TREATMENT_ID = treatment_id_param;
+-- END $$
+
+-- DELIMITER ;
+
+-- ================================================================================================================
+
+-- USE `adb_nhakhoa`;
+-- DELIMITER $$
+
+-- CREATE PROCEDURE sp_createNewTreatmentWithAppointment()
+-- BEGIN
+--     DECLARE new_treatment_id INT;
+
+--     -- Get the largest existing TREATMENT_ID and increment by 1
+--     SELECT MAX(TREATMENT_ID) + 1 INTO new_treatment_id FROM TREATMENT;
+
+--     -- Insert a new treatment with the calculated TREATMENT_ID
+--     INSERT INTO TREATMENT (TREATMENT_ID, DENTIST_ID, ASSISTANT_ID, PATIENT_ID, DESCRIPTION, STATUS)
+--     VALUES (new_treatment_id, NULL, NULL, NULL, NULL, NULL);
+
+--     -- Insert a new appointment with TREATMENT_ID and APPOINTMENT_ID set to "APP01"
+--     INSERT INTO APPOINTMENT (APPOINTMENT_ID, TREATMENT_ID, APPOINTMENT_DATE, APPOINTMENT_SHIFT, DESCRIPTION)
+--     VALUES ('APP01', new_treatment_id, NULL, NULL, NULL);
+-- END $$
+
+-- DELIMITER ;
+

@@ -7,7 +7,7 @@ const appointmentController = require('../controllers/appointmentController');
     router.get('/appointListAll', appointmentController.appointListAll);
     router.get('/navAppointmentMag', appointmentController.navAppointmentMag);
     router.get('/requestList', appointmentController.requestList);
-    // router.post('/appointmentDetail/:treatment_id/:appointment_id', appointmentController.updateAppoint);
+    router.post('/appointmentDetail/:treatment_id/:appointment_id', appointmentController.updateAppoint);
 
 
 
