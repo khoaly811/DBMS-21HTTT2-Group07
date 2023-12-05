@@ -20,7 +20,7 @@
                         <label for="Clinic">Clinic</label><br>
                         <% clinics.forEach((clinic) => { %>
                             <input type="radio" name="clinic" id="clinic-branch" value=<%= clinic.clinic_id %>>
-                            <label for="clinic-branch"><%= clinic.clinic_address %></label><br>
+                            <label for="clinic-branch"><%= clinic.CLINIC_ADDRESS %></label><br>
                         <% }) %>
                         <button type="button" data-next>Next</button>
                     </div>

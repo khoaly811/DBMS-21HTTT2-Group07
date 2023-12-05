@@ -12,25 +12,25 @@ const login = function(req, res, next){
             if (account[0].role === 'admin'){
                 // req.session.account.username = account.username;
                 // res.session.account.role = 'admin';
-                res.status(200).json(account[0]);
+                // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
             else if(account[0].role === 'dentist'){
                 // req.session.account.username = account.username;
                 // res.session.account.role = 'dentist';
-                res.status(200).json(account[0]);
+                // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
             else if(account[0].role === 'staff') {
                 // req.session.account.username = account.username;
                 // res.session.account.role = 'staff';
-                res.status(200).json(account[0]);
+                // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
             else {
                 // req.session.account.username = account.username;
                 // res.session.account.role = 'patient';
-                res.status(200).json(account[0]);
+                // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
         }
