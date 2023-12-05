@@ -24,37 +24,13 @@ $(document).ready(function () {
             })
         })
         .then(res => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
+            if (res.redirected && res.status === 200) {
+                window.location.href = res.url;
             }
-            return res.json();
-        })
-        .then(account => {
-            // Handle the response data
-            console.log(account);
-
-            // Check the role from the response
-            const role = account.role;
-
-            // Redirect based on the user's role
-            if (res.redirected && res.status === 200){
-                if (role === "admin") {
-                    window.location.href = "/admin";
-                } else if (role === "dentist") {
-                    window.location.href = "/bookingAppointment";
-                } else if (role === "staff") {
-                    window.location.href = "/bookingAppointment";
-                } else if (role === "patient") {
-                    window.location.href = "/bookingAppointment";
-                } else {
-                    // Handle other roles or show an error
-                    alert("Unknown user role");
-                }
-            } else {
+            else {
                 alert('Username or password is incorrect');
                 throw new Error('Username or password is incorrect');
             }
-            
         })
         .catch(error => {
             // Handle errors during the fetch request
