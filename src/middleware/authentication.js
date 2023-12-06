@@ -1,5 +1,5 @@
 const db = require('../models/db');
-
+const session = require('express-session');
 const login = function(req, res, next){
     console.log(req.body);
     const username = req.body.username;
@@ -10,26 +10,26 @@ const login = function(req, res, next){
         } else {
             console.log(account[0]);
             if (account[0].role === 'admin'){
-                // req.session.account.username = account.username;
-                // res.session.account.role = 'admin';
+                req.session.username = account[0].username;
+                req.session.role = 'admin';
                 // res.status(200).json(account[0]);
-                res.redirect('/bookingAppointment');
+                res.redirect('/admin');
             }
             else if(account[0].role === 'dentist'){
-                // req.session.account.username = account.username;
-                // res.session.account.role = 'dentist';
+                req.session.username = account[0].username;
+                req.session.role = 'dentist';
                 // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
             else if(account[0].role === 'staff') {
-                // req.session.account.username = account.username;
-                // res.session.account.role = 'staff';
+                req.session.username = account[0].username;
+                req.session.role = 'staff';
                 // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
             else {
-                // req.session.account.username = account.username;
-                // res.session.account.role = 'patient';
+                req.session.username = account[0].username;
+                req.session.role = 'patient';
                 // res.status(200).json(account[0]);
                 res.redirect('/bookingAppointment');
             }
@@ -47,11 +47,21 @@ const verify = function(req, res){
             return res.status(404).json({msg: "Account don't exist!"}); 
         } else {
             res.render('login');
-            res.status(200).json(account);
+            // res.status(200).json(account);
         }
     })
 }
 
+const checkAuth = (req, res, next) => {
+    if (req.session && req.session.username && req.session.role) {
+        res.locals.username = req.session.username;
+        res.locals.role = req.session.role;
+    } else {
+        res.locals.username = null;
+        res.locals.role = null;
+    }
+    next();
+};
 
 const logout = function(req, res) {
     req.session.destroy((err) => {
@@ -60,4 +70,4 @@ const logout = function(req, res) {
     });
 }
 
-module.exports = { login, verify, logout };
+module.exports = { login, verify, logout, checkAuth };
