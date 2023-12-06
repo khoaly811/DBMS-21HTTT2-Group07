@@ -45,37 +45,21 @@ Appointment.appointListAll = function (req, res, next) {
 };
 
 Appointment.appointmentDetail = function (req, res, next) {
-  //     USE `adb_nhakhoa`;
-  // DELIMITER $$
+//   CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_findAppointmentByID`(
+//     IN treatment_id_param VARCHAR(9),
+//     IN appointment_id_param VARCHAR(9)
+// )
+// BEGIN
+//     -- Select appointment from APPOINTMENT table based on given TREATMENT_ID and APPOINTMENT_ID
+//     SELECT *
+//     FROM APPOINTMENT
+//     WHERE TREATMENT_ID = treatment_id_param AND APPOINTMENT_ID = appointment_id_param;
 
-  // CREATE PROCEDURE sp_findPrescriptionDetails(
-  //     IN treatment_id_param VARCHAR(9),
-  //     IN appointment_id_param VARCHAR(9)
-  // )
-  // BEGIN
-  //     DECLARE prescription_id_var VARCHAR(9);
-
-  //     -- Find prescription_id based on treatment_id and appointment_id
-  //     SELECT PRESCRIPTION_ID
-  //     INTO prescription_id_var
-  //     FROM PRESCRIPTION
-  //     WHERE TREATMENT_ID = treatment_id_param
-  //       AND APPOINTMENT_ID = appointment_id_param
-  //     LIMIT 1;
-
-  //     -- Check if prescription_id is not null
-  //     IF prescription_id_var IS NOT NULL THEN
-  //         -- Select details from MEDICINE_IN_PRESCRIPTION based on the prescription_id
-  //         SELECT *
-  //         FROM MEDICINE_IN_PRESCRIPTION
-  //         WHERE PRESCRIPTION_ID = prescription_id_var;
-  //     ELSE
-  //         -- If prescription_id is null, return a message or handle as needed
-  //         SELECT 'No prescription found for the given treatment and appointment.' AS Message;
-  //     END IF;
-  // END $$
-
-  // DELIMITER ;
+//     -- Select treatment details based on given TREATMENT_ID
+//     SELECT *
+//     FROM TREATMENT
+//     WHERE TREATMENT_ID = treatment_id_param;
+// END
 
   // USE `adb_nhakhoa`;
   // DELIMITER $$
