@@ -1,4 +1,4 @@
-const db = require('../models/db.js');
+const db = require("../models/db.js");
 
 const Appointment = function (appointment) {
   this.appointment_id = appointment.APPOINTMENT_ID;
@@ -20,6 +20,7 @@ Appointment.appointList = function (req, res, next) {
   //     -- Select appointments from APPOINTMENT table based on given TREATMENT_ID
   //     SELECT *
   //     FROM APPOINTMENT
+        
   //     WHERE TREATMENT_ID = treatment_id_param;
   // END $$
 
@@ -45,21 +46,20 @@ Appointment.appointListAll = function (req, res, next) {
 };
 
 Appointment.appointmentDetail = function (req, res, next) {
-//   CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_findAppointmentByID`(
-//     IN treatment_id_param VARCHAR(9),
-//     IN appointment_id_param VARCHAR(9)
-// )
-// BEGIN
-//     -- Select appointment from APPOINTMENT table based on given TREATMENT_ID and APPOINTMENT_ID
-//     SELECT *
-//     FROM APPOINTMENT
-//     WHERE TREATMENT_ID = treatment_id_param AND APPOINTMENT_ID = appointment_id_param;
-
-//     -- Select treatment details based on given TREATMENT_ID
-//     SELECT *
-//     FROM TREATMENT
-//     WHERE TREATMENT_ID = treatment_id_param;
-// END
+  //   CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_findAppointmentByID`(
+  //     IN treatment_id_param VARCHAR(9),
+  //     IN appointment_id_param VARCHAR(9)
+  // )
+  // BEGIN
+  //     -- Select appointment from APPOINTMENT table based on given TREATMENT_ID and APPOINTMENT_ID
+  //     SELECT *
+  //     FROM APPOINTMENT
+  //     WHERE TREATMENT_ID = treatment_id_param AND APPOINTMENT_ID = appointment_id_param;
+  //     -- Select treatment details based on given TREATMENT_ID
+  //     SELECT *
+  //     FROM TREATMENT
+  //     WHERE TREATMENT_ID = treatment_id_param;
+  // END
 
   // USE `adb_nhakhoa`;
   // DELIMITER $$
@@ -107,7 +107,6 @@ Appointment.appointmentDetail = function (req, res, next) {
       if (err) {
         return next(err);
       }
-
       db.query(
         sqlPrescription,
         [treatment_id, appointment_id],
@@ -143,30 +142,42 @@ Appointment.requestList = function (req, res, next) {
 };
 
 function concatenateStrings(str1, str2) {
-  return str1 +" "+ str2;
+  return str1 + " " + str2;
 }
-
 
 Appointment.updateAppoint = function (req, res, next) {
   console.log(req.body);
   const treatment_id = req.params.treatment_id;
   const appointment_id = req.params.appointment_id;
-
+  const NOTES = req.body.NOTES;
   const APPOINTMENT_DATE = req.body.APPOINTMENT_DATE;
   const APPOINTMENT_SHIFT = req.body.APPOINTMENT_SHIFT;
   const inputGroupSelect01 = req.body.inputGroupSelect01;
   const inputGroupSelect02 = req.body.inputGroupSelect02;
-  const DESCRIPTION =concatenateStrings(inputGroupSelect01, inputGroupSelect02);
+  const DESCRIPTION = concatenateStrings(
+    inputGroupSelect01,
+    inputGroupSelect02
+  );
 
-  var sql = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?)";
+  var sql = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
   db.query(
-    sql,[appointment_id, treatment_id, APPOINTMENT_DATE, APPOINTMENT_SHIFT, DESCRIPTION],
+    sql,
+    [
+      appointment_id,
+      treatment_id,
+      APPOINTMENT_DATE,
+      APPOINTMENT_SHIFT,
+      DESCRIPTION,
+      NOTES,
+    ],
     function (err, patientData) {
       if (err) {
         return next(err);
       }
-      res.redirect("/appointListAll");
+      res.redirect("#");
+
     }
+    
   );
 };
 

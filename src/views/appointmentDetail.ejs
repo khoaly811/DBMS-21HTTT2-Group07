@@ -42,12 +42,24 @@
           <li class="nav-item rounded-3">
             <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
           </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navAppointmentMag">Quản lý cuộc hẹn</a></b>
-          </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navSystemMag">Quản lý nhân viên</a></b>
-          </li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+             <b>Quản lý cuộc hẹn</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 180px;">
+              <li><a class="btn" href="/appointListAll" role="button">Danh sách cuộc hẹn</a></li>
+              <li><a class="btn" href="/requestList" role="button">Danh sách yêu cầu</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+             <b>Quản lý nhân viên</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 190px;">
+              <li><a class="btn" href="/dentistList" role="button">Danh sách nha sĩ</a></li>
+              <li><a class="btn" href="/staffList" role="button">Danh sách nhân viên</a></li>
+            </ul>
+          </div>
 
           <li class="nav-item rounded-3">
             <b><a class="nav-link" href="">Quản lý thuốc</a></b>
@@ -118,6 +130,61 @@
               <div class="card-body">
                 <form action="/appointmentDetail/<%= pat.TREATMENT_ID%>/<%=pat.APPOINTMENT_ID%>" method="POST"
                   id="myForm">
+                  <% appointmentDetail1.forEach((pat2)=>{%>
+
+                  <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="patient_id">Số điện thoại</label> 
+
+                    <input type="text" id="patient_id" class="form-control form-control-lg" value="<%= pat2.PATIENT_ID %>" disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="full_name">Họ và tên</label>
+                    <input type="text" id="full_name" class="form-control form-control-lg" value="<%= pat2.FULL_NAME %>" required disabled>
+                  </div>
+                </div>
+                <%function calculateAge(dateOfBirth) {
+                  const dob = new Date(dateOfBirth);
+                  const today = new Date();
+              
+                  let age = today.getFullYear() - dob.getFullYear();
+                  const monthDiff = today.getMonth() - dob.getMonth();
+              
+                  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                  }
+              
+                  return age;
+                }%>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Tuổi</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= calculateAge(pat2.DOB) %>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="gender">Giới tính</label>
+                    <%if(pat2.GENDER == "M"){%>
+                    <input type="text" id="gender"  class="form-control form-control-lg" value="Nam" required disabled>
+                    <%}%>
+                    <%if(pat2.GENDER == "F"){%>
+                      <input type="text" id="gender"  class="form-control form-control-lg" value="Nữ" required disabled>
+                      <%}%>
+                  </div>
+                  
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="allergies">Tình trạng dị ứng</label>
+                    <input type="text" id="allergies"  class="form-control form-control-lg" rows="1" value="<%= pat2.ALLERGIES%>" required disabled>
+                  </div>
+                
+                </div>
+                  <div style="background-color: grey;height: 1px;width: 100%;margin-top: 50px;margin-bottom: 30px;">
+                  </div>
                   <div class="row gx-3 mb-3">
                     <div class="col-md-6">
 
@@ -158,7 +225,6 @@
                         class="form-control form-control-lg" rows="1" value="<%= pat.APPOINTMENT_STATUS%>" required
                         disabled>
                     </div>
-                    <% appointmentDetail1.forEach((pat2)=>{%>
                       <div class="col-md-6">
                         <label class="small mb-1" for="DESCRIPTION"><a href="/treatment/<%= pat.TREATMENT_ID %>"
                             style="text-decoration: none;color: black;">Miêu tả điều trị</a></label>
@@ -166,6 +232,11 @@
                           rows="1" value="<%= pat2.DESCRIPTION%>" required disabled>
                       </div>
                       <% }) %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="small mb-1" for="NOTES">Mô tả cuộc hẹn</label>
+                    <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg"
+                      rows="2"><%= pat.NOTES %></textarea>
                   </div>
                   <div class="input-group" style="display: none;">
                     <span class="input-group-text">Cập nhật mô tả điều trị</span>
@@ -209,7 +280,6 @@
                           <select id="MEDICINE_NAME<%=index%>" name="MEDICINE_NAME<%=index%>"
                             class="form-select form-select-lg" size="1" required disabled>
                             <!-- Add your options here -->
-                            <%=console.log(index)%>
                               <option value="<%= pat3.MEDICINE_NAME%>">
                                 <%= pat3.MEDICINE_NAME%>
                               </option>
@@ -273,7 +343,7 @@
 
       if (updateButton.textContent === "Update") {
         formElements.forEach(function (element) {
-          if (element.id !== "TREATMENT_ID" && element.id !== "APPOINTMENT_STATUS" && element.id !== "APPOINTMENT_ID" && element.id !== "contraindication" && element.id !== "" && element.id !== "DESCRIPTION") {
+          if (element.id !== "TREATMENT_ID" && element.id !== "APPOINTMENT_STATUS" && element.id !== "APPOINTMENT_ID" && element.id !== "patient_id" && element.id !== "full_name" && element.id !== "DOB" && element.id !== "allergies" && element.id !== "gender" && element.id !== "DESCRIPTION") {
             element.removeAttribute("disabled");
           }
         });

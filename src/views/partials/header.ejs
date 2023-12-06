@@ -42,12 +42,24 @@
           <li class="nav-item rounded-3">
             <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
           </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navAppointmentMag">Quản lý cuộc hẹn</a></b>
-          </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navSystemMag">Quản lý nhân viên</a></b>
-          </li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+             <b>Quản lý cuộc hẹn</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 180px;">
+              <li><a class="btn" href="/appointListAll" role="button">Danh sách cuộc hẹn</a></li>
+              <li><a class="btn" href="/requestList" role="button">Danh sách yêu cầu</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+             <b>Quản lý nhân viên</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 190px;">
+              <li><a class="btn" href="/dentistList" role="button">Danh sách nha sĩ</a></li>
+              <li><a class="btn" href="/staffList" role="button">Danh sách nhân viên</a></li>
+            </ul>
+          </div>
 
           <li class="nav-item rounded-3">
             <b><a class="nav-link" href="">Quản lý thuốc</a></b>

@@ -19,26 +19,30 @@ Treatment.treatListperPatient = function(req, res, next) {
     
     // CREATE PROCEDURE sp_treatment(IN patient_id INT)
     // BEGIN
-    //     SELECT 
-    //         TREATMENT.*, 
-    //         D1.FULL_NAME AS DentistName, 
-    //         D2.FULL_NAME AS AssistantName,
-    //         D1.CLINIC as place
-    //     FROM 
-    //         TREATMENT
-    //     LEFT JOIN 
-    //         DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
-    //     LEFT JOIN 
-    //         DENTIST D2 ON TREATMENT.ASSISTANT_ID = D2.DENTIST_ID
-    //     WHERE 
-    //         TREATMENT.PATIENT_ID = patient_id;
-    // END //
+    //             SELECT 
+//     TREATMENT.*, 
+//     D1.FULL_NAME AS DentistName, 
+//     APPOINTMENT.APPOINTMENT_DATE,
+//     D2.FULL_NAME AS AssistantName,
+//     D1.CLINIC as place
+// FROM 
+//     TREATMENT
+// LEFT JOIN 
+//     DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
+// LEFT JOIN 
+//     DENTIST D2 ON TREATMENT.ASSISTANT_ID = D2.DENTIST_ID
+// LEFT JOIN 
+//     APPOINTMENT ON TREATMENT.TREATMENT_ID = APPOINTMENT.TREATMENT_ID
+// WHERE 
+//     TREATMENT.PATIENT_ID = patient_id and
+//     APPOINTMENT.APPOINTMENT_ID = 'APP01';
+// END
     
     // DELIMITER ;
     let sql= `call sp_treatment('${patientID}')`;
     
     db.query(sql, function(err, treatmentData) {
-        if (err) {
+        if (err) { 
             return next(err);
         }
         res.render('treatmentListperPatient', { treatmentData: treatmentData[0] });
@@ -56,16 +60,18 @@ Treatment.treatmentDetail = function(req, res, next) {
     //     SELECT 
     //         TREATMENT.*, 
     //         APPOINTMENT.APPOINTMENT_DATE,
-    //         D1.CLINIC AS ClinicAddress,
     //         D1.FULL_NAME AS DentistName,
     //         D2.FULL_NAME AS AssistantName,
-    //         PATIENT.FULL_NAME AS PatientName
+    //         PATIENT.FULL_NAME AS PatientName,
+    //          CL.CLINIC_ADDRESS as ClinicAddress
     //     FROM 
     //         TREATMENT
     //     LEFT JOIN 
     //         APPOINTMENT ON TREATMENT.TREATMENT_ID = APPOINTMENT.TREATMENT_ID
     //     LEFT JOIN 
     //         DENTIST D1 ON TREATMENT.DENTIST_ID = D1.DENTIST_ID
+    //      LEFT JOIN 
+    //         CLINIC CL ON DENTIST.CLINIC = CL.CLINIC_ID
     //     LEFT JOIN 
     //         DENTIST D2 ON TREATMENT.ASSISTANT_ID = D2.DENTIST_ID
     //     LEFT JOIN

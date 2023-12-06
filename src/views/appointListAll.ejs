@@ -56,7 +56,7 @@
           <thead>
             <tr>
               <th class="border-bottom">Lần hẹn <i class="fa-solid fa-sort"></i> </th>
-              <th class="border-bottom">Điều trị <i class="fa-solid fa-sort "></i></th>
+              <th class="border-bottom">Bệnh nhân <i class="fa-solid fa-sort "></i></th>
               <th class="border-bottom">Ngày hẹn <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Ca hẹn <i class="fa-solid "></i></th>
               <th class="border-bottom ">Nơi hẹn<i class="fa-solid "></i></th>
@@ -69,7 +69,7 @@
             <% appointListAll.forEach((pat)=>{%>
             <tr>
               <td><%=pat.APPOINTMENT_ID.slice(-2)%></td>
-              <td><%=pat.TREATMENT_ID.slice(-5)%></td>
+              <td><%=pat.FULL_NAME%></td>
              
               <td><%=pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td>
               <td>
