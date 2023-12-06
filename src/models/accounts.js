@@ -9,7 +9,7 @@ const Accounts = function(accounts) {
 };
 
 Accounts.findAll = function(req, res, next) {
-    db.query ('SELECT username, email, role FROM accounts;', function(err, accountList){
+    db.query ('SELECT USERNAME, EMAIL, ROLE FROM accounts;', function(err, accountList){
       if(err) {
         return next(err);
       } else {
@@ -23,7 +23,7 @@ Accounts.findAll = function(req, res, next) {
 
 Accounts.findOne = function(req, res, next) {
   const username = req.params.username;
-  db.query('SELECT username, email, role FROM accounts where username = ?;',[username], function (err, account){
+  db.query('SELECT USERNAME, EMAIL, ROLE FROM accounts where USERNAME = ?;',[username], function (err, account){
     if(err) {
       return next(err);
     } else {
@@ -42,7 +42,7 @@ Accounts.create = function(req, res, next) {
   // BEGIN
   // DECLARE existing_cnt INT;
   // 	-- Check if username has been exist
-  // 	SELECT COUNT(*) INTO existing_cnt FROM accounts where username = p_username;
+  // 	SELECT COUNT(*) INTO existing_cnt FROM accounts where USERNAME = p_username;
   //     IF existing_cnt = 0 THEN
   // 		INSERT INTO accounts VALUES (p_username, p_password, p_email, p_passconfirm, p_role);
   //     ELSE 
@@ -52,7 +52,7 @@ Accounts.create = function(req, res, next) {
   // END //
   // DELIMITER ;
   let sql = 'CALL CreateAccount(?,?,?,?,?)'; 
-  db.query(sql, [username, password, email, passconfirm, role], function(err, data) {
+  db.query(sql, [username, password, email, passconfirm, role], function(err) {
     if (err) {
       return res.status(201).json({msg: err.message});
     } else {
@@ -74,7 +74,7 @@ Accounts.delete = function(req, res, next) {
   // CREATE PROCEDURE DeleteAccountByUsername(IN p_username CHAR(9))
   // BEGIN
   //     DELETE FROM accounts
-  //     WHERE username = p_username;
+  //     WHERE USERNAME = p_username;
   // END //
   let sql = 'CALL DeleteAccountByUsername';
   db.query(sql, [username], function(err, account){

@@ -61,38 +61,38 @@ Appointment.appointmentDetail = function (req, res, next) {
 //     WHERE TREATMENT_ID = treatment_id_param;
 // END
 
-  // USE `adb_nhakhoa`;
-  // DELIMITER $$
+//   USE `adb_nhakhoa`;
+//   DELIMITER $$
 
-  // CREATE PROCEDURE sp_findPrescriptionDetails(
-  //     IN treatment_id_param VARCHAR(9),
-  //     IN appointment_id_param VARCHAR(9)
-  // )
-  // BEGIN
-  //     DECLARE prescription_id_var VARCHAR(9);
+//   CREATE PROCEDURE sp_findPrescriptionDetails(
+//       IN treatment_id_param VARCHAR(9),
+//       IN appointment_id_param VARCHAR(9)
+//   )
+//   BEGIN
+//       DECLARE prescription_id_var VARCHAR(9);
 
-  //     -- Find prescription_id based on treatment_id and appointment_id
-  //     SELECT PRESCRIPTION_ID
-  //     INTO prescription_id_var
-  //     FROM PRESCRIPTION
-  //     WHERE TREATMENT_ID = treatment_id_param
-  //       AND APPOINTMENT_ID = appointment_id_param
-  //     LIMIT 1;
+//       -- Find prescription_id based on treatment_id and appointment_id
+//       SELECT PRESCRIPTION_ID
+//       INTO prescription_id_var
+//       FROM PRESCRIPTION
+//       WHERE TREATMENT_ID = treatment_id_param
+//         AND APPOINTMENT_ID = appointment_id_param
+//       LIMIT 1;
 
-  //     -- Check if prescription_id is not null
-  //     IF prescription_id_var IS NOT NULL THEN
-  //         -- Select details from MEDICINE_IN_PRESCRIPTION and join with MEDICINE table
-  //         SELECT MIP.*, M.NAME AS MEDICINE_NAME, M.DESCRIPTION AS MEDICINE_DESCRIPTION
-  //         FROM MEDICINE_IN_PRESCRIPTION MIP
-  //         JOIN MEDICINE M ON MIP.MEDICINE_ID = M.MEDICINE_ID
-  //         WHERE MIP.PRESCRIPTION_ID = prescription_id_var;
-  //     ELSE
-  //         -- If prescription_id is null, return a message or handle as needed
-  //         SELECT 'No prescription found for the given treatment and appointment.' AS Message;
-  //     END IF;
-  // END $$
+//       -- Check if prescription_id is not null
+//       IF prescription_id_var IS NOT NULL THEN
+//           -- Select details from MEDICINE_IN_PRESCRIPTION and join with MEDICINE table
+//           SELECT MIP.*, M.NAME AS MEDICINE_NAME, M.DESCRIPTION AS MEDICINE_DESCRIPTION
+//           FROM MEDICINE_IN_PRESCRIPTION MIP
+//           JOIN MEDICINE M ON MIP.MEDICINE_ID = M.MEDICINE_ID
+//           WHERE MIP.PRESCRIPTION_ID = prescription_id_var;
+//       ELSE
+//           -- If prescription_id is null, return a message or handle as needed
+//           SELECT 'No prescription found for the given treatment and appointment.' AS Message;
+//       END IF;
+//   END $$
 
-  // DELIMITER ;
+//   DELIMITER ;
 
   const treatment_id = req.params.treatment_id;
   const appointment_id = req.params.appointment_id;

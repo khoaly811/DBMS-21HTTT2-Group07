@@ -64,7 +64,9 @@
 
 // DELIMITER ;
 
-// CREATE PROCEDURE sp_get_dentist (in clinicID int, in wishDate date, in wishWeekday char(1), in shift int)
+// delimiter //
+
+// create procedure sp_get_dentist(in clinicID int, in wishDate char(1), in shift int)
 // begin
 // 	select distinct D.dentist_id, D.full_name
 // 	from 
