@@ -9,9 +9,17 @@ const Dentist = function(patient){
 };
 
 Dentist.getAll = function (req, res, next) {
-    
+    const appointment_date = new Date(req.body.appointment_date)
+    let weekDay = '0'
 
-    db.query("call sp_get_dentist(?,?,?)", [req.body.clinic, 5, req.body.shift],
+    if (appointment_date.getDay() == 0)
+        weekDay = 8
+    else {
+        weekDay = (appointment_date.getDay() - 1).toString()
+    }
+
+    db.query("call sp_get_dentist(?,?,?, ?)", [req.body.clinic, req.body.appointment_date,
+        weekDay, req.body.shift],
      function (err, data) {
         if(err) {
           next(err)

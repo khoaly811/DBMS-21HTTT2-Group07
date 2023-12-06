@@ -19,7 +19,7 @@
                     <div class="card" data-step>
                         <label for="Clinic">Clinic</label><br>
                         <% clinics.forEach((clinic) => { %>
-                            <input type="radio" name="clinic" id="clinic-branch" value=<%= clinic.clinic_id %>>
+                            <input type="radio" name="clinic" id="clinic-branch" value=<%= clinic.CLINIC_ID %>>
                             <label for="clinic-branch"><%= clinic.CLINIC_ADDRESS %></label><br>
                         <% }) %>
                         <button type="button" data-next>Next</button>
