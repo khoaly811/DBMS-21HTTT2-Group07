@@ -154,31 +154,74 @@ Appointment.updateAppoint = function (req, res, next) {
   const APPOINTMENT_SHIFT = req.body.APPOINTMENT_SHIFT;
   const inputGroupSelect01 = req.body.inputGroupSelect01;
   const inputGroupSelect02 = req.body.inputGroupSelect02;
-  const DESCRIPTION = concatenateStrings(
-    inputGroupSelect01,
-    inputGroupSelect02
-  );
+  let PRESCRIPTION_ID;
+  if(req.body.PRESCRIPTION_ID){
+    if(req.body.PRESCRIPTION_ID.length ==9)PRESCRIPTION_ID =  req.body.PRESCRIPTION_ID;
+    else{
+  PRESCRIPTION_ID =  req.body.PRESCRIPTION_ID[0];
+  console.log(req.body.PRESCRIPTION_ID.length);}
+}
+  const DESCRIPTION = concatenateStrings(inputGroupSelect01, inputGroupSelect02);
 
-  var sql = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
+  // Assuming you have an array of medicine data, replace this with your actual array
+  const medicineDataArray = [];
+
+// Iterate through keys and construct the array
+for (let i = 0; req.body[`MEDICINE_NAME${i}`] !== undefined; i++) {
+  const medicineData = {
+    medicine_name: req.body[`MEDICINE_NAME${i}`],
+    new_quantity: req.body[`QUANTITY${i}`],
+    medicine_id: req.body[`MEDICINE_ID${i}`]
+  };
+  medicineDataArray.push(medicineData);
+}
+console.log(medicineDataArray);
+
+
+  // Call the first stored procedure
+  var sql1 = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
   db.query(
-    sql,
-    [
-      appointment_id,
-      treatment_id,
-      APPOINTMENT_DATE,
-      APPOINTMENT_SHIFT,
-      DESCRIPTION,
-      NOTES,
-    ],
-    function (err, patientData) {
-      if (err) {
-        return next(err);
-      }
-      res.redirect("#");
+      sql1,
+      [
+          appointment_id,
+          treatment_id,
+          APPOINTMENT_DATE,
+          APPOINTMENT_SHIFT,
+          DESCRIPTION,
+          NOTES,
+      ],
+      function (err1, patientData1) {
+          if (err1) {
+              return next(err1);
+          }
 
-    }
-    
+          // Iterate over the array and call the second stored procedure for each entry
+          for (const medicineData of medicineDataArray) {
+              var sql2 = "call sp_updateMedicineInPrescription(?,?,?,?,?,?)";
+              db.query(
+                  sql2,
+                  [
+                      medicineData.medicine_name,
+                      PRESCRIPTION_ID,
+                      medicineData.new_quantity,
+                      treatment_id,
+                      appointment_id,
+                      medicineData.medicine_id
+                  ],
+                  function (err2, patientData2) {
+                      if (err2) {
+                          return next(err2);
+                      }
+                      // Continue or handle the result if needed
+                  }
+              );
+          }
+
+          // Both stored procedures executed successfully
+          res.redirect("#");
+      }
   );
 };
+
 
 module.exports = Appointment;
