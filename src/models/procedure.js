@@ -80,3 +80,63 @@
 //     where appointment_date <> wishDate) as DS
 //     on S.dentist_id = DS.dentist_id;
 // end
+
+// CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_updateMedicineInPrescription`(
+//     IN medicine_name_param VARCHAR(255),
+//     IN prescription_id_param VARCHAR(9),
+//     IN new_quantity_param INT,
+//     IN treatment_id_param VARCHAR(9),
+//     IN appointment_id_param VARCHAR(9),
+// 	IN medicine_old_param VARCHAR(255)
+// )
+// BEGIN
+//     DECLARE medicine_id_var VARCHAR(9);
+//     DECLARE prescription_id_var VARCHAR(9);
+
+
+//     -- Find MEDICINE_ID based on given NAME
+//     SELECT MEDICINE_ID INTO medicine_id_var
+//     FROM MEDICINE
+//     WHERE NAME = medicine_name_param
+//     LIMIT 1;
+
+//     -- Check if MEDICINE_ID is not null
+//     IF medicine_id_var IS NOT NULL THEN
+//         -- Check if the medicine already exists in MEDICINE_IN_PRESCRIPTION
+//         IF EXISTS (
+//             SELECT 1
+//             FROM MEDICINE_IN_PRESCRIPTION
+//             WHERE PRESCRIPTION_ID = prescription_id_param
+//               AND MEDICINE_ID = medicine_old_param
+//         ) THEN
+//             -- Update MEDICINE_IN_PRESCRIPTION table
+//             UPDATE MEDICINE_IN_PRESCRIPTION
+//             SET
+//                 QUANTITY = new_quantity_param,
+//                 MEDICINE_ID = medicine_id_var
+//             WHERE
+//                 PRESCRIPTION_ID = prescription_id_param
+//                 AND MEDICINE_ID = medicine_old_param;
+//         ELSE
+// 			SELECT COALESCE(MAX(PRESCRIPTION_ID), 0) + 1 INTO prescription_id_var
+//             FROM PRESCRIPTION;
+//             -- Insert new row in MEDICINE_IN_PRESCRIPTION table
+           
+// 			INSERT INTO PRESCRIPTION (PRESCRIPTION_ID, TREATMENT_ID, APPOINTMENT_ID)
+// 			VALUES (prescription_id_var, treatment_id_param, appointment_id_param);
+//             -- Check if the prescription already exists in PRESCRIPTION
+//             IF NOT EXISTS (
+//                 SELECT 1
+//                 FROM MEDICINE_IN_PRESCRIPTION
+//                 WHERE PRESCRIPTION_ID = prescription_id_var
+//             ) THEN
+//                 -- Insert new row in PRESCRIPTION table
+//                  INSERT INTO MEDICINE_IN_PRESCRIPTION (PRESCRIPTION_ID, MEDICINE_ID, QUANTITY)
+// 				VALUES (prescription_id_var, medicine_id_var, new_quantity_param);
+//             END IF;
+//         END IF;
+//     ELSE
+//         -- If MEDICINE_ID is null, return a message or handle as needed
+//         SELECT 'No medicine found for the given name.' AS Message;
+//     END IF;
+// END

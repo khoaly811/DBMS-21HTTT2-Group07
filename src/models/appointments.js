@@ -161,6 +161,10 @@ Appointment.updateAppoint = function (req, res, next) {
   PRESCRIPTION_ID =  req.body.PRESCRIPTION_ID[0];
   console.log(req.body.PRESCRIPTION_ID.length);}
 }
+else{
+  PRESCRIPTION_ID = "PRE000000";
+}
+console.log(PRESCRIPTION_ID);
   const DESCRIPTION = concatenateStrings(inputGroupSelect01, inputGroupSelect02);
 
   // Assuming you have an array of medicine data, replace this with your actual array
@@ -168,10 +172,11 @@ Appointment.updateAppoint = function (req, res, next) {
 
 // Iterate through keys and construct the array
 for (let i = 0; req.body[`MEDICINE_NAME${i}`] !== undefined; i++) {
+  console.log(req.body[`MEDICINE_NAME${i}`]);
   const medicineData = {
     medicine_name: req.body[`MEDICINE_NAME${i}`],
     new_quantity: req.body[`QUANTITY${i}`],
-    medicine_id: req.body[`MEDICINE_ID${i}`]
+    medicine_id: req.body[`MEDICINE_ID${i}`] || "MED000000"
   };
   medicineDataArray.push(medicineData);
 }

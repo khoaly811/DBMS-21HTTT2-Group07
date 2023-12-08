@@ -18,3 +18,7 @@ exports.staffList = function(req, res, next) {
 exports.navSystemMag = function(req, res, next) { 
     dentistModel.navSystemMag(req,res,next);
 }
+
+exports.detail = function(req, res, next) { 
+    dentistModel.detail(req,res,next);
+}

@@ -344,7 +344,7 @@
                             <div class="alert alert-warning" role="alert">
                               This patient have no medicine yet !
                             </div>
-                            <button type="button" class="btn btn-primary mt-3" id="addRowBtn">Add Row</button>
+                            <button type="button" class="btn btn-secondary mt-3 addtreatment" id="addRowBtn" style="margin-bottom: 20px;display: none;">+</button>
                             <div id="dynamicFormContainer"></div>
                           <% } %>
                             <button id="updateButton" class="btn btn-primary" type="button">Update</button>
@@ -365,15 +365,22 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     document.getElementById("updateButton").addEventListener("click", function () {
+      var addtreatment = document.querySelector('.addtreatment');
       var inputGroup = document.querySelector('.input-group');
       var formElements = document.querySelectorAll("form input, form textarea,  form select");
       var updateButton = document.getElementById("updateButton");
+if(addtreatment){
+      if (addtreatment.style.display === 'none') {
+        addtreatment.style.display = '';
+      } else {
+        addtreatment.style.display = 'none';
+      }
 
       if (inputGroup.style.display === 'none') {
         inputGroup.style.display = '';
       } else {
         inputGroup.style.display = 'none';
-      }
+      }}
 
       if (updateButton.textContent === "Update") {
         formElements.forEach(function (element) {
@@ -396,7 +403,7 @@
   </script>
   <script>
     // Counter to keep track of the index for each new row
-    let rowIndex = 0;
+    let rowIndex = -1;
   
     // Function to add a new row to the dynamic form
     function addNewRow() {
@@ -408,7 +415,7 @@
       <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                               <label class="small mb-1" for="MEDICINE_NAME">Tên thuốc</label>
-                              <select id="MEDICINE_NAME" name="MEDICINE_NAME"
+                              <select id="MEDICINE_NAME${rowIndex}" name="MEDICINE_NAME${rowIndex}"
                                 class="form-select form-select-lg" size="1" required >
                                 <!-- Add your options here -->
                             
@@ -444,7 +451,7 @@
 
                             <div class="col-md-6">
                               <label class="small mb-1" for="QUANTITY">Số lượng</label>
-                              <input type="text" id="QUANTITY" name="QUANTITY"
+                              <input type="text" id="QUANTITY" name="QUANTITY${rowIndex}"
                                 class="form-control form-control-lg" value="" required >
                             </div>
 

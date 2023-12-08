@@ -9,14 +9,12 @@
     <h3>Xem thêm:</h3>
     <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
       <button class="btn btn-secondary">Danh sách điều trị</button>
-  </a>  
-
- 
-   
-  <h5></h5>
+  </a> <h5></h5>
   <a href="/invoiceList/<%= pat.PATIENT_ID %>">
-    <button class="btn btn-secondary">Danh sách thanh toán</button></a>
-    <h5>ㅤ</h5>
+    <button class="btn btn-secondary">Danh sách thanh toán</button></a> <h5></h5>
+    <a href="/prescriptionList_ALL/<%= pat.PATIENT_ID %>">
+      <button class="btn btn-secondary">Danh sách đơn thuốc</button></a> <h5></h5>
+
     <a href="/unPaidTreatment/<%= pat.PATIENT_ID %>"><button class="btn btn-secondary">Danh sách chưa trả</button></a>
   </div>
 
