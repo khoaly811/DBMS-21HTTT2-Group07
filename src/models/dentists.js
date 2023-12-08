@@ -24,6 +24,13 @@ Dentist.getAll = function (req, res, next) {
         if(err) {
           next(err)
         }
+        let tempUsername = req.session.username
+        req.session.clinic = req.body.clinic
+        req.session.appointment_date = req.body.appointment_date
+        req.session.shift = req.body.shift
+        req.session.treatment = req.body.treatment
+        req.session.username = tempUsername
+        console.log(req.session.username)
         res.render('bookDentist', { dentists: data[0]})
     });
 };

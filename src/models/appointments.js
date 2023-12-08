@@ -223,5 +223,4 @@ console.log(medicineDataArray);
   );
 };
 
-
 module.exports = Appointment;

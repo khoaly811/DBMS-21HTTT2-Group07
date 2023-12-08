@@ -97,7 +97,7 @@ Treatment.treatmentDetail = function(req, res, next) {
 
 
 Treatment.newTreatment = function (result) {
-    // db.query('GOI FUNCTION)'
+    db.query("call sp_get_dentist(?,?)", [req.session.dentist_id, req.session.username]);
 }
 
 Treatment.unPaidTreatment = function(req, res, next) {
