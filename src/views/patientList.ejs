@@ -56,7 +56,7 @@
               <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
               <th class="border-bottom ">Tình trạng dị ứng<i class="fa-solid "></i></th>
               <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
-              <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+              <!-- <th class="border-bottom ">Xóa<i class="fa-solid "></i></th> -->
             </tr>
           </thead>
           <tbody id="bookTableBody">
@@ -101,15 +101,7 @@
                   </a>
                 </div>
               </td>
-              <td>
-                <div style="z-index: 31;">
-                  <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
-                    <button type="submit" class="btn">
-                      <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)" class="" alt="Small Image " width="20" height="20">
-                    </button>
-                  </form>
-                </div>
-              </td>
+              
               <!-- Thêm dòng để xóa -->
             </tr>
             <% }) %>

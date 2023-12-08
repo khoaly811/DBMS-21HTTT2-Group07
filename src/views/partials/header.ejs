@@ -68,11 +68,13 @@
           <!-- ======================================================================================================== -->
           <li class="nav-item ml-auto rounded-3">
             <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+              <%if(username){%>
               <div class="user-profile">
                 <p><%= username%> </p>
                 <p></p> <%= role%></p>
               </div>
-              <div class="img-box">
+             
+              <div class="img-box">               
                 <img src="../public/image/admin_ava.jpeg" alt="some user image" />
               </div>
             </div>
@@ -85,7 +87,7 @@
                   <a href=""><i class="far fa-bell"></i>Thông báo</a>
                 </li>
                 <li>
-                  <a href="/requétList"><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                  <a href="/requestList"><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
                 </li>
                 <!-- <li>
                         <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
@@ -100,7 +102,40 @@
                 </li>
               </ul>
             </div>
+<%}%>
+<%if(!username){%>
+  <div class="user-profile">
+    <p><a style="text-decoration: none;color: black;" href="/">Please sign in</a> </p>
+  </div>
+  <div class="img-box">               
+    <img src="../public/image/users.jpg" alt="some user image" />
+  </div>
+</div>
+<div class="menu">
+  <ul>
+    <li>
+      <a href="/"><i class="fa-regular fa-user"></i>Tài khoản</a>
+    </li>
+    <li>
+      <a href=""><i class="far fa-bell"></i>Thông báo</a>
+    </li>
+    <li>
+      <a href="/"><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+    </li>
+    <!-- <li>
+            <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
+          </li> -->
 
+    <li>
+      <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+    </li>
+
+    <li>
+      <a href="/"><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+    </li>
+  </ul>
+</div>
+<%}%>
             <script>
               let profile = document.querySelector(".profile");
               let menu = document.querySelector(".menu");

@@ -73,7 +73,12 @@
                   <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= pat.NOTES %></textarea>
                 </div>
                 <% }) %>
-                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                <%if(role =="admin"){%>
+
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <%}else{%>
+                    <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                    <%}%>
 
                 
               </form>

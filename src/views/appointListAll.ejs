@@ -2,6 +2,7 @@
 
 
 <body>
+
   <br>
 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
@@ -61,7 +62,9 @@
               <th class="border-bottom"> Ca hẹn <i class="fa-solid "></i></th>
               <th class="border-bottom ">Nơi hẹn<i class="fa-solid "></i></th>
               <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
+              <%if(role =="staff" || role =="admmin"){%>
               <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+              <%}%>
             </tr>
           </thead>
           <tbody id="bookTableBody">
@@ -86,6 +89,7 @@
                   </a>
                 </div>
               </td>
+              <%if(role =="staff" || role =="admmin"){%>
               <td>
                 <div style="z-index: 31;">
                   <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
@@ -95,7 +99,7 @@
                   </form>
                 </div>
               </td>
-             
+              <%}%>
 
               <!-- Thêm dòng để xóa -->
             </tr>

@@ -2,10 +2,13 @@ const express = require('express');
 const fs = require('fs');
 const csv = require('csv-parser');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const app = express();
 const MAIN_PORT = 9696; // Change to a number, not a string
 
 // Check if the server.pid file exists
+
+
 if (fs.existsSync('server.pid')) {
   // Read the PID of the previous server
   const previousServerPID = fs.readFileSync('server.pid', 'utf8');
@@ -33,7 +36,7 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const accountRoute = require("./routes/accountRoute");
 const dentistRoute = require("./routes/dentistRoute");
-const authRoute = require("./routes/authRoute");
+const authRoute = require("./routes/authRoute"); 
 
 const internalServerErrorMiddleware = require('./middleware/internalServerError');
 
@@ -61,11 +64,24 @@ db.getConnection((err, connection) => {
 app.listen(MAIN_PORT, function () {
   console.log(`Server started on port ${MAIN_PORT}`);
 });
-app.use(session({
-  secret: 'healthUs', // Change this to a secure random string
-  resave: false,
-  saveUninitialized: true,
-}));
+const sessionStoreOptions = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+};
+
+const sessionStore = new MySQLStore(sessionStoreOptions);
+
+app.use(
+  session({
+    secret: 'healthUs',
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore, // Use the MySQL session store
+  })
+);
 app.use('/public', express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.json());

@@ -65,7 +65,12 @@
                   <textarea disabled id="DENTIST_NAME" name="DENTIST_NAME" class="form-control form-control-lg" rows="2"><%= pat.DENTIST_NAME %></textarea>
                 </div>
 
-                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                <%if(role =="staff" || role =="admmin"){%>
+
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <%}else{%>
+                    <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                    <%}%>
 
                 
               </form>
