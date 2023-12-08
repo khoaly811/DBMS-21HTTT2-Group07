@@ -30,7 +30,7 @@ Dentist.getAll = function (req, res, next) {
         req.session.shift = req.body.shift
         req.session.treatment = req.body.treatment
         req.session.username = tempUsername
-        console.log(req.session.username)
+        
         res.render('bookDentist', { dentists: data[0]})
     });
 };

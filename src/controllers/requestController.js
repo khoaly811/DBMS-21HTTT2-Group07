@@ -15,4 +15,5 @@ exports.showDentist = function (req, res, next) {
 exports.writeDownTreatment = function (req, res, next) {
   Treatment.newTreatment(req, res, next)
   Request.newRequest(req, res, next)
+  res.send('OK')
 }

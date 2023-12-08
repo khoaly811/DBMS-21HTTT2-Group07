@@ -140,3 +140,38 @@
 //         SELECT 'No medicine found for the given name.' AS Message;
 //     END IF;
 // END
+
+// delimiter //
+
+// create procedure sp_insert_appointment(in treatmentID char(9), in appointmentDate date, in appointmentShift tinyint)
+// begin
+// 	declare var_appointment_id char(9);
+// 	select coalesce(max(APPOINTMENT_ID), 0) + 1 into var_appointment_id from appointment;
+//     insert into appointment(APPOINTMENT_ID, TREATMENT_ID, APPOINTMENT_DATE, APPOINTMENT_SHIFT, APPOINTMENT_STATUS)
+//     values
+//     (var_appointment_id, treatmentID, appointmentDate, appointmentShift, 'On Plan');
+// end //
+
+// delimiter //
+
+// create procedure sp_insert_treatment(in dentistID char(6), in patientID char(9), in description varchar(50),
+// in appointmentDate date, in appointmentShift tinyint)
+// begin
+// 	declare var_treatment_id char(9);
+// 	select coalesce(max(TREATMENT_ID), 0) + 1 into var_treatment_id from treatment;
+//     insert into treatment(TREATMENT_ID, DENTIST_ID, PATIENT_ID, DESCRIPTION, TREATMENT_STATUS)
+//     values
+//     (var_treatment_id, dentistID, patientID, description, 'On Plan');
+//     call sp_insert_appointment(var_treatment_id, appointmentDate, appointmentShift);
+// end //
+
+// delimiter //
+
+// create procedure sp_insert_request(in patientID char(9), in sendDate date, in wishDate date)
+// begin
+// 	declare var_request_id char(9);
+// 	select coalesce(max(REQUEST_ID), 0) + 1 into var_request_id from request;
+//     insert into request(REQUEST_ID, PATIENT_ID, SEND_DATE, WISH_DATE)
+//     values
+//     (var_request_id, patientID, sendDate, wishDate);
+// end //
