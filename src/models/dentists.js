@@ -89,6 +89,68 @@ Dentist.staffDetail = function(req, res, next) {
     });
 };
 
+Dentist.dentistList = function(req, res, next) {
+//     CREATE PROCEDURE sp_getDentistAndClinicInfo()
+// BEGIN
+//     -- Select FULL_NAME from DENTIST table and CLINIC_ADDRESS from CLINIC table based on given CLINIC_ID
+//     SELECT
+//         D.FULL_NAME AS DENTIST_NAME,
+//         C.CLINIC_ADDRESS
+//     FROM
+//         DENTIST D
+//     JOIN
+//         CLINIC C ON D.CLINIC = C.CLINIC_ID;
+    
+// END $$
+
+// DELIMITER ;
+    
+let sql = `call sp_getDentistAndClinicInfo()`;
+
+db.query(sql, function(err, dentistList) {
+    if (err) {
+        return next(err);
+    }
+    console.log(dentistList);
+    // Process the result to convert comma-separated values into arrays
+    // dentistList = dentistList.map(dentist => {
+    //     return {
+    //         ...dentist,
+    //         SCHEDULE_WEEKDAYS: dentist.SCHEDULE_WEEKDAYS ? dentist.SCHEDULE_WEEKDAYS.split(',') : [],
+    //         SCHEDULE_SHIFTS: dentist.SCHEDULE_SHIFTS ? dentist.SCHEDULE_SHIFTS.split(',') : []
+    //     };
+    // });
+    // console.log(dentistList);
+    res.render('dentistList', { dentistList: dentistList });
+});
+};
+
+Dentist.dentistDetail = function(req, res, next) { 
+    const dentistID = req.params.id;
+
+    // CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getDentistAndClinicInfo`()
+    // BEGIN
+    //     -- Select FULL_NAME from DENTIST table and CLINIC_ADDRESS from CLINIC table based on given CLINIC_ID
+    //     SELECT
+    //         D.*,
+    //         SCH.*
+    //     FROM
+    //         DENTIST D
+    //     JOIN
+    //         DENTIST_SCHEDULE SCH ON D.DENTIST_ID = SCH.DENTIST_ID;
+        
+    // END
+        
+        let sql= `call sp_getDentistAndClinicInfoDetail('${dentistID}')`;
+        
+        db.query(sql, function(err, dentistDetail) {
+            if (err) {
+                return next(err);
+            }
+            res.render('dentistDetail', { dentistDetail: dentistDetail[0] });
+        });
+    };
+
 Dentist.detail = function(req, res, next) {
 
     // Tách ở đâyyy
@@ -105,7 +167,7 @@ Dentist.detail = function(req, res, next) {
     //     -- Select staff information from the STAFF table based on the provided STAFF_ID
     //     SELECT *
     //     FROM STAFF
-    //     WHERE STAFF_ID = staff_id_param;
+    //     WHERE STAFF_ID = staff_id_param; 
     // END $$
     
     // DELIMITER ;

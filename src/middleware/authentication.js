@@ -16,17 +16,17 @@ const login = function (req, res, next) {
           req.session.username = account[0].username;
           req.session.role = "admin";
           // res.status(200).json(account[0]);
-          res.redirect("/admin");
+          res.redirect("/patientList");
         } else if (account[0].role === "dentist") {
           req.session.username = account[0].username;
           req.session.role = "dentist";
           // res.status(200).json(account[0]);
-          res.redirect("/bookingAppointment");
+          res.redirect("/patientList");
         } else if (account[0].role === "staff") {
           req.session.username = account[0].username;
           req.session.role = "staff";
           // res.status(200).json(account[0]);
-          res.redirect("/bookingAppointment");
+          res.redirect("/patientList");
         } else {
           req.session.username = account[0].username;
           req.session.role = "patient";

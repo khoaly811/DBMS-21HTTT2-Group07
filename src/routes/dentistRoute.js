@@ -5,6 +5,8 @@ const { checkPatientRole } = require('../middleware/authentication');
 
 
     router.get('/dentistList',checkPatientRole, dentistController.dentistList);
+    router.get('/dentistDetail/:id',checkPatientRole, dentistController.dentistDetail);
+
     router.get('/staffList', checkPatientRole,dentistController.staffList);
     router.get('/staffDetail/:id',checkPatientRole, dentistController.staffDetail);
     router.get('/detail/:id', checkPatientRole,dentistController.detail);
