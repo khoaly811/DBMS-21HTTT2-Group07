@@ -64,8 +64,6 @@
 
 // DELIMITER ;
 
-<<<<<<< HEAD
-=======
 // delimiter //
 
 // create procedure sp_get_dentist(in clinicID char(5), in wishDate char(1), in shift int)
@@ -83,7 +81,6 @@
 //     where appointment_date <> wishDate) as DS
 //     on S.dentist_id = DS.dentist_id;
 // end
->>>>>>> refs/remotes/origin/main
 
 // CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_updateMedicineInPrescription`(
 //     IN medicine_name_param VARCHAR(255),
