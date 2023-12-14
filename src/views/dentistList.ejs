@@ -43,13 +43,15 @@
                     </select>
 
                 </div>
+                <%if(role =="admin"){%>
+
                 <div class="col-md-3 mt-2 d-flex align-items-center">
                     <a href="/dentistAdd">
                         <button id="button-ban-unban" class="btn btn-outline "
                             style="background-color: #D9D9D9; margin-left: 30px;">Thêm nha sĩ</button>
                     </a>
                 </div>
-
+<%}%>
                 <!-- Bảng -->
 
                 <div class="table-responsive mt-2">
@@ -60,30 +62,38 @@
                                 <th class="border-bottom">Họ tên <i class="fa-solid fa-sort "></i></th>
                                 <th class="border-bottom">Tuổi <i class="fa-solid fa-sort"></i></th>
                                 <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
-                                <th class="border-bottom ">Ghi chú<i class="fa-solid "></i></th>
+                                <th class="border-bottom ">Thời gian làm việc<i class="fa-solid "></i></th>
                                 <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
-                                <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
                             </tr>
                         </thead>
                         <tbody id="bookTableBody">
                             <!-- Duplicate các dong ở đây -->
-                            <% patientData.forEach((pat)=>{%>
+                            <% let isFirstIteration = true; %>
+                            <% for (let pat of dentistList) { %>
+                                <% if (isFirstIteration) { %>
+                                <% isFirstIteration = false; %>
+                                <% for (let i = 0; i < pat.length; i++) { %>
                                 <tr>
                                     <td>
-                                        <%= pat.Dentist_ID%>
+                                        <% if (pat[i] && pat[i].DENTIST_ID) { %>
+                                            <%= pat[i].DENTIST_ID %>
+                                          <% } else { %>
+                                            <!-- Handle the case where pat[i] or pat[i].DENTIST_ID is undefined -->
+                                            N/A
+                                          <% } %>
                                     </td>
                                     <td>
-                                        <%= pat.FULL_NAME%>
+                                        <%= pat[i].FULL_NAME%>
                                     </td>
                                     <%function calculateAge(dateOfBirth) { const dob=new Date(dateOfBirth); const
                                         today=new Date(); let age=today.getFullYear() - dob.getFullYear(); const
                                         monthDiff=today.getMonth() - dob.getMonth(); if (monthDiff < 0 || (monthDiff===0
                                         && today.getDate() < dob.getDate())) { age--; } return age; }%>
                                         <td>
-                                            <%= calculateAge(pat.DOB) %>
+                                            <%= calculateAge(pat[i].DOB) %>
                                         </td>
                                         <td>
-                                            <% if (pat.GENDER=='M' ) { %>
+                                            <% if (pat[i].GENDER=='M' ) { %>
                                                 <span class="rounded"
                                                     style="background-color: #67ffeb; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
                                                 <% } else { %>
@@ -92,35 +102,68 @@
                                                     <% } %>
                                         </td>
 
-                                        <td class="d-flex  ">
-                                            <% if (pat.NOTES !=null) { %>
-                                                <%= pat.NOTES%>
-                                                    <% } else { %>
-                                                        <span class="p-1 rounded"
-                                                            style="background-color: #FF6767;">Không</span>
-                                                        <% } %>
-                                        </td>
+                                        <% 
+                                        function weekdaysToDateStrings(weekdays, month, year) {
+                                          const daysArray = weekdays.split(',').map(Number);
+                                      
+                                          const dateStrings = daysArray.map(day => {
+                                            const date = new Date(year, month - 1, day);
+                                            return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+                                          });
+                                      
+                                          return dateStrings;
+                                        }
+
+                                        function weekdaysToName(weekdays, month, year) {
+                                            const daysArray = weekdays.split(',').map(Number);
+                                            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                                        
+                                            const dateStrings = daysArray.map(day => {
+                                              const date = new Date(year, month - 1, day);
+                                              const dayName = dayNames[date.getDay()];
+                                              return `${dayName}`;
+                                            });
+                                        
+                                            return dateStrings;
+                                          }
+                                      
+                                        const weekdays = pat[i].SCHEDULE_WEEKDAYS; // Example weekdays
+                                        const month = 1; // January
+                                        const year = 2024;
+                                      
+                                        const dateStrings = weekdaysToDateStrings(weekdays, month, year);
+                                        const dateNameStrings = weekdaysToName(weekdays, month, year);
+                                      %>
+                                      
+                                      <td class="d-flex">
+                                        MONTHLY:<br>ㅤ01-01-2024 - 31-01-2024: <%=pat[i].SCHEDULE_WEEKDAYS%>
+                                        <br><br>
+
+                                        WEEKLY:<br>ㅤ01-01-2024 - 07-01-2024: 
+                                        <% dateNameStrings.forEach(dateString => { %>
+                                            <%= dateString %>,
+                                          <% }); %>
+                                        <br><br>
+                                      
+                                        AUTO:<br>ㅤ
+                                        <% dateStrings.forEach(dateString => { %>
+                                            <%= dateString %>,
+                                          <% }); %>
+                                      </td>
+                                      
                                         <td>
                                             <div style="z-index: 31;">
-                                                <a href="/dentistDetail/<%= pat.Dentist_ID%>" class="text-success">
+                                                <a href="/dentistDetail/<%= pat[i].DENTIST_ID%>" class="text-success">
                                                     <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
                                                 </a>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div style="z-index: 31;">
-                                                <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
-                                                    <button type="submit" class="btn">
-                                                        <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png"
-                                                            onclick="deleteRowAndImage(this)" class=""
-                                                            alt="Small Image " width="20" height="20">
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
+                                       
                                         <!-- Thêm dòng để xóa -->
                                 </tr>
-                                <% }) %>
+                                <% } %>
+                                <% } %>
+                                <% } %>
                         </tbody>
                     </table>
                     <!-- Add this section at the bottom of your HTML file, below the table -->

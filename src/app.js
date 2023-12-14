@@ -36,6 +36,8 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const accountRoute = require("./routes/accountRoute");
 const dentistRoute = require("./routes/dentistRoute");
+const medicineRoute = require("./routes/medicineRoute");
+
 const authRoute = require("./routes/authRoute"); 
 
 const internalServerErrorMiddleware = require('./middleware/internalServerError');
@@ -107,6 +109,8 @@ app.use("/", precriptionRoute);
 app.use("/", invoiceRoutes);
 app.use("/", appointmentRoutes);
 app.use("/", dentistRoute);
+app.use("/", medicineRoute);
+
 app.use("/bookingAppointment", bookingAppointmentRoute);
 // Comment them here if you wanna fix bugs
 app.use(notFoundMiddleware);

@@ -14,17 +14,23 @@
         <div class="col-lg-4 offset-lg-1 mx-0 px-0">
             <div id="title-container">
                 <img class="logo-image" src="">
-                <h2>MAKING APPOINTMENT</h2>
-                <h2><%= username %></h2>
+                <h2 style="text-align:  center;">ĐẶT LỊCH HẸN</h2>
+                <h2 style="text-align:  center;">MÃ BỆNH NHÂN: <%= username %></h2>
                 <form data-multi-step action="/bookingAppointment/bookDentist" method="POST">
-                    <div class="card" data-step>
-                        <label for="Clinic">Clinic</label><br>
-                        <% clinics.forEach((clinic) => { %>
-                            <input type="radio" name="clinic" id="clinic-branch" value=<%= clinic.CLINIC_ID %>>
-                            <label for="clinic-branch"><%= clinic.CLINIC_ADDRESS %></label><br>
-                        <% }) %>
-                        <button type="button" data-next>Next</button>
+                    <div class="card"style="padding: 10px;" data-step>
+                        <div class="form-group">
+                            <label for="Clinic">Hãy chọn nơi khám:</label><br><br>
+                            <% clinics.forEach((clinic) => { %>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="clinic" id="clinic-<%= clinic.CLINIC_ID %>" value="<%= clinic.CLINIC_ID %>">
+                                    <label class="form-check-label" for="clinic-<%= clinic.CLINIC_ID %>"><%= clinic.CLINIC_ADDRESS %></label><br>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-primary" data-next>Next</button>
                     </div>
+                    
                     <div class="card" data-step>
                         <label for="Schedule">Schedule</label><br>
                         <input type="date" name="appointment_date" id="appointment_date"><br>

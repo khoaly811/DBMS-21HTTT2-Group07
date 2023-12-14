@@ -6,6 +6,10 @@ exports.dentistList = function(req, res, next) {
     dentistModel.dentistList(req,res,next);
 }
 
+exports.dentistDetail = function(req, res, next) { 
+    dentistModel.dentistDetail(req,res,next);
+}
+
 exports.staffDetail = function(req, res, next) { 
     dentistModel.staffDetail(req,res,next);
 }
