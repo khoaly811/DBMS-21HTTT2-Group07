@@ -5,14 +5,14 @@
 
         <div class="container border rounded p-3" style="margin-bottom: 50px;">
             <!-- Tiêu đề -->
-            <h2><i class="fa-solid fa-users"></i> <strong> Danh sách nhân viên</strong></h2>
+            <h2><i class="fa-solid fa-users"></i> <strong> Danh sách thuốc</strong></h2>
             <div class="row">
                 <div class="col-md-2 mt-2  d-flex align-items-center ">
                     <div class="input-group " style="max-width: 266px;">
                         <form action="/patientSearch" method="GET">
                             <!-- <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i class="fa-solid fa-magnifying-glass"></i></span> -->
                             <input type="search" name="full_name" class="form-control"
-                                style="background-color: #D9D9D9;" id="search-input" placeholder="Tìm kiếm nhân viên">
+                                style="background-color: #D9D9D9;" id="search-input" placeholder="Tìm kiếm thuốc">
                             <input type="submit" value="Search">
                         </form>
                     </div>
@@ -22,11 +22,7 @@
                         <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
                         <i class="fa-solid fa-filter"></i>
                     </span>
-                    <select id="filter-select" class="form-select" style="max-width: 113px;background-color: #D9D9D9;">
-                        <option>Giới tính</option>
-                        <option>Nam</option>
-                        <option>Nữ</option>
-                    </select>
+                   
 
                 </div>
 
@@ -43,14 +39,16 @@
                     </select> -->
 
                 </div>
-                <%if(role =="admin"){%>
+                <%if(role =="admmin"){%>
+
                 <div class="col-md-3 mt-2 d-flex align-items-center">
-                    <a href="/staffAdd  ">
+                    <a href="/medicineAdd">
                         <button id="button-ban-unban" class="btn btn-outline "
-                            style="background-color: #D9D9D9; margin-left: 30px;">Thêm nhân viên</button>
+                            style="background-color: #D9D9D9; margin-left: 30px;">Thêm thuốc</button>
                     </a>
                 </div>
                 <%}%>
+
                 <!-- Bảng -->
 
                 <div class="table-responsive mt-2">
@@ -58,56 +56,49 @@
                         <thead>
                             <tr>
                                 <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
-                                <th class="border-bottom">Họ tên <i class="fa-solid fa-sort "></i></th>
-                                <th class="border-bottom">Tuổi <i class="fa-solid fa-sort"></i></th>
-                                <th class="border-bottom"> Giới tính <i class="fa-solid "></i></th>
-                                <th class="border-bottom ">Ghi chú<i class="fa-solid "></i></th>
-                                <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
+                                <th class="border-bottom">Tên thuốc <i class="fa-solid fa-sort "></i></th>
+                                <th class="border-bottom">Mô tả thuốc <i class="fa-solid "></i></th>
+                                <th class="border-bottom">Chi tiết <i class="fa-solid "></i></th>
+
+                                <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
                             </tr>
                         </thead>
                         <tbody id="bookTableBody">
                             <!-- Duplicate các dong ở đây -->
-                            <% staffList.forEach((pat)=>{%>
+                            <% medicineList.forEach((pat)=>{%>
                                 <tr>
                                     <td>
-                                        <%= pat.STAFF_ID%>
+                                        <%= pat.MEDICINE_ID%>
                                     </td>
                                     <td>
-                                        <%= pat.FULL_NAME%>
+                                        <%= pat.NAME%>
                                     </td>
                                     <%function calculateAge(dateOfBirth) { const dob=new Date(dateOfBirth); const
                                         today=new Date(); let age=today.getFullYear() - dob.getFullYear(); const
                                         monthDiff=today.getMonth() - dob.getMonth(); if (monthDiff < 0 || (monthDiff===0
                                         && today.getDate() < dob.getDate())) { age--; } return age; }%>
                                         <td>
-                                            <%= calculateAge(pat.DOB) %>
+                                            <%= pat.DESCRIPTION %>
                                         </td>
-                                        <td>
-                                            <% if (pat.GENDER=='M' ) { %>
-                                                <span class="rounded"
-                                                    style="background-color: #67ffeb; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nam</span>
-                                                <% } else { %>
-                                                    <span class="rounded"
-                                                        style="background-color: #ff67e6; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Nữ</span>
-                                                    <% } %>
-                                        </td>
-
-                                        <td class="d-flex  ">
-                                            <% if (pat.NOTES !=null) { %>
-                                                <%= pat.NOTES%>
-                                                    <% } else { %>
-                                                        <span class="p-1 rounded"
-                                                            style="background-color: #67ff7b;">Không</span>
-                                                        <% } %>
-                                        </td>
+                                        
                                         <td>
                                             <div style="z-index: 31;">
-                                                <a href="/staffDetail/<%= pat.STAFF_ID%>" class="text-success">
+                                                <a href="/medicineDetail/<%= pat.MEDICINE_ID%>" class="text-success">
                                                     <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
                                                 </a>
                                             </div>
                                         </td>
-                                        
+                                        <td>
+                                            <div style="z-index: 31;">
+                                                <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
+                                                    <button type="submit" class="btn">
+                                                        <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png"
+                                                            onclick="deleteRowAndImage(this)" class=""
+                                                            alt="Small Image " width="20" height="20">
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
                                         <!-- Thêm dòng để xóa -->
                                 </tr>
                                 <% }) %>

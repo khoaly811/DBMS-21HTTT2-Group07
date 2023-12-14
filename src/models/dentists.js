@@ -92,16 +92,22 @@ Dentist.staffDetail = function(req, res, next) {
 Dentist.dentistList = function(req, res, next) {
 //     CREATE PROCEDURE sp_getDentistAndClinicInfo()
 // BEGIN
-//     -- Select FULL_NAME from DENTIST table and CLINIC_ADDRESS from CLINIC table based on given CLINIC_ID
+//     -- Select FULL_NAME from DENTIST table and CLINIC_ADDRESS from CLINIC table
+//     -- along with an array of SCHEDULE_WEEKDAY and SCHEDULE_SHIFT for each dentist
 //     SELECT
-//         D.FULL_NAME AS DENTIST_NAME,
-//         C.CLINIC_ADDRESS
+//         D.*,
+//         C.CLINIC_ADDRESS,
+//         GROUP_CONCAT(SCH.SCHEDULE_WEEKDAY) AS SCHEDULE_WEEKDAYS,
+//         GROUP_CONCAT(SCH.SCHEDULE_SHIFT) AS SCHEDULE_SHIFTS
 //     FROM
 //         DENTIST D
 //     JOIN
-//         CLINIC C ON D.CLINIC = C.CLINIC_ID;
-    
-// END $$
+//         CLINIC C ON D.CLINIC = C.CLINIC_ID
+//     LEFT JOIN
+//         DENTIST_SCHEDULE SCH ON D.DENTIST_ID = SCH.DENTIST_ID
+//     GROUP BY
+//         D.DENTIST_ID;
+// END
 
 // DELIMITER ;
     
@@ -111,7 +117,6 @@ db.query(sql, function(err, dentistList) {
     if (err) {
         return next(err);
     }
-    console.log(dentistList);
     // Process the result to convert comma-separated values into arrays
     // dentistList = dentistList.map(dentist => {
     //     return {
@@ -120,7 +125,7 @@ db.query(sql, function(err, dentistList) {
     //         SCHEDULE_SHIFTS: dentist.SCHEDULE_SHIFTS ? dentist.SCHEDULE_SHIFTS.split(',') : []
     //     };
     // });
-    // console.log(dentistList);
+    console.log(dentistList);
     res.render('dentistList', { dentistList: dentistList });
 });
 };
@@ -157,6 +162,9 @@ Dentist.detail = function(req, res, next) {
     const human = req.params.id;
     const firstThreeLettersSubstring = human.substring(0, 3);
     console.log(firstThreeLettersSubstring);
+    if(firstThreeLettersSubstring == "DEN"){
+        res.redirect(`/dentistDetail/${human}`);
+    }
     if(firstThreeLettersSubstring == "STA"){
 
     // USE `adb_nhakhoa`; -- Replace with your actual database name
@@ -180,6 +188,9 @@ Dentist.detail = function(req, res, next) {
         }
         res.render('staffDetail', { staffDetail: staffDetail[0] });
     });
+}
+else{
+    res.redirect(`/patientProfile/${human}`);
 }
 };
 
