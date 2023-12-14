@@ -64,24 +64,6 @@
 
 // DELIMITER ;
 
-// delimiter //
-
-// create procedure sp_get_dentist(in clinicID char(5), in wishDate char(1), in shift int)
-
-// begin
-// 	select distinct D.dentist_id, D.full_name
-// 	from 
-//     (select * from dentist where clinic_id = clinicID) as D
-// 	inner join
-// 	(select * from dentist_schedule where schedule_weekday = wishWeekday and schedule_shift = shift) as S 
-// 	on D.dentist_id = S.dentist_id
-//     inner join
-//     (select T.dentist_id
-//     from treatment as T inner join appointment as A on T.treatment_id = A.treatment_id
-//     where appointment_date <> wishDate) as DS
-//     on S.dentist_id = DS.dentist_id;
-// end
-
 // CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_updateMedicineInPrescription`(
 //     IN medicine_name_param VARCHAR(255),
 //     IN prescription_id_param VARCHAR(9),
