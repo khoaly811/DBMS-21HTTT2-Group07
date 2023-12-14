@@ -102,7 +102,7 @@
 //                 AND MEDICINE_ID = medicine_old_param;
 //         ELSE
 // 			SELECT COALESCE(MAX(PRESCRIPTION_ID), 0) + 1 INTO prescription_id_var
-//             FROM PRESCRIPTION;
+//             FROM PRESCRIPTION; 
 //             -- Insert new row in MEDICINE_IN_PRESCRIPTION table
            
 // 			INSERT INTO PRESCRIPTION (PRESCRIPTION_ID, TREATMENT_ID, APPOINTMENT_ID)
