@@ -9,6 +9,8 @@ const { checkPatientRole } = require('../middleware/authentication');
     router.get('/navAppointmentMag', checkPatientRole, appointmentController.navAppointmentMag);
     router.get('/requestList', checkPatientRole, appointmentController.requestList);
     router.post('/appointmentDetail/:treatment_id/:appointment_id', checkPatientRole, appointmentController.updateAppoint);
+    router.get('/appointmentistory/:id',checkPatientRole,  appointmentController.appointmentistory);
+
 
 
 

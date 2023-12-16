@@ -7,15 +7,20 @@
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
     <!-- Sidebar -->
     <h3>Xem thêm:</h3>
-    <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
-      <button class="btn btn-secondary">Danh sách điều trị</button>
-  </a> <h5></h5>
+    <%if(role && role != "patient"){%>
+    
   <a href="/invoiceList/<%= pat.PATIENT_ID %>">
     <button class="btn btn-secondary">Danh sách thanh toán</button></a> <h5></h5>
     <a href="/prescriptionList_ALL/<%= pat.PATIENT_ID %>">
       <button class="btn btn-secondary">Danh sách đơn thuốc</button></a> <h5></h5>
 
-    <a href="/unPaidTreatment/<%= pat.PATIENT_ID %>"><button class="btn btn-secondary">Danh sách chưa trả</button></a>
+    <a href="/unPaidTreatment/<%= pat.PATIENT_ID %>"><button class="btn btn-secondary">Danh sách chưa trả</button></a><h5></h5>
+    <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
+      <button class="btn btn-secondary">Danh sách điều trị</button>
+  </a> <h5></h5>
+    <%}%>
+    <a href="/appointmentistory/<%= pat.PATIENT_ID %>">
+      <button class="btn btn-secondary">Lịch sử cuộc hẹn</button></a> <h5></h5>
   </div>
 
   <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">

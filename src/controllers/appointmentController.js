@@ -25,4 +25,8 @@ exports.requestList = function(req, res, next) {
 exports.updateAppoint = function(req, res, next) { 
     appointmentModel.updateAppoint(req,res,next);
 }
+
+exports.appointmentistory = function(req, res, next) { 
+    appointmentModel.appointmentistory(req,res,next);
+}
  

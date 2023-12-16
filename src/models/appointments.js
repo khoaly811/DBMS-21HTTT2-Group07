@@ -37,6 +37,53 @@ Appointment.appointList = function (req, res, next) {
 };
 
 Appointment.appointListAll = function (req, res, next) {
+ 
+  if(req.query.full_name){
+    let sql = 'CALL sp_getAllAppointments_byName(?)';
+    const full_name = req.query.full_name;
+    console.log(full_name); 
+    db.query(sql,[full_name], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      console.log(data);
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  }else if(req.query.address){
+    let sql = 'CALL sp_getAllAppointments_byAddress(?)';
+
+    const address = req.query.address;
+    console.log(address);
+    db.query(sql,[address], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      console.log(data);
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  }else if(req.query.dentist){
+    let sql = 'CALL sp_getAllAppointments_byDentist(?)';
+
+    const dentist = req.query.dentist;
+    db.query(sql,[dentist], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      console.log(data);
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  }
+  else{
+  db.query("CALL sp_getAllAppointments()", function (err, data) {
+    if (err) {
+      return next(err);
+    }
+    res.render("appointListAll", { appointListAll: data[0] });
+  });
+}
+};
+
+Appointment.appointmentistory = function (req, res, next) {
   db.query("CALL sp_getAllAppointments()", function (err, data) {
     if (err) {
       return next(err);
