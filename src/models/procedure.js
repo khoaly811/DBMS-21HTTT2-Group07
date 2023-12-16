@@ -175,3 +175,64 @@
 //     where appointment_date <> wishDate) as DS
 //     on S.dentist_id = DS.dentist_id;
 // end //
+
+// CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllAppointments_byDentist`(IN partial_name VARCHAR(50))
+// BEGIN
+// -- Select appointment details for the found patient ID
+//     SELECT *,
+//            P.*,
+//            cl.CLINIC_ADDRESS
+//     FROM APPOINTMENT APP
+//              LEFT JOIN TREATMENT TR ON TR.TREATMENT_ID = APP.TREATMENT_ID
+//              LEFT JOIN PATIENT P ON P.PATIENT_ID = TR.PATIENT_ID
+//              LEFT JOIN dentist de ON de.DENTIST_ID = tr.DENTIST_ID
+//              LEFT JOIN clinic cl ON cl.CLINIC_ID = de.CLINIC
+//     WHERE de.FULL_NAME LIKE CONCAT('%', partial_name, '%')
+//     LIMIT 2000;
+// END
+
+
+// CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllAppointments_byAddress`(IN partial_name VARCHAR(50))
+// BEGIN
+//     -- Select appointment details for the found patient ID
+//     SELECT *,
+//            P.*,
+//            cl.CLINIC_ADDRESS
+//     FROM APPOINTMENT APP
+//              LEFT JOIN TREATMENT TR ON TR.TREATMENT_ID = APP.TREATMENT_ID
+//              LEFT JOIN PATIENT P ON P.PATIENT_ID = TR.PATIENT_ID
+//              LEFT JOIN dentist de ON de.DENTIST_ID = tr.DENTIST_ID
+//              LEFT JOIN clinic cl ON cl.CLINIC_ID = de.CLINIC
+//     WHERE cl.CLINIC_ADDRESS LIKE CONCAT('%', partial_name, '%')
+//     LIMIT 2000;
+// END
+
+// CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllAppointments_byName`(IN partial_name VARCHAR(50))
+// BEGIN
+//     -- Select all appointments from APPOINTMENT table
+//     DECLARE patient_id_var VARCHAR(9);
+
+//     -- Find the patient ID with a partial match on the name
+//     SELECT PATIENT_ID INTO patient_id_var
+//     FROM PATIENT
+//     WHERE FULL_NAME LIKE CONCAT('%', partial_name, '%')
+//     LIMIT 1;
+
+//     -- If no matching record is found, set patient_id_var to NULL or an appropriate default value
+//     IF patient_id_var IS NULL THEN
+//         -- Set a default value or handle the case as needed
+//         SET patient_id_var = '';
+//     END IF;
+
+//     -- Select appointment details for the found patient ID
+//     SELECT *,
+//            P.*,
+//            cl.CLINIC_ADDRESS
+//     FROM APPOINTMENT APP
+//              LEFT JOIN TREATMENT TR ON TR.TREATMENT_ID = APP.TREATMENT_ID
+//              LEFT JOIN PATIENT P ON P.PATIENT_ID = TR.PATIENT_ID
+//              LEFT JOIN dentist de ON de.DENTIST_ID = tr.DENTIST_ID
+//              LEFT JOIN clinic cl ON cl.CLINIC_ID = de.CLINIC
+//     WHERE P.PATIENT_ID = patient_id_var
+//     LIMIT 2000;
+// END
