@@ -6,7 +6,7 @@
   <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
     <!-- Sidebar -->
     <h3>Xem thêm:</h3>
-    <% treatmentDetail.forEach((pat)=>{%>
+    <% dentistDetail.forEach((pat)=>{%>
 
     <a href="/dentistList/">
       <button class="btn btn-secondary">Back</button>
@@ -49,7 +49,7 @@
                 <div class="row gx-3 mb-3">
                   <div class="col-md-6">
                     <label class="small mb-1" for="DOB">Ngày sinh</label>
-                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.DOB %>" disabled>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.DOB.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>" disabled>
                   </div>
                   <div class="col-md-6">
                     <label class="small mb-1" for="Gender">Giới tính</label>
@@ -60,7 +60,7 @@
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1" for="CLINIC">Địa chỉ làm việc</label>
-                        <textarea id="CLINIC" name="CLINIC" class="form-control form-control-lg" rows="1" disabled><%= pat.CLINIC %></textarea>
+                        <textarea id="CLINIC" name="CLINIC" class="form-control form-control-lg" rows="1" disabled><%= pat.CLINIC_ADDRESS %></textarea>
                       </div>
                     </div>
                   <div class="col-md-6">
@@ -77,7 +77,12 @@
                   <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= pat.NOTES %></textarea>
                 </div>
                 <% }) %>
-                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                <%if(role =="admin"){%>
+
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <%}else{%>
+                    <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                    <%}%>
 
                 
               </form>

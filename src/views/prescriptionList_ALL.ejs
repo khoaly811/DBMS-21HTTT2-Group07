@@ -3,19 +3,19 @@
 <body>
 
 <br>
-<a href="/treatment/<%=appointList[0].TREATMENT_ID%>">
+<a href="/patientProfile/<%=prescriptionList[0].PATIENT_ID%>">
     <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
 </a> 
   <div class="container border rounded p-3" style="margin-bottom: 50px;">
     <!-- Tiêu đề -->
-    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách cuộc hẹn</strong></h2>
+    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách đơn thuốc</strong></h2>
     <div class="row">
       <div class="col-md-4 mt-2  d-flex align-items-center ">
         <div class="input-group " style="max-width: 266px;">
           <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
               class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
-            placeholder="Tìm kiếm cuộc hẹn">
+            placeholder="Tìm kiếm đơn thuốc">
         </div>
       </div>
       <div class="col-md-2 mt-2  d-flex align-items-center">
@@ -23,18 +23,20 @@
           <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
           <i class="fa-solid fa-filter"></i>
         </span>
-        <select id="filter-select" class="form-select" style="max-width: 187px;background-color: #D9D9D9;">
-          <option>Điều trị</option>
-          <option>Tái khám</option>
-          <option>Cuộc hẹn mới</option>
-
+        <select id="filter-select" class="form-select" style="max-width: 127px;background-color: #D9D9D9;">
+          <option>Lần điều trị</option>
+          <option>Lần 01</option>
+          <option>Lần 02</option>
+          <option>Lần 03</option>
+          <option>Lần 04</option>
+          <option>Lần 05</option>
         </select>
         
       </div>
       
       
       <div class="col-md-3 mt-2 d-flex align-items-center">
-        <button id="button-ban-unban" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 30px;">Thêm cuộc hẹn</button>
+        <button id="button-ban-unban" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 30px;">Thêm điều trị</button>
       </div>
 
       <!-- Bảng -->
@@ -43,52 +45,46 @@
         <table id="myTable" class="table table-hover table-borderless ">
           <thead>
             <tr>
-              <th class="border-bottom">ID <i class="fa-solid fa-sort"></i> </th>
-              <th class="border-bottom">Ngày điều trị<i class="fa-solid fa-sort "></i></th>
-              <th class="border-bottom">Thuộc ca<i class="fa-solid fa-sort"></i></th>
-              <th class="border-bottom"> Tình trạng<i class="fa-solid "></i></th>
+              <th class="border-bottom">Điều trị <i class="fa-solid fa-sort"></i> </th>
+              <th class="border-bottom">Lần điều trị<i class="fa-solid fa-sort "></i></th>
+              <th class="border-bottom">Ngày viết hóa đơn<i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Số loại thuốc <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Nha sĩ<i class="fa-solid "></i></th>
               <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
-              <%if(role =="staff" || role =="admmin"){%>
-
               <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
-              <%}%>
-
             </tr>
           </thead>
           <tbody id="bookTableBody">
             <!-- Duplicate các dong ở đây -->
-            <% appointList.forEach((pat)=>{%>
+            <% prescriptionList.forEach((pat)=>{%>
               <tr>
-                <td><%=pat.APPOINTMENT_ID%></td>
-                <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
-
-                <td>Ca số <%=pat.APPOINTMENT_SHIFT%></td>
+                <td><%=pat.TREATMENT_ID%></td>
+                <td>Lần <%=pat.APPOINTMENT_ID.slice(-2)%></td>
 
                 <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
                 <td>
-                    <%if(pat.APPOINTMENT_STATUS == "New"){%>
-                    <span class="rounded" style="background-color: #67ffa1; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Cuộc hẹn mới</span>
-                        <%}%>
-                        <%if(pat.APPOINTMENT_STATUS == "Re-examine"){%>
-                            <span class="rounded" style="background-color: #e3ff67; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">Tái khám</span>
-                                <%}%>
+                  <%=pat.Number_of_distinct_medicine%>
+                </td>
+
+                <td>
+     
+                    <%=pat.FULL_NAME%>
+          
                 </td>
                 
               <!-- D-flex khi không có dị ứng -->
               <td>
                 <div style="z-index: 31;">
-                  <a href="/appointmentDetail/<%= pat.TREATMENT_ID%>/<%= pat.APPOINTMENT_ID%>" class="text-success">
+                  <a href="/prescription/<%= pat.PRESCRIPTION_ID%>" class="text-success">
                     <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
                   </a>
                 </div>
               </td>
-              <%if(role =="staff" || role =="admmin"){%>
-
+             
               <td><div style="z-index: 31;">                                          
                 <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
                     class="" alt="Small Image " width="20" height="20">
               </div></td>
-              <%}%>
               <!-- Thêm dòng để xóa -->
               </tr>
               <% }) %>
@@ -187,7 +183,7 @@
 
     // Loop through all table rows and hide those that don't match the search query
     for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
-      var nameCell = rows[i].getElementsByTagName("td")[1]; // 2nd column (Họ tên)
+      var nameCell = rows[i].getElementsByTagName("td")[4]; // 2nd column (Họ tên)
 
       if (nameCell) {
         var name = nameCell.innerText.toLowerCase();
@@ -221,10 +217,10 @@
     }
 
     // If the selected gender is not "Giới tính," apply the filter
-    if (selectedGender !== "Điều trị") {
+    if (selectedGender !== "Lần điều trị") {
       // Loop through all table rows and hide those that don't match the selected gender
       for (var i = 1; i < rows.length; i++) {
-        var genderCell = rows[i].getElementsByTagName("td")[4]; // 4th column (Giới tính)
+        var genderCell = rows[i].getElementsByTagName("td")[1]; // 4th column (Giới tính)
 
         if (genderCell) {
           var gender = genderCell.innerText;

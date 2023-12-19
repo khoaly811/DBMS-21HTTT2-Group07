@@ -24,7 +24,7 @@
   <!-- <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/> -->
   <!-- <link rel="stylesheet" href="/css/styleManage.css" type="text/css"/> -->
   <link rel="stylesheet" href="../public/css/stylesUpload.css" type="text/css" />
-  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css"/>
+  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css" />
   <!-- Tiny ediotr -->
   <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
     referrerpolicy="origin"></script>
@@ -34,46 +34,77 @@
       <a class="navbar-brand" href="">
         <img class="rounded-2" src="../public/image/logo.png" alt="Bootstrap" width="60" height="40">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
         <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+          <%if(role != "patient"){%>
           <li class="nav-item rounded-3">
             <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
           </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navAppointmentMag">Quản lý cuộc hẹn</a></b>
-          </li>
-          <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="/navSystemMag">Quản lý nhân viên</a></b>
-          </li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown"
+              aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+              <b>Quản lý cuộc hẹn</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 180px;">
+              <li><a class="btn" href="/appointListAll" role="button">Danh sách cuộc hẹn</a></li>
+              <li><a class="btn" href="/requestList" role="button">Danh sách yêu cầu</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown"
+              aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+              <b>Quản lý nhân viên</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 190px;">
+              <li><a class="btn" href="/dentistList" role="button">Danh sách nha sĩ</a></li>
+              <li><a class="btn" href="/staffList" role="button">Danh sách nhân viên</a></li>
+            </ul>
+          </div>
 
           <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="">Quản lý thuốc</a></b>
+            <b><a class="nav-link" href="/medicineList">Quản lý thuốc</a></b>
           </li>
+          <%}else{%>
+            <li class="nav-item rounded-3">
+              <b><a class="nav-link" href="/bookingAppointment">Đặt lịch mới</a></b>
+            </li>
+            <li class="nav-item rounded-3">
+              <b><a class="nav-link" href="/detail/<%= username%>">Xem tài khoản</a></b>
+            </li>
+            <div style="width: 354px;"></div>
+            <%}%>
           <div style="width: 354px;"></div>
           <!-- ======================================================================================================== -->
           <li class="nav-item ml-auto rounded-3">
             <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
-              <div class="user-profile">
-                <p><%= username%> </p>
-                <p></p> <%= role%></p>
-              </div>
-              <div class="img-box">
-                <img src="../public/image/admin_ava.jpeg" alt="some user image" />
-              </div>
+              <%if(username){%>
+                <div class="user-profile">
+                  <p>
+                    <%= username%>
+                  </p>
+                  <p></p>
+                  <%= role%>
+                    </p>
+                </div>
+
+                <div class="img-box">
+                  <img src="../public/image/admin_ava.jpeg" alt="some user image" />
+                </div>
             </div>
             <div class="menu">
               <ul>
                 <li>
-                  <a href="#"><i class="fa-regular fa-user"></i>Tài khoản</a>
+                  <a href="/detail/<%= username%>"><i class="fa-regular fa-user"></i>Tài khoản</a>
                 </li>
                 <li>
                   <a href=""><i class="far fa-bell"></i>Thông báo</a>
                 </li>
                 <li>
-                  <a href=""><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                  <a href="/requestList"><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
                 </li>
                 <!-- <li>
                         <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
@@ -88,36 +119,69 @@
                 </li>
               </ul>
             </div>
-
-            <script>
-              let profile = document.querySelector(".profile");
-              let menu = document.querySelector(".menu");
-              let userProfile = document.querySelector(".user-profile");
-
-              document.onclick = function(e) {
-                if (!profile.contains(e.target) && !menu.contains(e.target)) {
-                  menu.classList.remove("active");
-                }
-              };
-
-              profile.onclick = function(e) {
-                menu.classList.toggle("active");
-              };
-
-              function hoverOn(e) {
-                e.style.color = "#36a189";
-              }
-
-              function hoverOff(e) {
-                e.style.color = "rgb(72, 72, 72)";
-              }
-            </script>
+            <%}%>
+              <%if(!username){%>
+                <div class="user-profile">
+                  <p><a style="text-decoration: none;color: black;" href="/">Please sign in</a> </p>
+                </div>
+                <div class="img-box">
+                  <img src="../public/image/users.jpg" alt="some user image" />
+                </div>
+      </div>
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="/"><i class="fa-regular fa-user"></i>Tài khoản</a>
           </li>
+          <li>
+            <a href=""><i class="far fa-bell"></i>Thông báo</a>
+          </li>
+          <li>
+            <a href="/"><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+          </li>
+          <!-- <li>
+            <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
+          </li> -->
+
+          <li>
+            <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+          </li>
+
+          <li>
+            <a href="/"><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+          </li>
+        </ul>
+      </div>
+      <%}%>
+        <script>
+          let profile = document.querySelector(".profile");
+          let menu = document.querySelector(".menu");
+          let userProfile = document.querySelector(".user-profile");
+
+          document.onclick = function (e) {
+            if (!profile.contains(e.target) && !menu.contains(e.target)) {
+              menu.classList.remove("active");
+            }
+          };
+
+          profile.onclick = function (e) {
+            menu.classList.toggle("active");
+          };
+
+          function hoverOn(e) {
+            e.style.color = "#36a189";
+          }
+
+          function hoverOff(e) {
+            e.style.color = "rgb(72, 72, 72)";
+          }
+        </script>
+        </li>
 
         </ul>
 
 
-      </div>
+    </div>
     </div>
 
   </nav>

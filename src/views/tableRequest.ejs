@@ -59,7 +59,10 @@
               <th class="border-bottom">Ngày hẹn mong muốn <i class="fa-solid fa-sort"></i></th>
               <th class="border-bottom"> Ngày gửi <i class="fa-solid "></i></th>
               <th class="border-bottom ">Ghi chú<i class="fa-solid "></i></th>
+              <%if(role =="staff" || role =="admmin"){%>
               <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+              <%}%>
+
             </tr>
           </thead>
           <tbody id="bookTableBody">
@@ -77,7 +80,7 @@
               <td class="d-flex  ">
                 <%= pat.NOTES%>
               </td>
-             
+              <%if(role =="staff" || role =="admmin"){%>
               <td>
                 <div style="z-index: 31;">
                   <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
@@ -87,6 +90,8 @@
                   </form>
                 </div>
               </td>
+              <%}%>
+
               <!-- Thêm dòng để xóa -->
             </tr>
             <% }) %>

@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const dentistController = require('../controllers/dentistController');
+const { checkPatientRole } = require('../middleware/authentication');
 
-    router.get('/dentistList', dentistController.dentistList);
-    router.get('/staffList', dentistController.staffList);
-    router.get('/staffDetail/:id', dentistController.staffDetail);
 
-    router.get('/navSystemMag', dentistController.navSystemMag);
+    router.get('/dentistList',checkPatientRole, dentistController.dentistList);
+    router.get('/dentistDetail/:id',checkPatientRole, dentistController.dentistDetail);
+
+    router.get('/staffList', checkPatientRole,dentistController.staffList);
+    router.get('/staffDetail/:id',checkPatientRole, dentistController.staffDetail);
+    router.get('/detail/:id', dentistController.detail);
+
+    router.get('/navSystemMag', checkPatientRole,dentistController.navSystemMag);
  
 
 

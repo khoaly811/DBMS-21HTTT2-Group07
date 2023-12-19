@@ -26,6 +26,7 @@ Patient.listPatientPro = function(req, res, next) {
         if (err) {
             return next(err);
         }
+        console.log(patientData);
         res.render('patientProfile', { patientData: patientData[0] , patie:patientData[1]});
     });
 };
