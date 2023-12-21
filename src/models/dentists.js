@@ -15,7 +15,7 @@ Dentist.getAll = function (req, res, next) {
     if (appointment_date.getDay() == 0)
         weekDay = 8
     else {
-        weekDay = (appointment_date.getDay() - 1).toString()
+        weekDay = (appointment_date.getDay() + 1).toString()
     }
 
     db.query("call sp_get_dentist(?,?,?, ?)", [req.body.clinic, req.body.appointment_date,

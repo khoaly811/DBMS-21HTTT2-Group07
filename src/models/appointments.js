@@ -20,7 +20,7 @@ Appointment.appointList = function (req, res, next) {
   //     -- Select appointments from APPOINTMENT table based on given TREATMENT_ID
   //     SELECT *
   //     FROM APPOINTMENT
-        
+
   //     WHERE TREATMENT_ID = treatment_id_param;
   // END $$
 
@@ -37,50 +37,45 @@ Appointment.appointList = function (req, res, next) {
 };
 
 Appointment.appointListAll = function (req, res, next) {
- 
-  if(req.query.full_name){
-    let sql = 'CALL sp_getAllAppointments_byName(?)';
+  if (req.query.full_name) {
+    let sql = "CALL sp_getAllAppointments_byName(?)";
     const full_name = req.query.full_name;
-    console.log(full_name); 
-    db.query(sql,[full_name], function (err, data) {
+    console.log(full_name);
+    db.query(sql, [full_name], function (err, data) {
       if (err) {
         return next(err);
       }
-      console.log(data);
       res.render("appointListAll", { appointListAll: data[0] });
     });
-  }else if(req.query.address){
-    let sql = 'CALL sp_getAllAppointments_byAddress(?)';
+  } else if (req.query.address) {
+    let sql = "CALL sp_getAllAppointments_byAddress(?)";
 
     const address = req.query.address;
     console.log(address);
-    db.query(sql,[address], function (err, data) {
+    db.query(sql, [address], function (err, data) {
       if (err) {
         return next(err);
       }
-      console.log(data);
       res.render("appointListAll", { appointListAll: data[0] });
     });
-  }else if(req.query.dentist){
-    let sql = 'CALL sp_getAllAppointments_byDentist(?)';
+  } else if (req.query.dentist) {
+    let sql = "CALL sp_getAllAppointments_byDentist(?)";
 
     const dentist = req.query.dentist;
-    db.query(sql,[dentist], function (err, data) {
+    db.query(sql, [dentist], function (err, data) {
       if (err) {
         return next(err);
       }
-      console.log(data);
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  } else {
+    db.query("CALL sp_getAllAppointments()", function (err, data) {
+      if (err) {
+        return next(err);
+      }
       res.render("appointListAll", { appointListAll: data[0] });
     });
   }
-  else{
-  db.query("CALL sp_getAllAppointments()", function (err, data) {
-    if (err) {
-      return next(err);
-    }
-    res.render("appointListAll", { appointListAll: data[0] });
-  });
-}
 };
 
 Appointment.appointmentistory = function (req, res, next) {
@@ -108,38 +103,38 @@ Appointment.appointmentDetail = function (req, res, next) {
   //     WHERE TREATMENT_ID = treatment_id_param;
   // END
 
-//   USE `adb_nhakhoa`;
-//   DELIMITER $$
+  //   USE `adb_nhakhoa`;
+  //   DELIMITER $$
 
-//   CREATE PROCEDURE sp_findPrescriptionDetails(
-//       IN treatment_id_param VARCHAR(9),
-//       IN appointment_id_param VARCHAR(9)
-//   )
-//   BEGIN
-//       DECLARE prescription_id_var VARCHAR(9);
+  //   CREATE PROCEDURE sp_findPrescriptionDetails(
+  //       IN treatment_id_param VARCHAR(9),
+  //       IN appointment_id_param VARCHAR(9)
+  //   )
+  //   BEGIN
+  //       DECLARE prescription_id_var VARCHAR(9);
 
-//       -- Find prescription_id based on treatment_id and appointment_id
-//       SELECT PRESCRIPTION_ID
-//       INTO prescription_id_var
-//       FROM PRESCRIPTION
-//       WHERE TREATMENT_ID = treatment_id_param
-//         AND APPOINTMENT_ID = appointment_id_param
-//       LIMIT 1;
+  //       -- Find prescription_id based on treatment_id and appointment_id
+  //       SELECT PRESCRIPTION_ID
+  //       INTO prescription_id_var
+  //       FROM PRESCRIPTION
+  //       WHERE TREATMENT_ID = treatment_id_param
+  //         AND APPOINTMENT_ID = appointment_id_param
+  //       LIMIT 1;
 
-//       -- Check if prescription_id is not null
-//       IF prescription_id_var IS NOT NULL THEN
-//           -- Select details from MEDICINE_IN_PRESCRIPTION and join with MEDICINE table
-//           SELECT MIP.*, M.NAME AS MEDICINE_NAME, M.DESCRIPTION AS MEDICINE_DESCRIPTION
-//           FROM MEDICINE_IN_PRESCRIPTION MIP
-//           JOIN MEDICINE M ON MIP.MEDICINE_ID = M.MEDICINE_ID
-//           WHERE MIP.PRESCRIPTION_ID = prescription_id_var;
-//       ELSE
-//           -- If prescription_id is null, return a message or handle as needed
-//           SELECT 'No prescription found for the given treatment and appointment.' AS Message;
-//       END IF;
-//   END $$
+  //       -- Check if prescription_id is not null
+  //       IF prescription_id_var IS NOT NULL THEN
+  //           -- Select details from MEDICINE_IN_PRESCRIPTION and join with MEDICINE table
+  //           SELECT MIP.*, M.NAME AS MEDICINE_NAME, M.DESCRIPTION AS MEDICINE_DESCRIPTION
+  //           FROM MEDICINE_IN_PRESCRIPTION MIP
+  //           JOIN MEDICINE M ON MIP.MEDICINE_ID = M.MEDICINE_ID
+  //           WHERE MIP.PRESCRIPTION_ID = prescription_id_var;
+  //       ELSE
+  //           -- If prescription_id is null, return a message or handle as needed
+  //           SELECT 'No prescription found for the given treatment and appointment.' AS Message;
+  //       END IF;
+  //   END $$
 
-//   DELIMITER ;
+  //   DELIMITER ;
 
   const treatment_id = req.params.treatment_id;
   const appointment_id = req.params.appointment_id;
@@ -202,77 +197,152 @@ Appointment.updateAppoint = function (req, res, next) {
   const inputGroupSelect01 = req.body.inputGroupSelect01;
   const inputGroupSelect02 = req.body.inputGroupSelect02;
   let PRESCRIPTION_ID;
-  if(req.body.PRESCRIPTION_ID){
-    if(req.body.PRESCRIPTION_ID.length ==9)PRESCRIPTION_ID =  req.body.PRESCRIPTION_ID;
-    else{
-  PRESCRIPTION_ID =  req.body.PRESCRIPTION_ID[0];
-  console.log(req.body.PRESCRIPTION_ID.length);}
-}
-else{
-  PRESCRIPTION_ID = "PRE000000";
-}
-console.log(PRESCRIPTION_ID);
-  const DESCRIPTION = concatenateStrings(inputGroupSelect01, inputGroupSelect02);
+  if (req.body.PRESCRIPTION_ID) {
+    if (req.body.PRESCRIPTION_ID.length == 9)
+      PRESCRIPTION_ID = req.body.PRESCRIPTION_ID;
+    else {
+      PRESCRIPTION_ID = req.body.PRESCRIPTION_ID[0];
+      console.log(req.body.PRESCRIPTION_ID.length);
+    }
+  } else {
+    PRESCRIPTION_ID = "PRE000000";
+  }
+  console.log(PRESCRIPTION_ID);
+  const DESCRIPTION = concatenateStrings(
+    inputGroupSelect01,
+    inputGroupSelect02
+  );
 
   // Assuming you have an array of medicine data, replace this with your actual array
   const medicineDataArray = [];
 
-// Iterate through keys and construct the array
-for (let i = 0; req.body[`MEDICINE_NAME${i}`] !== undefined; i++) {
-  console.log(req.body[`MEDICINE_NAME${i}`]);
-  const medicineData = {
-    medicine_name: req.body[`MEDICINE_NAME${i}`],
-    new_quantity: req.body[`QUANTITY${i}`],
-    medicine_id: req.body[`MEDICINE_ID${i}`] || "MED000000"
-  };
-  medicineDataArray.push(medicineData);
-}
-console.log(medicineDataArray);
-
+  // Iterate through keys and construct the array
+  for (let i = 0; req.body[`MEDICINE_NAME${i}`] !== undefined; i++) {
+    console.log(req.body[`MEDICINE_NAME${i}`]);
+    const medicineData = {
+      medicine_name: req.body[`MEDICINE_NAME${i}`],
+      new_quantity: req.body[`QUANTITY${i}`],
+      medicine_id: req.body[`MEDICINE_ID${i}`] || null,
+    };
+    medicineDataArray.push(medicineData);
+  }
+  console.log(medicineDataArray);
+  console.log(medicineDataArray.length);
 
   // Call the first stored procedure
-  var sql1 = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
-  db.query(
+  if (PRESCRIPTION_ID != "PRE000000") {
+    var sql1 = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
+    db.query(
       sql1,
       [
-          appointment_id,
-          treatment_id,
-          APPOINTMENT_DATE,
-          APPOINTMENT_SHIFT,
-          DESCRIPTION,
-          NOTES,
+        appointment_id,
+        treatment_id,
+        APPOINTMENT_DATE,
+        APPOINTMENT_SHIFT,
+        DESCRIPTION,
+        NOTES,
       ],
       function (err1, patientData1) {
-          if (err1) {
-              return next(err1);
-          }
+        if (err1) {
+          return next(err1);
+        }
 
-          // Iterate over the array and call the second stored procedure for each entry
-          for (const medicineData of medicineDataArray) {
-              var sql2 = "call sp_updateMedicineInPrescription(?,?,?,?,?,?)";
-              db.query(
-                  sql2,
-                  [
-                      medicineData.medicine_name,
-                      PRESCRIPTION_ID,
-                      medicineData.new_quantity,
-                      treatment_id,
-                      appointment_id,
-                      medicineData.medicine_id
-                  ],
-                  function (err2, patientData2) {
-                      if (err2) {
-                          return next(err2);
-                      }
-                      // Continue or handle the result if needed
-                  }
-              );
-          }
+        // Iterate over the array and call the second stored procedure for each entry
+        for (const medicineData of medicineDataArray) {
+          var sql2 = "call sp_updateMedicineInPrescription(?,?,?,?,?,?)";
+          console.log("Med");
+          console.log(medicineData.medicine_name);
+          console.log(PRESCRIPTION_ID);
+          db.query(
+            sql2,
+            [
+              medicineData.medicine_name,
+              PRESCRIPTION_ID,
+              medicineData.new_quantity,
+              treatment_id,
+              appointment_id,
+              medicineData.medicine_id,
+            ],
+            function (err2, patientData2) {
+              if (err2) {
+                return next(err2);
+              }
+              // Continue or handle the result if needed
+            }
+          );
+        }
 
-          // Both stored procedures executed successfully
-          res.redirect("#");
+        // Both stored procedures executed successfully
+        res.redirect("#");
       }
-  );
+    );
+  } else {
+    var sql1 = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
+    db.query(
+      sql1,
+      [
+        appointment_id,
+        treatment_id,
+        APPOINTMENT_DATE,
+        APPOINTMENT_SHIFT,
+        DESCRIPTION,
+        NOTES,
+      ],
+      function (err1, patientData1) {
+        if (err1) {
+          return next(err1);
+        }
+
+        // Iterate over the array and call the second stored procedure for each entry
+        for (const medicineData of medicineDataArray) {
+          var sql2 = "call sp_updateMedicineInPrescriptionAdd(?,?,?,?,?)";
+          console.log("Med22");
+          var sql3 = "CALL generatePrescriptionID(@newPrescriptionID)";
+          let NewPrescriptionID;
+          db.query(sql3, (error, results, fields) => {
+            if (error) {
+              console.error(error);
+              throw error;
+            }
+
+            // Assuming that the stored procedure sets the newPrescriptionID in a session variable
+            var sql4 = "SELECT @newPrescriptionID AS newPrescriptionID";
+            db.query(sql4, (error, results, fields) => {
+              if (error) {
+                console.error(error);
+                throw error;
+              }
+
+              const newPrescriptionID = results[0].newPrescriptionID;
+              console.log("New Prescription ID:", newPrescriptionID);
+              NewPrescriptionID = newPrescriptionID;
+              // Continue with the rest of your code or handle the newPrescriptionID as needed
+           
+            db.query(
+              sql2,
+              [
+                  medicineData.medicine_name,
+                  newPrescriptionID,
+                  medicineData.new_quantity,
+                  treatment_id,
+                  appointment_id,
+              ],
+              function (err2, patientData2) {
+                  if (err2) {
+                      return next(err2);
+                  }
+                  // Continue or handle the result if needed
+              }
+          ); 
+        });
+          });
+        }
+
+        // Both stored procedures executed successfully
+        res.redirect("#");
+      }
+    );
+  }
 };
 
 module.exports = Appointment;

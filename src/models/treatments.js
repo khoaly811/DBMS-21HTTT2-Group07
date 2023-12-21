@@ -97,8 +97,9 @@ Treatment.treatmentDetail = function(req, res, next) {
 
 
 Treatment.newTreatment = function (req, res, next) {
-    db.query("call sp_insert_treatment(?,?,?,?)", [req.body.dentist, req.session.username,
+    db.query("call sp_insert_treatment(?,?,?,?,?)", [req.body.dentist, req.session.username,
     req.session.treatment, req.session.appointment_date, req.session.shift]);
+    console.log(req.body.dentist);
 }
 
 Treatment.unPaidTreatment = function(req, res, next) {

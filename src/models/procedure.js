@@ -178,7 +178,7 @@
 
 // CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllAppointments_byDentist`(IN partial_name VARCHAR(50))
 // BEGIN
-// -- Select appointment details for the found patient ID
+// -- Select appointment details for the found patient IDaa
 //     SELECT *,
 //            P.*,
 //            cl.CLINIC_ADDRESS

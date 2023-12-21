@@ -30,7 +30,7 @@
   <title>Health Us</title>
   <nav class="navbar navbar-expand-lg bg-transparent">
     <div class="container-fluid" style="background-color: #dcfffd;">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="/">
         <img class="rounded-2" src="../../public/image/logo.png" alt="Bootstrap" width="60" height="40">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -64,7 +64,7 @@
           </div>
 
           <li class="nav-item rounded-3">
-            <b><a class="nav-link" href="">Quản lý thuốc</a></b>
+            <b><a class="nav-link" href="/medicineList">Quản lý thuốc</a></b>
           </li>
           <div style="width: 354px;"></div>
           <!-- ======================================================================================================== -->
@@ -273,7 +273,7 @@
                         <div
                           style="background-color: grey;height: 1px;width: 100%;margin-top: 50px;margin-bottom: 30px;">
                         </div>
-                        <% if (prescriptionResult.length > 0) { %>
+                        <% if (prescriptionResult.length > 0 && prescriptionResult[0].PRESCRIPTION_ID) { %>
                         <% prescriptionResult.forEach((pat3,index)=>{%>
                           <div class="row gx-3 mb-3" style="display: none;">
                             <div class="col-md-6">
@@ -347,7 +347,7 @@
                             <button type="button" class="btn btn-secondary mt-3 addtreatment" id="addRowBtn" style="margin-bottom: 20px;display: none;">+</button>
                             <div id="dynamicFormContainer"></div>
                           <% } %>
-                          <%if(role =="staff" || role =="admmin"){%>
+                          <%if(role =="dentist"){%>
 
                             <button id="updateButton" class="btn btn-primary" type="button">Update</button>
                             <%}else{%>

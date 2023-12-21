@@ -15,7 +15,14 @@ Request.newRequest = function (req, res, next) {
     let today_year = today.getFullYear()
     let currentDate = today_year + '-' + today_month + '-' + today_date
     
-    db.query("call sp_insert_request(?,?,?)", [req.session.username, currentDate, req.session.appointment_date]);
+    db.query("call sp_insert_request(?,?,?)", [req.session.username, currentDate, req.session.appointment_date],
+    function(err, data) {
+        if (err) {
+            return next(err);
+        }
+       
+    });
+    console.log("appoint");
 }
 
 module.exports = Request
