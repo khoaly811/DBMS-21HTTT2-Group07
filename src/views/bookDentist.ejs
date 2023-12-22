@@ -11,10 +11,10 @@
                 <h2 style="text-align:  center;">MÃ BỆNH NHÂN: <%= username %></h2>
                 <form action="/bookingAppointment/bookOK" method="POST">
                     <div class="card" style="padding: 10px;">
-                        <label for="Dentist">Dentist</label><br><br>
+                        <label for="Dentist"><h4>Dentist:</h4></label>
                         <% dentists.forEach((dentist) => { %>
-                            <input type="radio" name="dentist" id="dentist" value="<%= dentist.DENTIST_ID %>">
-                            <label for="dentist"><%= dentist.FULL_NAME %></label><br>
+                            <input type="radio" name="dentist" id="dentist" value="<%= dentist.DENTIST_ID %>" style="">
+                            <label for="dentist"><%= dentist.FULL_NAME %></label>
                         <% }) %>
                     </div><br>
                     <input type="submit" value="Submit">

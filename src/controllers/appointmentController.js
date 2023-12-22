@@ -30,3 +30,11 @@ exports.appointmentistory = function(req, res, next) {
     appointmentModel.appointmentistory(req,res,next);
 }
  
+exports.appointAdd = function(req, res, next) { 
+    appointmentModel.appointAdd(req,res,next);
+}
+
+exports.appointAddMore = function(req, res, next) { 
+    appointmentModel.appointAddMore(req,res,next);
+}
+ 

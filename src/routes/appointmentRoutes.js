@@ -10,6 +10,10 @@ const { checkPatientRole } = require('../middleware/authentication');
     router.get('/requestList', checkPatientRole, appointmentController.requestList);
     router.post('/appointmentDetail/:treatment_id/:appointment_id', checkPatientRole, appointmentController.updateAppoint);
     router.get('/appointmentistory/:id',checkPatientRole,  appointmentController.appointmentistory);
+    router.get('/appointAdd/:id', checkPatientRole, appointmentController.appointAdd);
+    router.post('/appointAdd', checkPatientRole, appointmentController.appointAddMore);
+
+
 
 
 

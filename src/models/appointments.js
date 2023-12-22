@@ -87,6 +87,24 @@ Appointment.appointmentistory = function (req, res, next) {
   });
 };
 
+Appointment.appointAdd = function (req, res, next) {
+
+  const treatment_id = req.params.id;
+  
+
+
+
+  let sql = `CALL sp_treatmentDetail('${treatment_id}')`;
+  
+  
+  db.query(sql, function(err, treatmentDetail) {
+      if (err) {
+          return next(err);
+      }
+      res.render('appointmentAdd', { treatmentDetail: treatmentDetail[0] });
+  });
+};
+
 Appointment.appointmentDetail = function (req, res, next) {
   //   CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_findAppointmentByID`(
   //     IN treatment_id_param VARCHAR(9),
@@ -180,6 +198,20 @@ Appointment.requestList = function (req, res, next) {
       return next(err);
     }
     res.render("tableRequest", { requestList: data[0] });
+  });
+};
+
+Appointment.appointAddMore = function (req, res, next) {
+  console.log(req.body);
+  const treat = req.body.TREATMENT_ID;
+  const dateTreat = req.body.dob;
+  const shift = req.body.gender;
+  const note = req.body.allergies
+  db.query("CALL sp_addAppointmentPatient(?,?,?,?)",[treat,dateTreat,shift,note], function (err, data) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/appointmentList/" + treat);
   });
 };
 
