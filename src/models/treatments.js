@@ -102,6 +102,26 @@ Treatment.newTreatment = function (req, res, next) {
     console.log(req.body.dentist);
 }
 
+Treatment.review = function(req, res, next) {
+    const dataArray = [req.body, req.session];
+
+  // Log the array
+  console.log("Data Array:");
+  console.log(dataArray);
+
+
+    let sql = `CALL sp_reviewRequest(?,?,?,?,?,?)`;
+    
+    
+    db.query(sql,[req.session.username,req.session.clinic,req.session.appointment_date,req.session.shift,req.body.dentist,req.session.treatment], function(err, unPaidTreatment) {
+        if (err) {
+            return next(err);
+        }
+        console.log(unPaidTreatment);
+        res.render('reviewRequest', { unPaidTreatment:unPaidTreatment[0] });
+    });
+};
+
 Treatment.unPaidTreatment = function(req, res, next) {
     const patientID = req.params.id;
 
