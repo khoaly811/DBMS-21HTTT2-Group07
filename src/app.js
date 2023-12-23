@@ -43,25 +43,23 @@ const authRoute = require("./routes/authRoute");
 const internalServerErrorMiddleware = require('./middleware/internalServerError');
 
 const bodyParser = require("body-parser");
-const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 dotenv.config(); // Load environment variables from .env
+const mysql = require('mysql2/promise');
+
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  connectionLimit: process.env.DB_CONNECTION_LIMIT,
   multipleStatements: true, // Allow executing multiple statements in a single query
   connectionConfig: {
-    namedPlaceholders: true,
-    // Disable automatic transactions and commits
-    transaction: false,
-    noWrap: true
+    noWrap: process.env.DB_NO_WRAP === 'true',
+    transaction: process.env.DB_TRANSACTION === 'true',
   }
 });
+
 db.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to MySQL:', err);

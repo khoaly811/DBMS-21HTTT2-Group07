@@ -65,13 +65,13 @@
                 </div>            
                 <div class="mb-3">
                   <label class="small mb-1" for="description">Mô tả thuốc</label>
-                  <input type="text" id="description" name="description" class="form-control form-control-lg" value="<%= med.DESCRIPTION %>" disabled>
                   <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= med.DESCRIPTION %></textarea>
                 </div>
                 <% }) %>
                 <%if(role =="admin"){%>
 
                   <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <button id="updateButton2" class="btn btn-primary" type="button">Update fix</button>
                   <%}else{%>
                     <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
                     <%}%>
