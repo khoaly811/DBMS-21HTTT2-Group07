@@ -62,7 +62,11 @@
                   </div>
                 </div>
      
-                </div>            
+                </div>          
+                <div class="mb-3">
+                  <label class="small mb-1" for="fix">Fix hay không</label>
+                  <input type="text" id="fix" name="fix" class="form-control form-control-lg" >
+                </div>  
                 <div class="mb-3">
                   <label class="small mb-1" for="description">Mô tả thuốc</label>
                   <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= med.DESCRIPTION %></textarea>
@@ -71,7 +75,6 @@
                 <%if(role =="admin"){%>
 
                   <button id="updateButton" class="btn btn-primary" type="button">Update</button>
-                  <button id="updateButton2" class="btn btn-primary" type="button">Update fix</button>
                   <%}else{%>
                     <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
                     <%}%>

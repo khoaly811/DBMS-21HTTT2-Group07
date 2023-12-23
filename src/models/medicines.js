@@ -58,14 +58,26 @@ Medicine.editMedicine = function(req,res,next){
     let inputN = req.body.inputNumber;
     console.log(req.body.inputNumber);
     console.log(inputN);
-
     const medicine_id = req.params.id;
-    var sql = 'call sp_edit_med(?,?)';
-    db.query(sql, [medicine_id, inputN], function(err, medicineDetail) {
-        if (err) {
-            return next(err);
-        }
-        res.redirect('/medicineList');
-    });
+    if (req.body.fix === "1"){
+        var sql = 'call sp_edit_med_fix(?,?)';
+        db.query(sql, [medicine_id, inputN], function(err, medicineDetail) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/medicineList');
+        });
+    }
+    else if (req.body.fix === "0"){
+        var sql = 'call sp_edit_med(?,?)';
+        db.query(sql, [medicine_id, inputN], function(err, medicineDetail) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/medicineList');
+        });
+    }
+
+   
 };
 module.exports = Medicine;
