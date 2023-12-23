@@ -147,12 +147,19 @@ Dentist.dentistDetail = function(req, res, next) {
     // END
         
         let sql= `call sp_getDentistAndClinicInfoDetail('${dentistID}')`;
+        let sql2= `call findDentistScheduleGrouped('${dentistID}')`;
         
         db.query(sql, function(err, dentistDetail) {
             if (err) {
                 return next(err);
             }
-            res.render('dentistDetail', { dentistDetail: dentistDetail[0] });
+            db.query(sql2, function(err, dentistDetail2) {
+                if (err) {
+                    return next(err);
+                }
+                console.log(dentistDetail2);
+            res.render('dentistDetail', { dentistDetail: dentistDetail[0],  dentistDetail2: dentistDetail2[0]});
+        });
         });
     };
 

@@ -108,7 +108,7 @@
                                       
                                           const dateStrings = daysArray.map(day => {
                                             const date = new Date(year, month - 1, day);
-                                            return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+                                            return `${date.getDate()-1}-${date.getMonth() + 1}-${date.getFullYear()}`;
                                           });
                                       
                                           return dateStrings;
@@ -116,7 +116,7 @@
 
                                         function weekdaysToName(weekdays, month, year) {
                                             const daysArray = weekdays.split(',').map(Number);
-                                            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                                            const dayNames = [ 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                                         
                                             const dateStrings = daysArray.map(day => {
                                               const date = new Date(year, month - 1, day);
