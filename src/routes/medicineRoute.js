@@ -5,7 +5,7 @@ const { checkPatientRole } = require('../middleware/authentication');
 
 router.get('/medicineList/', checkPatientRole, medicineController.medicineList);
 router.get('/medicineDetail/:id', checkPatientRole, medicineController.medicineDetail);
-
+router.post('/medicineDetail/:id', checkPatientRole, medicineController.editMedicine);
 
 
 

@@ -51,7 +51,7 @@ Accounts.create = function(req, res, next) {
   // 	END IF;
   // END //
   // DELIMITER ;
-  let sql = 'CALL CreateAccount(?,?,?,?,?)'; 
+  let sql = 'CALL sp_insert_account(?,?,?,?,?)'; 
   db.query(sql, [username, password, email, passconfirm, role], function(err) {
     if (err) {
       return res.status(201).json({msg: err.message});

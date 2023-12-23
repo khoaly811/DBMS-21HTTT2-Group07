@@ -43,7 +43,7 @@ const authRoute = require("./routes/authRoute");
 const internalServerErrorMiddleware = require('./middleware/internalServerError');
 
 const bodyParser = require("body-parser");
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 dotenv.config(); // Load environment variables from .env
 const db = mysql.createPool({
@@ -51,6 +51,16 @@ const db = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  multipleStatements: true, // Allow executing multiple statements in a single query
+  connectionConfig: {
+    namedPlaceholders: true,
+    // Disable automatic transactions and commits
+    transaction: false,
+    noWrap: true
+  }
 });
 db.getConnection((err, connection) => {
   if (err) {

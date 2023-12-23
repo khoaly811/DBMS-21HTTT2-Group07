@@ -53,5 +53,19 @@ Medicine.medicineDetail = function(req, res, next) {
         res.render('medicineDetail', { medicineDetail: medicineDetail[0] });
     });
 };
+Medicine.editMedicine = function(req,res,next){
+    console.log(req.body);
+    let inputN = req.body.inputNumber;
+    console.log(req.body.inputNumber);
+    console.log(inputN);
 
+    const medicine_id = req.params.id;
+    var sql = 'call sp_edit_med(?,?)';
+    db.query(sql, [medicine_id, inputN], function(err, medicineDetail) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/medicineList');
+    });
+};
 module.exports = Medicine;
