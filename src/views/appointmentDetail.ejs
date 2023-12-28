@@ -237,6 +237,10 @@
                         <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg"
                           rows="2"><%= pat.NOTES %></textarea>
                       </div>
+                      <div class="mb-3">
+                      <label class="small mb-1" for="fix">Fix hay khong</label>
+                    <input type="text" id="fix" name="fix" class="form-control form-control-lg"
+                      rows="1"</div>
                       <div class="input-group" style="display: none;">
                         <span class="input-group-text">Cập nhật mô tả điều trị</span>
 
@@ -302,32 +306,12 @@
                                 <option value="<%= pat3.MEDICINE_NAME%>">
                                   <%= pat3.MEDICINE_NAME%>
                                 </option>
-                                <option value="Xylitol">Xylitol</option>
-                                <option value="BreathRx">BreathRx</option>
-                                <option value="BruxStop">BruxStop</option>
-                                <option value="ReliefGum">ReliefGum</option>
-                                <option value="DentiPatch">DentiPatch</option>
-                                <option value="OralGel">OralGel</option>
-                                <option value="TeethRinse">TeethRinse</option>
-                                <option value="TongueSoothe">TongueSoothe</option>
-                                <option value="TartarNox">TartarNox</option>
-                                <option value="Dentigel">Dentigel</option>
-                                <option value="Fluoride">Fluoride</option>
-                                <option value="PlaqueOff">PlaqueOff</option>
-                                <option value="GingiGard">GingiGard</option>
-                                <option value="CavityX">CavityX</option>
-                                <option value="PeriRinse">PeriRinse</option>
-                                <option value="FlossAid">FlossAid</option>
-                                <option value="EnamelFix">EnamelFix</option>
-                                <option value="Mouthwash">Mouthwash</option>
-                                <option value="GumEase">GumEase</option>
-                                <option value="EnamelMax">EnamelMax</option>
-                                <option value="Whitener">Whitener</option>
-                                <option value="Gumsaver">Gumsaver</option>
-                                <option value="ToothTabs">ToothTabs</option>
-                                <option value="BiteGuard">BiteGuard</option>
-                                <option value="CleanMouth">CleanMouth</option>
-                                <option value="PlaqueBane">PlaqueBane</option>
+                                <option value="MED001">Dentigel</option>
+                                <option value="MED002">Fluoride</option>
+                                <option value="MED003">PlaqueOff</option>
+                                <option value="MED004">GingiGard</option>
+                                <option value="MED005">CavityX</option>
+                                <option value="MED006">Xylitol</option>
                                 <!-- Add more options as needed -->
                               </select>
                             </div>
@@ -424,32 +408,12 @@ if(addtreatment){
                                 class="form-select form-select-lg" size="1" required >
                                 <!-- Add your options here -->
                             
-                                <option value="Xylitol">Xylitol</option>
-                                <option value="BreathRx">BreathRx</option>
-                                <option value="BruxStop">BruxStop</option>
-                                <option value="ReliefGum">ReliefGum</option>
-                                <option value="DentiPatch">DentiPatch</option>
-                                <option value="OralGel">OralGel</option>
-                                <option value="TeethRinse">TeethRinse</option>
-                                <option value="TongueSoothe">TongueSoothe</option>
-                                <option value="TartarNox">TartarNox</option>
-                                <option value="Dentigel">Dentigel</option>
-                                <option value="Fluoride">Fluoride</option>
-                                <option value="PlaqueOff">PlaqueOff</option>
-                                <option value="GingiGard">GingiGard</option>
-                                <option value="CavityX">CavityX</option>
-                                <option value="PeriRinse">PeriRinse</option>
-                                <option value="FlossAid">FlossAid</option>
-                                <option value="EnamelFix">EnamelFix</option>
-                                <option value="Mouthwash">Mouthwash</option>
-                                <option value="GumEase">GumEase</option>
-                                <option value="EnamelMax">EnamelMax</option>
-                                <option value="Whitener">Whitener</option>
-                                <option value="Gumsaver">Gumsaver</option>
-                                <option value="ToothTabs">ToothTabs</option>
-                                <option value="BiteGuard">BiteGuard</option>
-                                <option value="CleanMouth">CleanMouth</option>
-                                <option value="PlaqueBane">PlaqueBane</option>
+                                <option value="MED001">Dentigel</option>
+                                <option value="MED002">Fluoride</option>
+                                <option value="MED003">PlaqueOff</option>
+                                <option value="MED004">GingiGard</option>
+                                <option value="MED005">CavityX</option>
+                                <option value="MED006">Xylitol</option>
                                 <!-- Add more options as needed -->
                               </select>
                             </div>

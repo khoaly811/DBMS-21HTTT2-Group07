@@ -260,6 +260,12 @@ Appointment.updateAppoint = function (req, res, next) {
   }
   console.log(medicineDataArray);
   console.log(medicineDataArray.length);
+  if (req.body.fix === "0"){
+    var sqlPres = "call sp_dentist_prescribe(?,?)"
+  }
+  else if (req.body.fix === "1"){
+    var sqlPres = "call sp_dentist_prescribe_fix(?,?)"
+  }
 
   // Call the first stored procedure
   if (PRESCRIPTION_ID != "PRE000000") {
@@ -299,8 +305,20 @@ Appointment.updateAppoint = function (req, res, next) {
               if (err2) {
                 return next(err2);
               }
+              db.query(
+                sqlPres,
+                [
+                  medicineData.medicine_name,
+                  medicineData.new_quantity
+                ],
+                function (err2, patientData2) {
+                  if (err2) {
+                    return next(err2);
+                  }}
+              );
               // Continue or handle the result if needed
             }
+            
           );
         }
 
@@ -308,6 +326,7 @@ Appointment.updateAppoint = function (req, res, next) {
         res.redirect("#");
       }
     );
+
   } else {
     var sql1 = "call sp_updateAppointmentAndTreatmentDetails(?,?,?,?,?,?)";
     db.query(
