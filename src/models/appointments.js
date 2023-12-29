@@ -68,7 +68,17 @@ Appointment.appointListAll = function (req, res, next) {
       }
       res.render("appointListAll", { appointListAll: data[0] });
     });
-  } else {
+  } else if (req.query.full_name_fix) {
+    let sql = "CALL sp_getAllAppointments_byName_fix(?)";
+    const full_name_fix = req.query.full_name_fix;
+    db.query(sql, [full_name_fix], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  }
+  else {
     db.query("CALL sp_getAllAppointments()", function (err, data) {
       if (err) {
         return next(err);
@@ -368,7 +378,7 @@ Appointment.updateAppoint = function (req, res, next) {
               console.log("New Prescription ID:", newPrescriptionID);
               NewPrescriptionID = newPrescriptionID;
               // Continue with the rest of your code or handle the newPrescriptionID as needed
-           
+              console.log(treatment_id," ",appointment_id);
             db.query(
               sql2,
               [
@@ -391,7 +401,7 @@ Appointment.updateAppoint = function (req, res, next) {
 
         // Both stored procedures executed successfully
         res.redirect("#");
-      }
+      },
     );
   }
 };
