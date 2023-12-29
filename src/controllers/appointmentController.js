@@ -37,4 +37,9 @@ exports.appointAdd = function(req, res, next) {
 exports.appointAddMore = function(req, res, next) { 
     appointmentModel.appointAddMore(req,res,next);
 }
+
+exports.appointListAllSta = function(req, res, next) {  
+    appointmentModel.appointListAllSta(req,res,next);
+}
+
  
