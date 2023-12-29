@@ -79,7 +79,8 @@
   };
 
   Appointment.appointmentistory = function (req, res, next) {
-    db.query("CALL sp_getAllAppointments()", function (err, data) {
+    console.log(req.params.id);
+    db.query("CALL sp_getAllAppointmentsPatient(?)",[req.params.id], function (err, data) {
       if (err) {
         return next(err);
       }
