@@ -331,7 +331,7 @@
                             <button type="button" class="btn btn-secondary mt-3 addtreatment" id="addRowBtn" style="margin-bottom: 20px;display: none;">+</button>
                             <div id="dynamicFormContainer"></div>
                           <% } %>
-                          <%if(role =="dentist"){%>
+                          <%if(role =="dentist" && username ==appointmentDetail1[0].DENTIST_ID){%>
 
                             <button id="updateButton" class="btn btn-primary" type="button">Update</button>
                             <%}else{%>
