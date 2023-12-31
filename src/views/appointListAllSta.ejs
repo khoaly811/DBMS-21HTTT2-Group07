@@ -14,17 +14,10 @@
           <form action="/appointListAllSta" method="POST" class="align-items-center">
             <div class="input-group" style="width: 566px;">
          
-              <%
-                // Check if ngaybd is undefined or falsy
-                if (typeof BacSi === 'undefined' || !ngaybd) {
-                  // Set default value
-                  BacSi = '';
-                }
-              %>
 
                 <input type="date" name="ngayBD" class="form-control" style="background-color: #D9D9D9;" id="search-input" placeholder="Tên bệnh nhân">ㅤ
                 <input type="date" name="ngayKT"  class="form-control" style="background-color: #D9D9D9;" id="search-input-dentist" placeholder="Tên bác sĩ">ㅤ
-                <input type="search" name="BacSi"   value="<%= BacSi  %>"class="form-control" style="background-color: #D9D9D9;" id="search-input-place" placeholder="Tên bác sĩ">
+                <input type="search" name="BacSi"  class="form-control" style="background-color: #D9D9D9;" id="search-input-place" placeholder="Tên bác sĩ">
 
                 <div class="input-group-append">
                     <input type="submit" value="Search" class="btn btn-info">
