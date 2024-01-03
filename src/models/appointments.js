@@ -77,7 +77,36 @@ Appointment.appointListAll = function (req, res, next) {
     });
   }
 };
+Appointment.appointListAllSta = function (req, res, next) {
 
+  console.log(req.body);
+  if(req.body.ngayBD || req.body.ngayKT || req.body.BacSi){
+    let ngaybd = req.body.ngayBD;
+    if(!req.body.ngayBD){
+      ngaybd = '1950-01-01';
+    }
+    let ngaykt = req.body.ngayKT;
+    if(!req.body.ngayKT){
+      ngaykt = '2090-01-01';
+    }
+    console.log("Search...",ngaybd," ",ngaykt," ",req.body.BacSi);
+    db.query("CALL sp_getAllAppointmentsADv(?,?,?)",[ngaybd, ngaykt, req.body.BacSi], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      res.render("appointListAllSta", { appointListAll: data[0],ngaybd, ngaykt, BacSi });
+    });
+  }else{
+
+
+  db.query("CALL sp_getAllAppointments()", function (err, data) {
+    if (err) {
+      return next(err);
+    }
+    res.render("appointListAllSta", { appointListAll: data[0] });
+  });
+}
+};
 Appointment.appointmentistory = function (req, res, next) {
   db.query("CALL sp_getAllAppointments()", function (err, data) {
     if (err) {

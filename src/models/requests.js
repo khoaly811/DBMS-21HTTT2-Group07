@@ -11,9 +11,10 @@ const Request = function(request){
 Request.newRequest = function (req, res, next) {
     let today = new Date()
     let today_date = today.getDate()
-    let today_month = today.getMonth()
+    let today_month = today.getMonth() + 1
     let today_year = today.getFullYear()
     let currentDate = today_year + '-' + today_month + '-' + today_date
+    console.log(currentDate)
     
     db.query("call sp_insert_request(?,?,?)", [req.session.username, currentDate, req.session.appointment_date],
     function(err, data) {
