@@ -68,7 +68,18 @@ Appointment.appointListAll = function (req, res, next) {
       }
       res.render("appointListAll", { appointListAll: data[0] });
     });
-  } else {
+  } else if (req.query.full_name_fix){
+    let sql = "CALL sp_getAllAppointments_byName_fix(?)";
+    const full_name_fix = req.query.full_name_fix;
+    console.log(full_name_fix);
+    db.query(sql, [full_name_fix], function (err, data) {
+      if (err) {
+        return next(err);
+      }
+      res.render("appointListAll", { appointListAll: data[0] });
+    });
+  } 
+  else {
     db.query("CALL sp_getAllAppointments()", function (err, data) {
       if (err) {
         return next(err);
